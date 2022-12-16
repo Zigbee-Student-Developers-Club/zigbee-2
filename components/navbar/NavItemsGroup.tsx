@@ -1,4 +1,5 @@
 import { Button, Stack, useMediaQuery } from "@chakra-ui/react";
+import Link from "next/link";
 
 const navItemsData = [
   {
@@ -21,18 +22,18 @@ export default function NavItemsGroup() {
   return (
     <Stack direction={isMobile ? "column" : "row"}>
       {navItemsData.map((item, index) => (
-        <Button
-          key={index}
-          variant="ghost"
-          _hover={{ background: "blue.100" }}
-          colorScheme="blue"
-          color="black"
-          size={"lg"}
-        >
-          {item.name}
-        </Button>
+        <Link href={item.route} key={index}>
+          <Button
+            variant="ghost"
+            _hover={{ background: "blue.100" }}
+            colorScheme="blue"
+            color="black"
+            size={"lg"}
+          >
+            {item.name}
+          </Button>
+        </Link>
       ))}
-
     </Stack>
   );
 }
