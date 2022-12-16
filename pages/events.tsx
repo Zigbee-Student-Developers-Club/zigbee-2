@@ -1,4 +1,4 @@
-import { Box, Center, Container, Heading, Image, Text } from '@chakra-ui/react';
+import { Center, Container, Heading, Image, Text } from '@chakra-ui/react';
 import EventCard from 'components/eventCard/EventCard';
 import Footer from 'components/footer/Footer';
 import EventDog from 'assets/events-dog.png';
