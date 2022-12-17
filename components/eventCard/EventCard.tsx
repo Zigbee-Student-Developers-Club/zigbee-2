@@ -9,25 +9,23 @@ import {
   Stack,
   Text,
 } from '@chakra-ui/react';
-import Salesforce from 'assets/salesforce.png';
 
-export default function EventCard() {
+export default function EventCard({ data }) {
+  console.log(data);
   return (
     <Card maxW='sm' m='2'>
       <CardBody>
         <Image
-          src={Salesforce.src}
+          src={data.thumbnail}
           alt='Green double couch with wooden legs'
           borderRadius='lg'
         />
         <Stack mt='4' spacing='1'>
-          <Heading size='md'>Debasis Jena</Heading>
-          <Text size='md'>2011</Text>
-          <Text size='md'>Tech Lead</Text>
-          <Text size='md'>Dubai Multi Commodities Center</Text>
-          <Heading size='xl'>
-            Cloud Application Development with Salesforce Platform
-          </Heading>
+          <Heading size='md'>{data.speaker.name}</Heading>
+          <Text size='12px'>{data.date}</Text>
+          <Text size='12px'>{data.speaker.role}</Text>
+          <Text size='12px'>{data.speaker.company}</Text>
+          <Heading size='md'>{data.topic}</Heading>
         </Stack>
       </CardBody>
       <CardFooter justifyContent={'center'} p='2'>
