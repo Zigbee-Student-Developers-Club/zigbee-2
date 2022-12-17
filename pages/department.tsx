@@ -32,30 +32,34 @@ export default function Department() {
         <Container maxW="5xl">
           <Stack spacing={5}>
             <Box>
-              <Flex alignItems={"center"}>
+              <Flex alignItems={"center"} gap={6}>
                 <Heading as="h4" size="lg" pr="2">
                   Vision
                 </Heading>
-                <Divider border="2px" borderRadius={"2xl"} />
+                <Divider
+                  border="4px"
+                  borderRadius={"2xl"}
+                  borderColor="purple.100"
+                />
               </Flex>
 
-              <Text fontSize="xl">
-                To develop the student's’ skill to cope with the challenging
+              <Text fontSize="xl" textAlign={"justify"}>
+                To develop the student&apos;s skill to cope with the challenging
                 industries expectations and to spring up the department to
-                attain the
-              </Text>
-              <Text fontSize="xl">
-                {" "}
-                international quality in the field of Education, Research &
-                Development.
+                attain the international quality in the field of Education,
+                Research & Development.
               </Text>
             </Box>
-            <Box>
-              <Flex alignItems={"center"}>
+            <Box textAlign={"justify"}>
+              <Flex alignItems={"center"} gap={6}>
                 <Heading as="h4" size="lg" pr="2">
                   Mission
                 </Heading>
-                <Divider border="2px" borderRadius={"2xl"} />
+                <Divider
+                  border="4px"
+                  borderRadius={"2xl"}
+                  borderColor="cyan.100"
+                />
               </Flex>
               <UnorderedList fontSize="xl">
                 <ListItem>
@@ -75,15 +79,22 @@ export default function Department() {
                 </ListItem>
               </UnorderedList>
             </Box>
-            <Box>
-              <Flex alignItems={"center"}>
-                <Heading as="h4" size="lg" pr="2">
-                  Programme Educational Objectives (PEOs)
+            <Box textAlign={"justify"}>
+              <Flex alignItems={"center"} gap={6}>
+                <Heading as="h4" size="lg" pr="2" whiteSpace={"nowrap"}>
+                  Programme Educational Objectives(PEOs)
                 </Heading>
-                <Divider border="2px" borderRadius={"2xl"} />
+                <Divider
+                  border="4px"
+                  borderRadius={"2xl"}
+                  borderColor="teal.100"
+                />
               </Flex>
               <Text fontSize="xl">
-                PEO 1: Excel in professional career and/or higher education by
+                <Text as="span" fontWeight={"bold"}>
+                  PEO 1:{" "}
+                </Text>
+                Excel in professional career and/or higher education by
                 acquiring knowledge and skill in problem solving, analysis,
                 programming and development.
               </Text>
@@ -103,15 +114,22 @@ export default function Department() {
                 expertise and professional competency.
               </Text>
             </Box>
-            <Box>
-              <Flex alignItems={"center"}>
-                <Heading as="h4" size="lg" pr="2">
+            <Box textAlign={"justify"}>
+              <Flex alignItems={"center"} gap={6}>
+                <Heading as="h4" size="lg" pr="2" whiteSpace={"nowrap"}>
                   Program Outcomes (POs)
                 </Heading>
-                <Divider border="2px" borderRadius={"2xl"} />
+                <Divider
+                  border="4px"
+                  borderRadius={"2xl"}
+                  borderColor="green.100"
+                />
               </Flex>
               <Text fontSize="xl">
-                PO 1: Acquiring sufficient knowledge on fundamentals of computer
+                <Text as="span" fontWeight={"bold"}>
+                  PO 1:
+                </Text>
+                Acquiring sufficient knowledge on fundamentals of computer
                 sciences, applied mathematics and computational aspects and to
                 apply the knowledge gained on laboratory experiments.
               </Text>
@@ -159,13 +177,17 @@ export default function Department() {
               </Text>
             </Box>
             <Box>
-              <Flex alignItems={"center"}>
-                <Heading as="h4" size="lg" pr="2">
+              <Flex alignItems={"center"} gap={6}>
+                <Heading as="h4" size="lg" whiteSpace={"nowrap"}>
                   About the Department
                 </Heading>
-                <Divider border="2px" borderRadius={"2xl"} />
+                <Divider
+                  border="4px"
+                  borderRadius={"2xl"}
+                  borderColor="blue.100"
+                />
               </Flex>
-              <Text fontSize="xl">
+              <Text fontSize="xl" textAlign={"justify"}>
                 Department of Computer Science and Application was established
                 in the year 1993, in College of Engineering and Technology,
                 OUAT. The PGDCA program, under the department of Electrical
