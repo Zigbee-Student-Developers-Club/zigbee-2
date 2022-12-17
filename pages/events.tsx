@@ -63,7 +63,7 @@ export default function Events() {
           animi adipisci expedita sint beatae?
         </Text>
 
-        <Grid templateColumns='repeat(4, 1fr)' gap={6} my={'2em'}>
+        <Grid templateColumns='repeat(4, 1fr)' gap={2} my={'2em'}>
           {eventsData.map((data: any, i) => (
             <GridItem key={i}>
               <EventCard data={data} />
