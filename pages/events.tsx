@@ -5,7 +5,6 @@ import {
   Grid,
   GridItem,
   Heading,
-  Image,
   Stack,
   Text,
 } from "@chakra-ui/react";
@@ -15,6 +14,7 @@ import EventHeroImg from "assets/event-img.png";
 import Navbar from "components/navbar/Navbar";
 import Salesforce from "assets/salesforce.png";
 import Game from "assets/game.png";
+import Image from "next/image";
 
 const eventsData = [
   {
@@ -140,10 +140,10 @@ export default function Events() {
           </Stack>
           <Flex flex={1} justify={"center"} align={"center"}>
             <Image
-              boxSize={{ base: "xs", md: "md" }}
-              objectFit="contain"
+              height="200"
+              width="500"
               alt="zigbee hero"
-              src={EventHeroImg.src}
+              src={EventHeroImg}
             />
           </Flex>
         </Stack>
