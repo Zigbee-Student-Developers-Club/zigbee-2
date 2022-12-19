@@ -1,43 +1,112 @@
 import {
   Center,
   Container,
+  Flex,
   Grid,
   GridItem,
   Heading,
   Image,
+  Stack,
   Text,
-} from '@chakra-ui/react';
-import EventCard from 'components/eventCard/EventCard';
-import Footer from 'components/footer/Footer';
-import EventDog from 'assets/events-dog.png';
-import Navbar from 'components/navbar/Navbar';
-import Salesforce from 'assets/salesforce.png';
-import Game from 'assets/game.png';
+} from "@chakra-ui/react";
+import EventCard from "components/eventCard/EventCard";
+import Footer from "components/footer/Footer";
+import EventHeroImg from "assets/event-img.png";
+import Navbar from "components/navbar/Navbar";
+import Salesforce from "assets/salesforce.png";
+import Game from "assets/game.png";
 
 const eventsData = [
   {
     id: 1,
-    date: '28th Nov 2022',
+    date: "28th Nov 2022",
     speaker: {
-      role: 'Tech Lead',
-      name: 'Debasis Jena',
-      company: 'Dubai Multi Commodities Center',
+      role: "Tech Lead",
+      name: "Debasis Jena",
+      company: "Dubai Multi Commodities Center",
     },
-    topic: 'Cloud Application Development with Salesforce Platform',
+    topic: "Cloud Application Development with Salesforce Platform",
     expired: true,
     thumbnail: Salesforce.src,
+    eventDate: "",
   },
   {
     id: 2,
-    date: '28th Nov 2022',
+    date: "28th Nov 2022",
     speaker: {
-      role: 'Lead game engineer',
-      name: 'John Doe',
-      company: 'Krafton Co.',
+      role: "Lead game engineer",
+      name: "John Doe",
+      company: "Krafton Co.",
     },
-    topic: 'Game Development with Unity 3D',
-    expired: true,
+    topic: "Game Development with Unity 3D",
+    expired: false,
     thumbnail: Game.src,
+    eventDate: "31 December 2022",
+  },
+  {
+    id: 1,
+    date: "28th Nov 2022",
+    speaker: {
+      role: "Tech Lead",
+      name: "Debasis Jena",
+      company: "Dubai Multi Commodities Center",
+    },
+    topic: "Cloud Application Development with Salesforce Platform",
+    expired: true,
+    thumbnail: Salesforce.src,
+    eventDate: "",
+  },
+  {
+    id: 2,
+    date: "28th Nov 2022",
+    speaker: {
+      role: "Lead game engineer",
+      name: "John Doe",
+      company: "Krafton Co.",
+    },
+    topic: "Game Development with Unity 3D",
+    expired: false,
+    thumbnail: Game.src,
+    eventDate: "31 December 2022",
+  },
+  {
+    id: 2,
+    date: "28th Nov 2022",
+    speaker: {
+      role: "Lead game engineer",
+      name: "John Doe",
+      company: "Krafton Co.",
+    },
+    topic: "Game Development with Unity 3D",
+    expired: false,
+    thumbnail: Game.src,
+    eventDate: "31 December 2022",
+  },
+  {
+    id: 1,
+    date: "28th Nov 2022",
+    speaker: {
+      role: "Tech Lead",
+      name: "Debasis Jena",
+      company: "Dubai Multi Commodities Center",
+    },
+    topic: "Cloud Application Development with Salesforce Platform",
+    expired: true,
+    thumbnail: Salesforce.src,
+    eventDate: "",
+  },
+  {
+    id: 2,
+    date: "28th Nov 2022",
+    speaker: {
+      role: "Lead game engineer",
+      name: "John Doe",
+      company: "Krafton Co.",
+    },
+    topic: "Game Development with Unity 3D",
+    expired: false,
+    thumbnail: Game.src,
+    eventDate: "31 December 2022",
   },
 ];
 
@@ -45,27 +114,55 @@ export default function Events() {
   return (
     <>
       <Navbar />
-      <Container maxW={'7xl'}>
-        <Heading textAlign={'center'} as='h1' size='2xl'>
-          Events
-        </Heading>
-        <Center>
-          <Image
-            boxSize='md'
-            objectFit={'contain'}
-            src={EventDog.src}
-            alt='happy dog for the event'
-          />
-        </Center>
-        <Text textAlign={'center'}>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit,
-          aliquam. Consectetur deleniti repudiandae reprehenderit. Quibusdam
-          animi adipisci expedita sint beatae?
-        </Text>
+      <Container maxW={"7xl"}>
+        <Stack
+          align={"center"}
+          spacing={{ base: 8, md: 10 }}
+          direction={{ base: "column", md: "row" }}
+          backgroundColor={"purple.100"}
+          borderRadius="2xl"
+          py="4"
+          px="14"
+        >
+          <Stack flex={1} spacing={{ base: 5, md: 10 }}>
+            <Heading
+              fontWeight="black"
+              fontSize={{ base: "3xl", sm: "4xl", lg: "6xl" }}
+              as="h2"
+            >
+              Events
+            </Heading>
+            <Text>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere,
+              blanditiis. Lorem ipsum dolor sit amet consectetur adipisicing
+              elit. Facere, blanditiis.
+            </Text>
+          </Stack>
+          <Flex flex={1} justify={"center"} align={"center"}>
+            <Image
+              boxSize={{ base: "xs", md: "md" }}
+              objectFit="contain"
+              alt="zigbee hero"
+              src={EventHeroImg.src}
+            />
+          </Flex>
+        </Stack>
 
-        <Grid templateColumns='repeat(4, 1fr)' gap={2} my={'2em'}>
+        <Grid
+          justifyContent={"center"}
+          alignContent="center"
+          gridAutoRows={"1fr"}
+          templateColumns={{
+            base: "repeat(1, 1fr)",
+            md: "repeat(2, 1fr)",
+            lg: "repeat(3, 1fr)",
+            xl: "repeat(4, 1fr)",
+          }}
+          gap={8}
+          my={"10"}
+        >
           {eventsData.map((data: any, i) => (
-            <GridItem key={i}>
+            <GridItem key={i} justifyContent={"center"} alignContent="center">
               <EventCard data={data} />
             </GridItem>
           ))}

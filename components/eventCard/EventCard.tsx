@@ -7,31 +7,42 @@ import {
   Image,
   Stack,
   Text,
-} from '@chakra-ui/react';
+} from "@chakra-ui/react";
+import { NextPage } from "next";
 
-export default function EventCard({ data }) {
-  console.log(data);
+interface EventDataProps {
+  data?: any;
+}
+
+const EventCard: NextPage<EventDataProps> = ({ data }) => {
+  // console.log(data);
   return (
-    <Card maxW='sm' m='2'>
+    <Card maxW="sm" height="100%" m="auto" background={"gray.100"}>
       <CardBody>
         <Image
           src={data.thumbnail}
-          alt='Green double couch with wooden legs'
-          borderRadius='lg'
+          alt="Green double couch with wooden legs"
+          borderRadius="lg"
         />
-        <Stack mt='4' spacing='1'>
-          <Heading size='md'>{data.speaker.name}</Heading>
-          <Text size='12px'>{data.date}</Text>
-          <Text size='12px'>{data.speaker.role}</Text>
-          <Text size='12px'>{data.speaker.company}</Text>
-          <Heading size='md'>{data.topic}</Heading>
+        <Stack mt="4" spacing="1">
+          <Heading size="md">{data.speaker.name}</Heading>
+          <Text size="12px">{data.date}</Text>
+          <Text size="12px">{data.speaker.role}</Text>
+          <Text size="12px">{data.speaker.company}</Text>
+          <Heading size="md">{data.topic}</Heading>
         </Stack>
       </CardBody>
-      <CardFooter justifyContent={'center'} p='2'>
-        <Button width={'100%'} colorScheme='red' variant='ghost'>
-          Event Expired
+      <CardFooter justifyContent={"center"} p="2">
+        <Button
+          width={"100%"}
+          colorScheme={data.expired ? "red" : "green"}
+          variant="ghost"
+        >
+          {data.expired ? "Event Expired" : data.eventDate}
         </Button>
       </CardFooter>
     </Card>
   );
-}
+};
+
+export default EventCard;

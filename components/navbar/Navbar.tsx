@@ -13,6 +13,7 @@ import {
   DrawerCloseButton,
   Spacer,
   Stack,
+  Container,
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { HamburgerIcon } from "@chakra-ui/icons";
@@ -25,52 +26,54 @@ function Navbar() {
   const btnRef = useRef();
 
   return (
-    <Flex p="4">
-      <Link href="/">
-        <Button
-          variant="ghost"
-          _hover={{ background: "blue.100" }}
-          colorScheme="blue"
-          color="black"
-          size={"lg"}
-        >
-          Zigbee
-        </Button>
-      </Link>
-      <Spacer />
-      {isMobile ? (
-        <>
-          <Button onClick={onOpen}>
-            <HamburgerIcon />
-          </Button>
-          <Drawer
-            isOpen={isOpen}
-            placement="left"
-            onClose={onClose}
-            finalFocusRef={btnRef.current}
-            size="full"
+    <Container maxW={"7xl"}>
+      <Flex py="4">
+        <Link href="/">
+          <Button
+            variant="ghost"
+            _hover={{ background: "blue.100" }}
+            colorScheme="blue"
+            color="black"
+            size={"lg"}
           >
-            <DrawerOverlay />
-            <DrawerContent>
-              <DrawerCloseButton />
-              <DrawerHeader>Zigbee</DrawerHeader>
+            Zigbee
+          </Button>
+        </Link>
+        <Spacer />
+        {isMobile ? (
+          <>
+            <Button onClick={onOpen}>
+              <HamburgerIcon />
+            </Button>
+            <Drawer
+              isOpen={isOpen}
+              placement="left"
+              onClose={onClose}
+              finalFocusRef={btnRef.current}
+              size="full"
+            >
+              <DrawerOverlay />
+              <DrawerContent>
+                <DrawerCloseButton />
+                <DrawerHeader>Zigbee</DrawerHeader>
 
-              <DrawerBody>
-                <NavItemsGroup />
-              </DrawerBody>
+                <DrawerBody>
+                  <NavItemsGroup />
+                </DrawerBody>
 
-              <DrawerFooter>
-                <Button variant="outline" mr={3} onClick={onClose}>
-                  Cancel
-                </Button>
-              </DrawerFooter>
-            </DrawerContent>
-          </Drawer>
-        </>
-      ) : (
-        <NavItemsGroup />
-      )}
-    </Flex>
+                <DrawerFooter>
+                  <Button variant="outline" mr={3} onClick={onClose}>
+                    Cancel
+                  </Button>
+                </DrawerFooter>
+              </DrawerContent>
+            </Drawer>
+          </>
+        ) : (
+          <NavItemsGroup />
+        )}
+      </Flex>
+    </Container>
   );
 }
 export default Navbar;
