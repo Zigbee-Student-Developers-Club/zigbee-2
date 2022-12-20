@@ -14,6 +14,14 @@ const navItemsData = [
     name: "Events",
     route: "/events",
   },
+  {
+    name: "Resources",
+    route: "/resources",
+  },
+  {
+    name: "Drafts",
+    route: "/Drafts",
+  },
 ];
 
 export default function NavItemsGroup() {

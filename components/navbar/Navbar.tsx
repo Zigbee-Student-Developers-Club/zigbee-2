@@ -13,6 +13,7 @@ import {
   Spacer,
   Stack,
   Container,
+  Text,
 } from '@chakra-ui/react';
 import Link from 'next/link';
 import { HamburgerIcon } from '@chakra-ui/icons';
@@ -26,19 +27,18 @@ function Navbar() {
 
   return (
     <Container maxW={'7xl'}>
-      <Flex py='4'>
+      <Flex py='4' alignItems={'center'}>
         <Link href='/'>
-          <Button
-            variant='ghost'
-            colorScheme='blue'
+          <Text
+            fontWeight={"black"}
             color='#5879f1'
-            size={'xl'}
             className='logo'
             py='8px'
             pr={'16px'}
+            fontSize="4xl"
           >
             Zigbee
-          </Button>
+          </Text>
         </Link>
         <Spacer />
         {isMobile ? (
