@@ -133,9 +133,7 @@ export default function Events() {
               Events
             </Heading>
             <Text>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere,
-              blanditiis. Lorem ipsum dolor sit amet consectetur adipisicing
-              elit. Facere, blanditiis.
+            Yes, we’ve been really busy and happening lately. Or maybe it’s just that we love making it to the headlines time and again. Nevertheless, here’s to take you on a quick tour on all our ventures in the recent past.
             </Text>
           </Stack>
           <Flex flex={1} justify={"center"} align={"center"}>

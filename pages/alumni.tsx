@@ -27,9 +27,7 @@ export default function Alumni() {
               Alumni
             </Heading>
             <Text>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere,
-              blanditiis. Lorem ipsum dolor sit amet consectetur adipisicing
-              elit. Facere, blanditiis.
+            They’re exemplary, they’re buoyant, they’re the high fliers, they’re the veterans. Here’s to help you learn more and connect with our respected alumni.
             </Text>
           </Stack>
           <Flex flex={1} justify={"center"} align={"center"}>

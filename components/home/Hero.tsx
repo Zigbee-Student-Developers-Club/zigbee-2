@@ -18,7 +18,7 @@ export default function Hero() {
           >
             Learn . Apply . Grow
           </Heading>
-          <Text>Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere, blanditiis. Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere, blanditiis.</Text>
+          <Text>Yes, if you love to code, you’re family already! Come join the cult and open yourself to a whole new world of technological bliss.</Text>
         </Stack>
         <Flex flex={1} justify={"center"} align={"center"}>
           <Image alt="zigbee hero" src={HomeHeroImg.src} />
