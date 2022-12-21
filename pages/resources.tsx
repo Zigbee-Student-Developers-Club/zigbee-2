@@ -5,6 +5,7 @@ import {
   GridItem,
   Heading,
   Image,
+  Select,
   Stack,
   Text,
 } from "@chakra-ui/react";
@@ -12,8 +13,45 @@ import Footer from "components/footer/Footer";
 import Navbar from "components/navbar/Navbar";
 import ResourceHeroImg from "assets/resource.png";
 import ResourceCard from "components/resource/ResourceCard";
+import { useState } from "react";
 
-export default function resources() {
+interface ResourceProp {
+  androidDev: Object;
+  backendDev: Object;
+  designing: Object;
+  frontendDev: Object;
+  fullStackDev: Object;
+  networking: Object;
+}
+
+const resourceData: ResourceProp = {
+  androidDev: [],
+  backendDev: [],
+  designing: [],
+  frontendDev: [],
+  fullStackDev: [],
+  networking: [
+    {
+      courseName: "Netacad",
+      author: "CISCO",
+      url: "https://www.netacad.com/courses/networking",
+    },
+    {
+      courseName: "Computer Networking Beginner to Pro (Hindi)",
+      author: "Shesh Chauhan",
+      url: "https://youtu.be/vGjH9leVXaM",
+    },
+  ],
+};
+
+
+export default function Resources() {
+  const [resourceOption, setResourceOption] = useState("");
+  // console.log(resourceData[resourceOption]);
+  type ObjectKey = keyof typeof resourceData;
+  const keyVar = "networking"
+  const myObjectKey = resourceOption as ObjectKey;
+  console.log(resourceData[myObjectKey]);
   return (
     <>
       <Navbar />
@@ -52,6 +90,21 @@ export default function resources() {
             />
           </Flex>
         </Stack>
+
+        <Select
+          variant="filled"
+          placeholder="Select your field"
+          my="4"
+          onChange={(e) => setResourceOption(e.target.value)}
+        >
+          <option value="androidDev">Android App Development</option>
+          <option value="backendDev">Backend Development</option>
+          <option value="designin">Designing</option>
+          <option value="frontendDev">Frontend Development</option>
+          <option value="fullstackDev">Full Stack Development</option>
+          <option value="networking">Networking</option>
+        </Select>
+
         <Grid
           justifyContent={"center"}
           alignContent="center"
