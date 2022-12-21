@@ -24,12 +24,49 @@ import {
 import Faculties from 'components/faculties/Faculties';
 import Footer from 'components/footer/Footer';
 import Navbar from 'components/navbar/Navbar';
+import AlumniHeroImg from 'assets/alumni-img.png';
+import Image from 'next/image';
 
 export default function Department() {
   return (
     <>
       <Navbar />
       <Container maxW={'7xl'}>
+        <Stack
+          align={'center'}
+          spacing={{ base: 8, md: 10 }}
+          direction={{ base: 'column', md: 'row' }}
+          backgroundColor={'blue.100'}
+          borderRadius='2xl'
+          py='4'
+          px='14'
+          mb='2em'
+        >
+          <Stack flex={1} spacing={{ base: 5, md: 10 }}>
+            <Heading
+              fontWeight='black'
+              fontSize={{ base: '3xl', sm: '4xl', lg: '6xl' }}
+              as='h2'
+            >
+              Meet Our Department
+            </Heading>
+            <Text>
+              They’re exemplary, they’re buoyant, they’re the high fliers,
+              they’re the veterans. Here’s to help you learn more and connect
+              with our respected alumni.
+            </Text>
+          </Stack>
+          <Flex flex={1} justify={'center'} align={'center'}>
+            <Image
+              // boxSize={{ base: "sm", md: "lg" }}
+              // objectFit="contain"
+              width='500'
+              height='200'
+              alt='zigbee hero'
+              src={AlumniHeroImg}
+            />
+          </Flex>
+        </Stack>
         <Stack
           align={'center'}
           direction={'column'}
