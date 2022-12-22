@@ -11,7 +11,7 @@ import {
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 import Logo from "components/logo/Logo";
-import { IconBrandFacebook, IconBrandTwitter,IconBrandInstagram } from "@tabler/icons";
+// import { IconBrandFacebook, IconBrandTwitter,IconBrandInstagram } from "@tabler/icons";
 
 export default function Footer() {
   return (
@@ -46,9 +46,9 @@ export default function Footer() {
         align={{ base: 'center', md: 'center' }}>
         <Text>© 2022 Zigbee Student Developer Group. All rights reserved</Text>
         <Stack direction={'row'} spacing={6}>
-          <IconBrandFacebook/>
+          {/* <IconBrandFacebook/>
           <IconBrandTwitter/>
-          <IconBrandInstagram/>
+          <IconBrandInstagram/> */}
         </Stack>
       </Container>
     </Box>
