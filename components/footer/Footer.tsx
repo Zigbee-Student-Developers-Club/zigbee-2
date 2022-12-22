@@ -16,7 +16,7 @@ import { IconBrandFacebook, IconBrandTwitter,IconBrandInstagram } from "@tabler/
 export default function Footer() {
   return (
     <Box
-    bg="gray.200"
+    bg="gray.50"
     color={"gray.700"}>
     <Container
       as={Stack}
@@ -33,7 +33,7 @@ export default function Footer() {
         <Link href={'#'}>Contact</Link>
       </Stack>
     </Container>
-    <Box border="1px" borderColor='gray.300'></Box>
+    <Box border="1px" borderColor='gray.100'></Box>
     <Box
       borderTopWidth={1}
       borderStyle={'solid'}
