@@ -19,6 +19,7 @@ import Link from 'next/link';
 import { HamburgerIcon } from '@chakra-ui/icons';
 import { useRef } from 'react';
 import NavItemsGroup from './NavItemsGroup';
+import Logo from 'components/logo/Logo';
 
 function Navbar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -29,16 +30,7 @@ function Navbar() {
     <Container maxW={'7xl'}>
       <Flex py='4' alignItems={'center'}>
         <Link href='/'>
-          <Text
-            fontWeight={"black"}
-            color='#5879f1'
-            className='logo'
-            py='8px'
-            pr={'16px'}
-            fontSize="4xl"
-          >
-            Zigbee
-          </Text>
+          <Logo />
         </Link>
         <Spacer />
         {isMobile ? (
