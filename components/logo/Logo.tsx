@@ -10,7 +10,7 @@ const Logo = () => {
       pr={'16px'}
       fontSize='4xl'
     >
-      Zigbee
+      &lt; Zigbee /&gt;
     </Text>
   );
 };
