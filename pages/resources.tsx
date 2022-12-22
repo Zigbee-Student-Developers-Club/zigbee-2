@@ -1,4 +1,5 @@
 import {
+  Center,
   Container,
   Flex,
   Grid,
@@ -14,44 +15,12 @@ import Navbar from "components/navbar/Navbar";
 import ResourceHeroImg from "assets/resource.png";
 import ResourceCard from "components/resource/ResourceCard";
 import { useState } from "react";
-
-interface ResourceProp {
-  androidDev: Object;
-  backendDev: Object;
-  designing: Object;
-  frontendDev: Object;
-  fullStackDev: Object;
-  networking: Object;
-}
-
-const resourceData: ResourceProp = {
-  androidDev: [],
-  backendDev: [],
-  designing: [],
-  frontendDev: [],
-  fullStackDev: [],
-  networking: [
-    {
-      courseName: "Netacad",
-      author: "CISCO",
-      url: "https://www.netacad.com/courses/networking",
-    },
-    {
-      courseName: "Computer Networking Beginner to Pro (Hindi)",
-      author: "Shesh Chauhan",
-      url: "https://youtu.be/vGjH9leVXaM",
-    },
-  ],
-};
-
+import Link from "next/link";
+import { ResourceData } from "../components/resource/resourceData";
 
 export default function Resources() {
-  const [resourceOption, setResourceOption] = useState("");
-  // console.log(resourceData[resourceOption]);
-  type ObjectKey = keyof typeof resourceData;
-  const keyVar = "networking"
-  const myObjectKey = resourceOption as ObjectKey;
-  console.log(resourceData[myObjectKey]);
+  const [resourceOption, setResourceOption] = useState("all");
+
   return (
     <>
       <Navbar />
@@ -74,9 +43,7 @@ export default function Resources() {
               Resource
             </Heading>
             <Text>
-              They’re exemplary, they’re buoyant, they’re the high fliers,
-              they’re the veterans. Here’s to help you learn more and connect
-              with our respected alumni.
+            Android App Development, Frontend/Backend Development, Designing, Networking, Full Stack, anything. Whatever is the colour of that feather on your hat, we&apos;ve got you covered. Choose your domain, and jump directly to the best resources available out there to help you upskill and sharpen your swords.
             </Text>
           </Stack>
           <Flex flex={1} justify={"center"} align={"center"}>
@@ -91,44 +58,61 @@ export default function Resources() {
           </Flex>
         </Stack>
 
-        <Select
-          variant="filled"
-          placeholder="Select your field"
-          my="4"
-          onChange={(e) => setResourceOption(e.target.value)}
-        >
-          <option value="androidDev">Android App Development</option>
-          <option value="backendDev">Backend Development</option>
-          <option value="designin">Designing</option>
-          <option value="frontendDev">Frontend Development</option>
-          <option value="fullstackDev">Full Stack Development</option>
-          <option value="networking">Networking</option>
-        </Select>
+        <Center>
+          <Stack
+            direction={{ base: "column", md: "row" }}
+            py="4"
+            align={"center"}
+          >
+            <Text whiteSpace={"nowrap"}>Choose your domain:</Text>
+
+            <Select
+              variant="filled"
+              my="4"
+              onChange={(e) => setResourceOption(e.target.value)}
+              width={"100%"}
+            >
+              <option value="all">All Resources</option>
+              <option value="androidDev">Android App Development</option>
+              <option value="backendDev">Backend Development</option>
+              <option value="designing">Designing</option>
+              <option value="frontendDev">Frontend Development</option>
+              <option value="fullstackDev">Full Stack Development</option>
+              <option value="networking">Networking</option>
+            </Select>
+          </Stack>
+        </Center>
 
         <Grid
           justifyContent={"center"}
           alignContent="center"
           gridAutoRows={"1fr"}
           templateColumns={{
-            base: "repeat(2, 1fr)",
-            lg: "repeat(4, 1fr)",
-            xl: "repeat(5, 1fr)",
+            base: "repeat(1, 1fr)",
+            sm: "repeat(2, 1fr)",
+            lg: "repeat(3, 1fr)",
+            xl: "repeat(4, 1fr)",
           }}
           gap={8}
           my={"10"}
         >
-          <GridItem>
-            <ResourceCard />
-          </GridItem>
-          <GridItem>
-            <ResourceCard />
-          </GridItem>
-          <GridItem>
-            <ResourceCard />
-          </GridItem>
-          <GridItem>
-            <ResourceCard />
-          </GridItem>
+          {resourceOption === "all"
+            ? ResourceData.map((item, index) => (
+                <GridItem key={index}>
+                  <Link href={item.url} target="_blank">
+                    <ResourceCard data={item} />
+                  </Link>
+                </GridItem>
+              ))
+            : ResourceData
+                .filter((course) => resourceOption === course.domain)
+                .map((item, index) => (
+                  <GridItem key={index}>
+                    <Link href={item.url}>
+                      <ResourceCard data={item} />
+                    </Link>
+                  </GridItem>
+                ))}
         </Grid>
       </Container>
       <Footer />

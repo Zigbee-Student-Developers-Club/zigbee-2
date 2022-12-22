@@ -12,14 +12,12 @@
   height: 100px;
   width: 100px;
   position: absolute;
-  /* opacity: 0.3; */
   z-index: -1;
   border-radius: 50%;
   transition: transform .3s;
 }
 
 .card:hover .blob {
-
   transform: scale(1.3);
 }
 
