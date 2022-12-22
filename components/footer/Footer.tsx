@@ -16,11 +16,13 @@ import { IconBrandFacebook, IconBrandTwitter,IconBrandInstagram } from "@tabler/
 export default function Footer() {
   return (
     <Box
-    bg="gray.50"
-    color={"gray.700"}>
+    bg="gray.100"
+    color={"gray.700"}
+    rounded="xl"
+    >
     <Container
       as={Stack}
-      maxW={'6xl'}
+      maxW={'7xl'}
       py={4}
       spacing={4}
       justify={'center'}
@@ -33,11 +35,7 @@ export default function Footer() {
         <Link href={'#'}>Contact</Link>
       </Stack>
     </Container>
-    <Box border="1px" borderColor='gray.100'></Box>
-    <Box
-      borderTopWidth={1}
-      borderStyle={'solid'}
-      borderColor={"gray.200"}>
+    <Box>
       <Container
         as={Stack}
         maxW={'6xl'}

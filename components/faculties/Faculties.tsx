@@ -160,7 +160,7 @@ const Faculties = () => {
           <Heading as='h4' size='lg' pr='2' pb='2' whiteSpace={'nowrap'}>
             Head of the Department
           </Heading>
-          <Divider border='4px' borderRadius={'2xl'} borderColor='purple.100' />
+          <Divider border='4px' borderRadius={'2xl'} borderColor='blue.100' />
         </Flex>
 
         <Heading
@@ -181,7 +181,7 @@ const Faculties = () => {
           <Heading as='h4' size='lg' pr='2' pb='2' whiteSpace={'nowrap'}>
             Professors
           </Heading>
-          <Divider border='4px' borderRadius={'2xl'} borderColor='purple.100' />
+          <Divider border='4px' borderRadius={'2xl'} borderColor='blue.100' />
         </Flex>
 
         {faculties.professors.map((professor, i) => (
@@ -239,7 +239,7 @@ const Faculties = () => {
           <Heading as='h4' size='lg' pr='2' pb='2' whiteSpace={'nowrap'}>
             Associate Professors
           </Heading>
-          <Divider border='4px' borderRadius={'2xl'} borderColor='purple.100' />
+          <Divider border='4px' borderRadius={'2xl'} borderColor='blue.100' />
         </Flex>
 
         {faculties.associate_professors.map((professor, i) => (
@@ -297,7 +297,7 @@ const Faculties = () => {
           <Heading as='h4' size='lg' pr='2' pb='2' whiteSpace={'nowrap'}>
             Assistant Professors
           </Heading>
-          <Divider border='4px' borderRadius={'2xl'} borderColor='purple.100' />
+          <Divider border='4px' borderRadius={'2xl'} borderColor='blue.100' />
         </Flex>
 
         {faculties.assistant_professors.map((professor, i) => (
@@ -360,7 +360,7 @@ const Faculties = () => {
           <Heading as='h4' size='lg' pr='2' pb='2' whiteSpace={'nowrap'}>
             Lecturers
           </Heading>
-          <Divider border='4px' borderRadius={'2xl'} borderColor='purple.100' />
+          <Divider border='4px' borderRadius={'2xl'} borderColor='blue.100' />
         </Flex>
 
         {faculties.lecturers.map((professor, i) => (

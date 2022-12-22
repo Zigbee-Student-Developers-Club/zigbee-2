@@ -43,12 +43,12 @@ export default function Resources() {
               Resource
             </Heading>
             <Text>
-            Android App Development, Frontend/Backend Development, Designing, Networking, Full Stack, anything. Whatever is the colour of that feather on your hat, we&apos;ve got you covered. Choose your domain, and jump directly to the best resources available out there to help you upskill and sharpen your swords.
+            Android App Development, Frontend, Backend Development, Designing, Networking, Full Stack, anything. Whatever is the colour of that feather on your hat, we&apos;ve got you covered. Choose your domain, and jump directly to the best resources available out there to help you upskill and sharpen your swords.
             </Text>
           </Stack>
           <Flex flex={1} justify={"center"} align={"center"}>
             <Image
-              boxSize={{ base: "sm", md: "lg" }}
+              boxSize={{ base: "sm", md: "sm" }}
               objectFit="contain"
               width="500"
               height="200"
