@@ -27,6 +27,8 @@ const blobColorArray = [
   "pink.200",
 ];
 
+const positionArr = ["1", "1.5", "2", "2.5", "3", "3.5"];
+
 const ResourceCard: NextPage<ResourceCardProps> = ({ data }) => {
   return (
     <Card
@@ -36,21 +38,37 @@ const ResourceCard: NextPage<ResourceCardProps> = ({ data }) => {
       bg={bgColorArray[Math.floor(Math.random() * bgColorArray.length)]}
       className={ResourceCardStyles.card}
     >
-      <div className={ResourceCardStyles.card_heading}>
+      <Box className={ResourceCardStyles.card_heading} height="100%">
         <Box
           bg={blobColorArray[Math.floor(Math.random() * bgColorArray.length)]}
           opacity={"0.3"}
           className={`${ResourceCardStyles.blob} ${ResourceCardStyles.blob1}`}
+          left={positionArr[Math.floor(Math.random() * positionArr.length)]}
+          borderTopRightRadius={Math.random() * 100}
+          borderTopLeftRadius={Math.random() * 100}
+          borderBottomRightRadius={Math.random() * 100}
+          borderBottomLeftRadius={Math.random() * 100}
         ></Box>
         <Box
           bg={blobColorArray[Math.floor(Math.random() * bgColorArray.length)]}
           opacity={"0.3"}
           className={`${ResourceCardStyles.blob} ${ResourceCardStyles.blob2}`}
+          left="40%"
+          bottom={"10"}
+          borderTopRightRadius={Math.random() * 100}
+          borderTopLeftRadius={Math.random() * 100}
+          borderBottomRightRadius={Math.random() * 100}
+          borderBottomLeftRadius={Math.random() * 100}
         ></Box>
         <Box
           bg={blobColorArray[Math.floor(Math.random() * bgColorArray.length)]}
           opacity={"0.3"}
           className={`${ResourceCardStyles.blob} ${ResourceCardStyles.blob3}`}
+          right={positionArr[Math.floor(Math.random() * positionArr.length)]}
+          borderTopRightRadius={Math.random() * 100}
+          borderTopLeftRadius={Math.random() * 100}
+          borderBottomRightRadius={Math.random() * 100}
+          borderBottomLeftRadius={Math.random() * 100}
         ></Box>
         <Heading
           fontWeight={"extrabold"}
@@ -59,10 +77,10 @@ const ResourceCard: NextPage<ResourceCardProps> = ({ data }) => {
           {data.courseName}
         </Heading>
         <Text px="4">with</Text>
-        <Text px="4" fontWeight={"black"}>
+        <Text px="4" fontWeight={"black"} fontSize="xl">
           {data.author}
         </Text>
-      </div>
+      </Box>
     </Card>
   );
 };
