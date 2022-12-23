@@ -41,7 +41,7 @@ export default function Footer() {
           align={{ base: "center", md: "center" }}
         >
           <Text>
-            © 2022 Zigbee Student Developer Group. All rights reserved
+            © 2022 Zigbee Student Developers' Club. All rights reserved
           </Text>
           <Stack direction={"row"} spacing={6}>
             <Link href="https://www.instagram.com/zigbee.cetb/" target="_blank">
