@@ -19,13 +19,8 @@ const navItemsData = [
     route: '/resources',
   },
   {
-<<<<<<< HEAD
     name: 'Drafts',
     route: '/drafts',
-=======
-    name: "Drafts",
-    route: "/drafts",
->>>>>>> 112469df19d8200b8c201c5559ecd6b9c3ce0cb2
   },
 ];
 
