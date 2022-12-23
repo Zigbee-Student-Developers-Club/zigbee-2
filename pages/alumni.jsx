@@ -150,16 +150,16 @@ const alumniData = {
       name: 'Nikhil Barik',
     },
   ],
-  2019: [],
-  2018: [],
   2017: [],
   2016: [],
   2015: [],
+  2018: [],
+  2019: [],
   2014: [],
   2013: [],
 };
 
-const Tabs = ({ selectedYear, setSelectedYear }: any) => {
+const Tabs = ({ selectedYear, setSelectedYear }) => {
   return (
     <Flex
       bg='gray.50'
@@ -203,7 +203,7 @@ const Tabs = ({ selectedYear, setSelectedYear }: any) => {
   );
 };
 
-const TabContent = ({ alums }: any) => {
+const TabContent = ({ alums }) => {
   console.log(alums);
   return (
     <Box minH={'30em'} bg='gray.50' p='1em' w='100%' borderRadius={'8px'}>
@@ -217,7 +217,7 @@ const TabContent = ({ alums }: any) => {
         }}
         gap={6}
       >
-        {alums.map((alum: any, i: any) => (
+        {alums.map((alum, i) => (
           <Alum key={i} alumData={alum} />
         ))}
       </Grid>
