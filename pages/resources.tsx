@@ -77,7 +77,6 @@ export default function Resources() {
               <option value="backendDev">Backend Development</option>
               <option value="designing">Designing</option>
               <option value="frontendDev">Frontend Development</option>
-              <option value="fullstackDev">Full Stack Development</option>
               <option value="networking">Networking</option>
             </Select>
           </Stack>

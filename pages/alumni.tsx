@@ -44,7 +44,7 @@ const alumniData = {
   ],
 };
 
-const Tabs = ({ selectedYear, setSelectedYear }) => {
+const Tabs = ({ selectedYear, setSelectedYear }:any) => {
   return (
     <VStack bg='gray.100' p='8px' borderRadius={'4px'} minW='120px'>
       {Object.keys(alumniData)
@@ -69,10 +69,10 @@ const Tabs = ({ selectedYear, setSelectedYear }) => {
   );
 };
 
-const TabContent = ({ alums }) => {
+const TabContent = ({ alums }:any) => {
   return (
     <Box minH={'30em'} bg='gray.200' p='2em' w='100%' borderRadius={'4px'}>
-      {alums.map((alum: any, i: Number) => (
+      {alums.map((alum: any, i: any) => (
         <div key={i}>{alum.name}</div>
       ))}
     </Box>
