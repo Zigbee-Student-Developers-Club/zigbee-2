@@ -1,7 +1,7 @@
 import { Avatar, GridItem, Heading, Stack } from '@chakra-ui/react';
-import { IconBrandLinkedin } from '@tabler/icons';
 import { NextPage } from 'next';
 import Link from 'next/link';
+import   {Linkedin} from "react-bootstrap-icons";
 
 interface AlumDataProp {
   alumData: {
@@ -21,7 +21,7 @@ const Alum: NextPage<AlumDataProp> = ({ alumData }) => {
         </Heading>
         {alumData.linkedin_url && (
           <Link href='/#' target='_blank'>
-            <IconBrandLinkedin />
+            <Linkedin size="20" />
           </Link>
         )}
       </Stack>
