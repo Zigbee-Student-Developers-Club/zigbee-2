@@ -1,7 +1,9 @@
 import {
   Box,
+  Button,
   Container,
   Flex,
+  Grid,
   Heading,
   Stack,
   Text,
@@ -12,6 +14,7 @@ import Navbar from 'components/navbar/Navbar';
 import AlumniHeroImg from 'assets/alumni-img.png';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import Alum from 'components/alumniCard/Alum';
 
 const alumniData = {
   2022: [
@@ -23,6 +26,111 @@ const alumniData = {
     },
     {
       name: 'Siddhant Kumar Sahu',
+    },
+    {
+      name: 'Abhijeet Garnayak',
+    },
+    {
+      name: 'Animesh Panda',
+    },
+    {
+      name: 'Ankita Sahoo',
+    },
+    {
+      name: 'Anisha Pati',
+    },
+    {
+      name: 'Arpan Prakash Sahoo',
+    },
+    {
+      name: 'Arup Dash',
+    },
+    {
+      name: 'Ashish Kumar Sahoo',
+    },
+    {
+      name: 'Basanta Bhola',
+    },
+    {
+      name: 'Biren Kumar Sahoo',
+    },
+    {
+      name: 'Biswajeet Biswal',
+    },
+    {
+      name: 'Chandrakant Jena',
+    },
+    {
+      name: 'Chinmaya Kumar Jena',
+    },
+    {
+      name: 'Chinmayee Sabar',
+    },
+    {
+      name: 'Deeptimayee Ojha',
+    },
+    {
+      name: 'Diptesh Choudhury',
+    },
+    {
+      name: 'Ipsita Patnaik',
+    },
+    {
+      name: 'Khagendra Rana',
+    },
+    {
+      name: 'Pariseema Routray',
+    },
+    {
+      name: 'Priyanka Mishra',
+    },
+    {
+      name: 'Priyanka Mittal',
+    },
+    {
+      name: 'Rajiv Kumar Jena',
+    },
+    {
+      name: 'Rakesh Ranjan Pradhan',
+    },
+    {
+      name: 'Sanjay Sahoo',
+    },
+    {
+      name: 'Shashwat Kumar Panigrahi',
+    },
+    {
+      name: 'Shibsundar Naik',
+    },
+    {
+      name: 'Siddhant Kumar Sahu',
+    },
+    {
+      name: 'Snehal Prusty',
+    },
+    {
+      name: 'Soumya Ranjan Jena',
+    },
+    {
+      name: 'Soumya Ranjan Sahoo',
+    },
+    {
+      name: 'Sourav Soreng',
+    },
+    {
+      name: 'Sudheer Kumar Swain',
+    },
+    {
+      name: 'Sumanta Das',
+    },
+    {
+      name: 'Sumit Behera',
+    },
+    {
+      name: 'Susmita Subudhi',
+    },
+    {
+      name: 'Vishal Sharma',
     },
   ],
   2021: [
@@ -42,39 +150,77 @@ const alumniData = {
       name: 'Nikhil Barik',
     },
   ],
+  2019: [],
+  2018: [],
+  2017: [],
+  2016: [],
+  2015: [],
+  2014: [],
+  2013: [],
 };
 
-const Tabs = ({ selectedYear, setSelectedYear }:any) => {
+const Tabs = ({ selectedYear, setSelectedYear }: any) => {
   return (
-    <VStack bg='gray.100' p='8px' borderRadius={'4px'} minW='120px'>
+    <Flex
+      bg='gray.50'
+      p='1em'
+      borderRadius={'4px'}
+      minW='140px'
+      position={'sticky'}
+      top='0'
+      zIndex={'999'}
+      direction={{
+        base: 'row',
+        md: 'column',
+      }}
+      gap='2'
+      flexWrap={'wrap'}
+    >
       {Object.keys(alumniData)
         .reverse()
         .map((alum, i) => (
-          <Box
+          <Button
             key={i}
-            bg={alum === selectedYear ? '#5879f1' : 'gray.200'}
+            bg={alum === selectedYear ? '#5879f1' : 'teal.100'}
             color={alum === selectedYear ? 'white' : 'initial'}
             py='8px'
             px='16px'
-            borderRadius={'4px'}
-            w='100%'
+            borderRadius={'8px'}
+            minW='fit-content'
             textAlign={'center'}
             onClick={() => setSelectedYear(alum)}
             cursor='pointer'
+            fontWeight={'bold'}
+            _hover={{
+              color: 'white',
+              bg: '#5879f1',
+            }}
           >
             {alum}
-          </Box>
+          </Button>
         ))}
-    </VStack>
+    </Flex>
   );
 };
 
-const TabContent = ({ alums }:any) => {
+const TabContent = ({ alums }: any) => {
+  console.log(alums);
   return (
-    <Box minH={'30em'} bg='gray.200' p='2em' w='100%' borderRadius={'4px'}>
-      {alums.map((alum: any, i: any) => (
-        <div key={i}>{alum.name}</div>
-      ))}
+    <Box minH={'30em'} bg='gray.50' p='1em' w='100%' borderRadius={'8px'}>
+      <Grid
+        templateColumns={{
+          base: 'repeat(1, 1fr)',
+          sm: 'repeat(2, 1fr)',
+          md: 'repeat(3, 1fr)',
+          lg: 'repeat(4, 1fr)',
+          xl: 'repeat(5, 1fr)',
+        }}
+        gap={6}
+      >
+        {alums.map((alum: any, i: any) => (
+          <Alum key={i} alumData={alum} />
+        ))}
+      </Grid>
     </Box>
   );
 };
@@ -128,9 +274,11 @@ export default function Alumni() {
           </Flex>
         </Stack>
 
-        <Flex my={'2em'}>
+        <Flex my={'2em'} gap='1em' direction={{ base: 'column', md: 'row' }}>
           <Tabs selectedYear={selectedYear} setSelectedYear={setSelectedYear} />
-          <TabContent alums={alumni} />
+          <TabContent
+            alums={alumni.sort((a, b) => a?.name.localeCompare(b?.name))}
+          />
         </Flex>
       </Container>
       <Footer />
