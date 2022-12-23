@@ -20,7 +20,7 @@ const navItemsData = [
   },
   {
     name: "Drafts",
-    route: "/Drafts",
+    route: "/drafts",
   },
 ];
 
