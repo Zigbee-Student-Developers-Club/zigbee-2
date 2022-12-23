@@ -14,11 +14,15 @@ const faqs = [
     title: 'What is Zigbee?',
     content: `Zigbee is a student run community run by OUTR MCA Students that focuses fundamentally on software development. Zigbee CETB subsists on the belief that everyone can create & innovate.`,
   },
+  {
+    title: 'How can I join Zigbee?',
+    content: `Anyone who loves to collaborate and build something amamzing can join Zigbee.`,
+  },
 ];
 
 export default function FAQ() {
   return (
-    <Container my='4' py='4' maxW={'7xl'}>
+    <Container my='4' py='4' maxW={'3xl'}>
       <Heading
         textAlign='center'
         fontWeight='black'
@@ -27,23 +31,25 @@ export default function FAQ() {
       >
         FAQs
       </Heading>
-      {faqs.map((faq, i) => (
-        <Accordion allowToggle key={i}>
-          <AccordionItem border='none'>
-            <h2>
-              <AccordionButton
-                _expanded={{ bg: 'teal.100', borderRadius: 'md' }}
-              >
-                <Box as='span' flex='1' textAlign='left'>
-                  {faq.title}
-                </Box>
-                <AccordionIcon />
-              </AccordionButton>
-            </h2>
-            <AccordionPanel pb={4}>{faq.content}</AccordionPanel>
-          </AccordionItem>
-        </Accordion>
-      ))}
+      <Box my='2em'>
+        {faqs.map((faq, i) => (
+          <Accordion allowToggle key={i}>
+            <AccordionItem border='none'>
+              <h2>
+                <AccordionButton
+                  _expanded={{ bg: 'teal.100', borderRadius: 'md' }}
+                >
+                  <Box as='span' flex='1' textAlign='left'>
+                    {faq.title}
+                  </Box>
+                  <AccordionIcon />
+                </AccordionButton>
+              </h2>
+              <AccordionPanel pb={4}>{faq.content}</AccordionPanel>
+            </AccordionItem>
+          </Accordion>
+        ))}
+      </Box>
     </Container>
   );
 }
