@@ -32,11 +32,11 @@ const eventsData = [
   },
   {
     id: 2,
-    date: "28th Nov 2022",
+    date: "31st Dec 2022",
     speaker: {
-      role: "Lead game engineer",
-      name: "John Doe",
-      company: "Krafton Co.",
+      role: "Game Developer",
+      name: "Mallik Ebadat",
+      company: "Amgo Games",
     },
     topic: "Game Development with Unity 3D",
     expired: false,
