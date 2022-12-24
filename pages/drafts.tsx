@@ -46,9 +46,7 @@ const drafts = () => {
               Drafts
             </Heading>
             <Text>
-              They’re exemplary, they’re buoyant, they’re the high fliers,
-              they’re the veterans. Here’s to help you learn more and connect
-              with our respected alumni.
+            Take a quick sneak peek into our Department&apos;s Annual Magazine, which embraces a plethora of humbly royal memories and celebrations of the various feats accomplished throughout the recent past.
             </Text>
           </Stack>
           <Flex flex={1} justify={"center"} align={"center"}>

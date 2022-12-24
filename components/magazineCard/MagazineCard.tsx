@@ -16,7 +16,7 @@ const MagazineCard: NextPage<EventDataProps> = ({ data }) => {
       m="auto"
       background={"gray.100"}
       borderRadius={"lg"}
-
+      shadow="md"
     >
       <Image
         borderRadius={"lg"}
