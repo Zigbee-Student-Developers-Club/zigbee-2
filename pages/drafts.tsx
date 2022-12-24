@@ -32,7 +32,7 @@ const drafts = () => {
           align={"center"}
           spacing={{ base: 8, md: 10 }}
           direction={{ base: "column", md: "row" }}
-          backgroundColor={"blue.100"}
+          backgroundColor={"red.100"}
           borderRadius="2xl"
           py="4"
           px="14"
