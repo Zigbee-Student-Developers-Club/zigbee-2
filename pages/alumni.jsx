@@ -136,9 +136,11 @@ const alumniData = {
   2023: [
     {
       name: 'Sudipta Behera',
+      position:'CR'
     },
     {
       name: 'Ashutosh Dash',
+      position:'PC'
     },
   ],
   2022: [
@@ -222,9 +224,11 @@ const alumniData = {
   },
   {
       name: "SUBHASHREE SATAPATHY",
+      position:'GR'
   },
   {
       name: "SURAJ KUMAR ROY",
+      position:'CR'
   },
   {
       name: "SWETA DASH",
@@ -261,6 +265,7 @@ const alumniData = {
     },
     {
       name:'JAGDISH SAHOO',
+      position:'PC'
     },
     {
       name:'GUNU MISHRA',
@@ -285,6 +290,7 @@ const alumniData = {
     },
     {
       name:'PADMAPANI PATRA',
+      position:'CR'
     },
     {
       name:'PIYUSH KUMAR SAHOO',
@@ -306,6 +312,7 @@ const alumniData = {
     },
     {
       name:'SMITARANI CHOUDHURY',
+      position:'GR'
     },
     {
       name:'SMRUTI RANJAN SAHOO',
