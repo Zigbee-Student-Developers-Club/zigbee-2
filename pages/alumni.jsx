@@ -140,193 +140,274 @@ const alumniData = {
     {
       name: 'Ashutosh Dash',
     },
+    {
+      name: 'BibhuDatta Nayak',
+    },
+    {
+      name: 'Biswanath Sahoo',
+    },
+    {
+      name: 'Debasis Rout',
+    },
+    {
+      name: 'Devi Prasad Mohanty',
+    },
+    {
+      name: 'Gyana Ranjan Sahoo',
+    },
+    {
+      name: 'Happy Sahu',
+    },
+    {
+      name: 'Jagannath Nayak',
+    },
+    {
+      name: 'Jyotshnarani Sahoo',
+    },
+    {
+      name: 'Lipsa Sethy',
+    },
+    {
+      name: 'Manoj Siknku',
+    },
+    {
+      name: 'Muskan Agrawal',
+    },
+    {
+      name: 'Nishikanta Parida',
+    },
+    {
+      name: 'Nitu Mohapatra',
+    },
+    {
+      name: 'Niyatee Rashmee Sahoo',
+    },
+    {
+      name: 'Rashmi Mahana',
+    },
+    {
+      name: 'Saloman Kanhar',
+    },
+    {
+      name: 'Shaktee Biswal',
+    },
+    {
+      name: 'Shubhasmita Kar',
+    },
+    {
+      name: 'Sisir Kumar Das',
+    },
+    {
+      name: 'Snehasis Mohanty',
+    },
+    {
+      name: 'Soumya Ranjan Mohanty',
+    },
+    {
+      name: 'Subarna Pani',
+    },
+    {
+      name: 'Suraj Kumar Behera',
+    },
+    {
+      name: 'Suraj Kumar Sahani',
+    },
+    {
+      name: 'Tanuj Tanmay Pattanaik',
+    },
+    {
+      name: 'Tofan Kumar Parida',
+    },
+    {
+      name: 'Swagatika Nayak',
+    },
   ],
   2022: [
     {
-    name: "DEBABRATA SAHOO",
-  },
-  {
-      name: "PINAKI PRIYADARSINI SWAIN",
-  },
-  {
-      name: "AFTAB AHMED",
-  },
-  {
-      name: "ANKITA KIRO",
-  },
-  {
-      name: "ANUPAM MOHANTY",
-  },
-  {
-      name: "ARPITA MAHARATHA",
-  },
-  {
-      name: "ASHISH KUMAR PANDA",
-  },
-  {
-      name: "BIBHUDENDU DWIBEDI",
-  },
-  {
-      name: "BISWAJIT SAHOO",
-  },
-  {
-      name: "CHINMAYA DAS",
-  },
-  {
-      name: "JAGABANDHU MOHANTA",
-  },
-  {
-      name: "JHARANA PERUA",
-  },
-  {
-      name: "JITENDRA BISOI",
-  },
-  {
-      name: "M V V S S NIKHIL",
-  },
-  {
-      name: "MILAN KUMAR NAYAK",
-  },
-  {
-      name: "N PRIYAJIT",
-  },
-  {
-      name: "NIKHIL KUMAR BARIK",
-  },
-  {
-      name: "PADMALAYA JENA",
-  },
-  {
-      name: "PRASANTA KUMAR MURMU",
-  },
-  {
-      name: "PREETAM DASH",
-  },
-  {
-      name: "R P HITESH BEHERA",
-  },
-  {
-      name: "SAMAR KUMAR DAS",
-  },
-  {
-      name: "SAROJ KUMAR PIROI",
-  },
-  {
-      name: "SASANKA SEKHAR SAHU",
-  },
-  {
-      name: "SOUMYASHREE PATRA",
-  },
-  {
-      name: "SUBHASHREE PANDA",
-  },
-  {
-      name: "SUBHASHREE SATAPATHY",
-  },
-  {
-      name: "SURAJ KUMAR ROY",
-  },
-  {
-      name: "SWETA DASH",
-  },
-  {
-      name: "UTTAM KUMAR DEY",
-  },
-    {
-      name:'A. MANISHA PATRO',
+      name: 'DEBABRATA SAHOO',
     },
     {
-      name:'ADITYA KUMAR PATRA',
+      name: 'PINAKI PRIYADARSINI SWAIN',
     },
     {
-      name:'ANWESHA SAHOO',
+      name: 'AFTAB AHMED',
     },
     {
-      name:'ARCHANA MISHRA',
+      name: 'ANKITA KIRO',
     },
     {
-      name:'ARUP KUMAR SUBUDHI',
+      name: 'ANUPAM MOHANTY',
     },
     {
-      name:'BHAGABATI PRASAD PANDA',
+      name: 'ARPITA MAHARATHA',
     },
     {
-      name:'BIJAY KUMAR NAIK',
+      name: 'ASHISH KUMAR PANDA',
     },
     {
-      name:'CHINMAYA BISWAL',
+      name: 'BIBHUDENDU DWIBEDI',
     },
     {
-      name:'GUNU MISHRA',
+      name: 'BISWAJIT SAHOO',
     },
     {
-      name:'JAGDISH SAHOO',
+      name: 'CHINMAYA DAS',
     },
     {
-      name:'GUNU MISHRA',
+      name: 'JAGABANDHU MOHANTA',
     },
     {
-      name:'LAKSHMI PRASAD DAS',
+      name: 'JHARANA PERUA',
     },
     {
-      name:'LALIT KUMAR SOREN',
+      name: 'JITENDRA BISOI',
     },
     {
-      name:'LIPIKA DALAI',
+      name: 'M V V S S NIKHIL',
     },
     {
-      name:'MOHAMMAD SIKANDAR',
+      name: 'MILAN KUMAR NAYAK',
     },
     {
-      name:'MRUTYUNJAY ROUT',
+      name: 'N PRIYAJIT',
     },
     {
-      name:'NISHANT SINGH RAJPUT',
+      name: 'NIKHIL KUMAR BARIK',
     },
     {
-      name:'PADMAPANI PATRA',
+      name: 'PADMALAYA JENA',
     },
     {
-      name:'PIYUSH KUMAR SAHOO',
+      name: 'PRASANTA KUMAR MURMU',
     },
     {
-      name:'PURNENDU SAHOO',
+      name: 'PREETAM DASH',
     },
     {
-      name:'RASHMI RANJAN SAHOO',
+      name: 'R P HITESH BEHERA',
     },
     {
-      name:'PURNENDU SAHOO',
+      name: 'SAMAR KUMAR DAS',
     },
     {
-      name:'ROSHNI RUPALI SATPATHY',
+      name: 'SAROJ KUMAR PIROI',
     },
     {
-      name:'RUPALI MISHRA',
+      name: 'SASANKA SEKHAR SAHU',
     },
     {
-      name:'SMITARANI CHOUDHURY',
+      name: 'SOUMYASHREE PATRA',
     },
     {
-      name:'SMRUTI RANJAN SAHOO',
+      name: 'SUBHASHREE PANDA',
     },
     {
-      name:'SUDHANSHU BARAL',
+      name: 'SUBHASHREE SATAPATHY',
     },
     {
-      name:'SUDHAMAYA SAHOO',
+      name: 'SURAJ KUMAR ROY',
     },
     {
-      name:'SUJIT KUMAR SAHOO',
+      name: 'SWETA DASH',
     },
     {
-      name:'SUSANT DASH',
+      name: 'UTTAM KUMAR DEY',
     },
     {
-      name:'VISHNU PRIYA',
+      name: 'A. MANISHA PATRO',
     },
     {
-      name:'YAJNASENEE PRIYADARSINEE',
+      name: 'ADITYA KUMAR PATRA',
+    },
+    {
+      name: 'ANWESHA SAHOO',
+    },
+    {
+      name: 'ARCHANA MISHRA',
+    },
+    {
+      name: 'ARUP KUMAR SUBUDHI',
+    },
+    {
+      name: 'BHAGABATI PRASAD PANDA',
+    },
+    {
+      name: 'BIJAY KUMAR NAIK',
+    },
+    {
+      name: 'CHINMAYA BISWAL',
+    },
+    {
+      name: 'GUNU MISHRA',
+    },
+    {
+      name: 'JAGDISH SAHOO',
+    },
+    {
+      name: 'GUNU MISHRA',
+    },
+    {
+      name: 'LAKSHMI PRASAD DAS',
+    },
+    {
+      name: 'LALIT KUMAR SOREN',
+    },
+    {
+      name: 'LIPIKA DALAI',
+    },
+    {
+      name: 'MOHAMMAD SIKANDAR',
+    },
+    {
+      name: 'MRUTYUNJAY ROUT',
+    },
+    {
+      name: 'NISHANT SINGH RAJPUT',
+    },
+    {
+      name: 'PADMAPANI PATRA',
+    },
+    {
+      name: 'PIYUSH KUMAR SAHOO',
+    },
+    {
+      name: 'PURNENDU SAHOO',
+    },
+    {
+      name: 'RASHMI RANJAN SAHOO',
+    },
+    {
+      name: 'PURNENDU SAHOO',
+    },
+    {
+      name: 'ROSHNI RUPALI SATPATHY',
+    },
+    {
+      name: 'RUPALI MISHRA',
+    },
+    {
+      name: 'SMITARANI CHOUDHURY',
+    },
+    {
+      name: 'SMRUTI RANJAN SAHOO',
+    },
+    {
+      name: 'SUDHANSHU BARAL',
+    },
+    {
+      name: 'SUDHAMAYA SAHOO',
+    },
+    {
+      name: 'SUJIT KUMAR SAHOO',
+    },
+    {
+      name: 'SUSANT DASH',
+    },
+    {
+      name: 'VISHNU PRIYA',
+    },
+    {
+      name: 'YAJNASENEE PRIYADARSINEE',
     },
   ],
   2021: [],
