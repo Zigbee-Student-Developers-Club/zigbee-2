@@ -174,6 +174,7 @@ const alumniData = {
     },
     {
       name: 'Muskan Agrawal',
+      position:'GR'
     },
     {
       name: 'Nishikanta Parida',
@@ -299,17 +300,15 @@ const alumniData = {
       name: 'SASANKA SEKHAR SAHU',
     },
     {
-      name:'SMITARANI CHOUDHURY',
-      position:'GR'
-    },
-    {
       name: 'SUBHASHREE PANDA',
     },
     {
       name: 'SUBHASHREE SATAPATHY',
+      position:'GR'
     },
     {
-      name: 'SURAJ KUMAR ROY',
+      name: 'SURAJ ROY',
+      position:'CR'
     },
     {
       name: 'SWETA DASH',
@@ -346,6 +345,7 @@ const alumniData = {
     },
     {
       name: 'JAGDISH SAHOO',
+      position:'PC'
     },
     {
       name: 'GUNU MISHRA',
@@ -391,6 +391,7 @@ const alumniData = {
     },
     {
       name: 'SMITARANI CHOUDHURY',
+      position:'GR'
     },
     {
       name: 'SMRUTI RANJAN SAHOO',
