@@ -17,7 +17,7 @@ import { useEffect, useState } from 'react';
 import Alum from 'components/alumniCard/Alum';
 
 const alumniData = {
-  2022: [
+  2024: [
     {
       name: 'Amar Kishore Senapati',
     },
@@ -133,7 +133,7 @@ const alumniData = {
       name: 'Vishal Sharma',
     },
   ],
-  2021: [
+  2023: [
     {
       name: 'Sudipta Behera',
     },
@@ -141,22 +141,201 @@ const alumniData = {
       name: 'Ashutosh Dash',
     },
   ],
-  2020: [
+  2022: [
     {
-      name: 'Suraj Roy',
+    name: "DEBABRATA SAHOO",
+  },
+  {
+      name: "PINAKI PRIYADARSINI SWAIN",
+  },
+  {
+      name: "AFTAB AHMED",
+  },
+  {
+      name: "ANKITA KIRO",
+  },
+  {
+      name: "ANUPAM MOHANTY",
+  },
+  {
+      name: "ARPITA MAHARATHA",
+  },
+  {
+      name: "ASHISH KUMAR PANDA",
+  },
+  {
+      name: "BIBHUDENDU DWIBEDI",
+  },
+  {
+      name: "BISWAJIT SAHOO",
+  },
+  {
+      name: "CHINMAYA DAS",
+  },
+  {
+      name: "JAGABANDHU MOHANTA",
+  },
+  {
+      name: "JHARANA PERUA",
+  },
+  {
+      name: "JITENDRA BISOI",
+  },
+  {
+      name: "M V V S S NIKHIL",
+  },
+  {
+      name: "MILAN KUMAR NAYAK",
+  },
+  {
+      name: "N PRIYAJIT",
+  },
+  {
+      name: "NIKHIL KUMAR BARIK",
+  },
+  {
+      name: "PADMALAYA JENA",
+  },
+  {
+      name: "PRASANTA KUMAR MURMU",
+  },
+  {
+      name: "PREETAM DASH",
+  },
+  {
+      name: "R P HITESH BEHERA",
+  },
+  {
+      name: "SAMAR KUMAR DAS",
+  },
+  {
+      name: "SAROJ KUMAR PIROI",
+  },
+  {
+      name: "SASANKA SEKHAR SAHU",
+  },
+  {
+      name: "SOUMYASHREE PATRA",
+  },
+  {
+      name: "SUBHASHREE PANDA",
+  },
+  {
+      name: "SUBHASHREE SATAPATHY",
+  },
+  {
+      name: "SURAJ KUMAR ROY",
+  },
+  {
+      name: "SWETA DASH",
+  },
+  {
+      name: "UTTAM KUMAR DEY",
+  },
+    {
+      name:'A. MANISHA PATRO',
     },
-
     {
-      name: 'Nikhil Barik',
+      name:'ADITYA KUMAR PATRA',
+    },
+    {
+      name:'ANWESHA SAHOO',
+    },
+    {
+      name:'ARCHANA MISHRA',
+    },
+    {
+      name:'ARUP KUMAR SUBUDHI',
+    },
+    {
+      name:'BHAGABATI PRASAD PANDA',
+    },
+    {
+      name:'BIJAY KUMAR NAIK',
+    },
+    {
+      name:'CHINMAYA BISWAL',
+    },
+    {
+      name:'GUNU MISHRA',
+    },
+    {
+      name:'JAGDISH SAHOO',
+    },
+    {
+      name:'GUNU MISHRA',
+    },
+    {
+      name:'LAKSHMI PRASAD DAS',
+    },
+    {
+      name:'LALIT KUMAR SOREN',
+    },
+    {
+      name:'LIPIKA DALAI',
+    },
+    {
+      name:'MOHAMMAD SIKANDAR',
+    },
+    {
+      name:'MRUTYUNJAY ROUT',
+    },
+    {
+      name:'NISHANT SINGH RAJPUT',
+    },
+    {
+      name:'PADMAPANI PATRA',
+    },
+    {
+      name:'PIYUSH KUMAR SAHOO',
+    },
+    {
+      name:'PURNENDU SAHOO',
+    },
+    {
+      name:'RASHMI RANJAN SAHOO',
+    },
+    {
+      name:'PURNENDU SAHOO',
+    },
+    {
+      name:'ROSHNI RUPALI SATPATHY',
+    },
+    {
+      name:'RUPALI MISHRA',
+    },
+    {
+      name:'SMITARANI CHOUDHURY',
+    },
+    {
+      name:'SMRUTI RANJAN SAHOO',
+    },
+    {
+      name:'SUDHANSHU BARAL',
+    },
+    {
+      name:'SUDHAMAYA SAHOO',
+    },
+    {
+      name:'SUJIT KUMAR SAHOO',
+    },
+    {
+      name:'SUSANT DASH',
+    },
+    {
+      name:'VISHNU PRIYA',
+    },
+    {
+      name:'YAJNASENEE PRIYADARSINEE',
     },
   ],
+  2021: [],
+  2020: [],
+  2019: [],
+  2018: [],
   2017: [],
   2016: [],
   2015: [],
-  2018: [],
-  2019: [],
-  2014: [],
-  2013: [],
 };
 
 const Tabs = ({ selectedYear, setSelectedYear }) => {
