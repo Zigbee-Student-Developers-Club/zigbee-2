@@ -143,7 +143,7 @@ const alumniData = {
   ],
   2020: [
     {
-      name: 'Suroj Roy',
+      name: 'Suraj Roy',
     },
 
     {
