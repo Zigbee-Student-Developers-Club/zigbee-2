@@ -1,10 +1,12 @@
 import { Box, Center, Container, Heading, Image, Stack, Text } from "@chakra-ui/react";
 import Footer from "components/footer/Footer";
 import PageNotFoundImg from "assets/page-not-found.png"
+import Navbar from "components/navbar/Navbar";
 
 export default function Error404() {
   return (
     <Box height="100vh">
+      <Navbar/>
       <Stack align={"center"}
         spacing={"2"} direction="column">
         <Heading as="h2" size={"2xl"}>Congratulations!!!</Heading>

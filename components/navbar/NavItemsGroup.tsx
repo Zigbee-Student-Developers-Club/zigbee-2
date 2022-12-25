@@ -11,8 +11,8 @@ const navItemsData = [
     route: '/alumni',
   },
   {
-    name: 'Events',
-    route: '/events',
+    name: 'Alumni Connect',
+    route: '/alumniConnect',
   },
   {
     name: 'Resources',
@@ -22,6 +22,7 @@ const navItemsData = [
     name: 'Drafts',
     route: '/drafts',
   },
+
 ];
 
 export default function NavItemsGroup() {

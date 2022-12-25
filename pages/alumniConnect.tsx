@@ -45,7 +45,7 @@ const eventsData = [
   },
 ];
 
-export default function Events() {
+export default function AlumniConnect() {
   return (
     <>
       <Navbar />

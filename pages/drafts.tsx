@@ -46,7 +46,10 @@ const drafts = () => {
               Drafts
             </Heading>
             <Text>
-            Take a quick sneak peek into our Department&apos;s Annual Magazine, which embraces a plethora of humbly royal memories and celebrations of the various feats accomplished throughout the recent past.
+              Take a quick sneak peek into our Department&apos;s Annual
+              Magazine, which embraces a plethora of humbly royal memories and
+              celebrations of the various feats accomplished throughout
+              the recent past.
             </Text>
           </Stack>
           <Flex flex={1} justify={"center"} align={"center"}>
@@ -62,6 +65,15 @@ const drafts = () => {
         </Stack>
         {/* magazine */}
 
+        <Heading
+          fontWeight="bold"
+          textAlign={"center"}
+          fontSize={{ base: "xl", sm: "2xl", lg: "3xl" }}
+          as="h2"
+          my="4"
+        >
+          Magazine
+        </Heading>
         <Grid
           justifyContent={"center"}
           alignContent="center"
@@ -83,6 +95,18 @@ const drafts = () => {
             </GridItem>
           ))}
         </Grid>
+{/* 
+        <Heading
+          fontWeight="bold"
+          textAlign={"center"}
+          fontSize={{ base: "xl", sm: "2xl", lg: "3xl" }}
+          as="h2"
+          my="4"
+        >
+          Blog
+        </Heading> */}
+
+        
       </Container>
       <Footer />
     </>
