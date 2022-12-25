@@ -1,7 +1,6 @@
 import {
   Avatar,
   Badge,
-  Box,
   Flex,
   GridItem,
   Heading,
@@ -22,7 +21,7 @@ interface AlumDataProp {
 
 const Alum: NextPage<AlumDataProp> = ({ alumData }) => {
   return (
-    <GridItem p="1em" bg={"teal.100"} borderRadius="8px" h="100%">
+    <GridItem p="1em" bg={"teal.100"} borderRadius="8px" h="100%" textTransform='capitalize'>
       <Stack align={"center"} h="100%">
         <Flex justifyContent={"flex-end"} width={"100%"}>
           {(alumData.position == "PC"||"CR"||"GR") ? (
@@ -35,7 +34,7 @@ const Alum: NextPage<AlumDataProp> = ({ alumData }) => {
         </Flex>
         <Avatar src="https://bit.ly/broken-link" />
         <Heading textAlign={"center"} size={"sm"}>
-          {alumData.name}
+        {alumData.name.toLowerCase()}
         </Heading>
         {alumData.linkedin_url && (
           <Link href="/#" target="_blank">
