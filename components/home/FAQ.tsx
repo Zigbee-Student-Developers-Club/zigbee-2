@@ -16,7 +16,7 @@ const faqs = [
   },
   {
     title: 'How can I join Zigbee?',
-    content: `Anyone who loves to collaborate and build something amamzing can join Zigbee.`,
+    content: `Anyone who loves to collaborate and build something amazing can join Zigbee.`,
   },
 ];
 

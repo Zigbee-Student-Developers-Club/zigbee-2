@@ -40,7 +40,7 @@ export default function Resources() {
               fontSize={{ base: "3xl", sm: "4xl", lg: "6xl" }}
               as="h2"
             >
-              Resource
+              Resources
             </Heading>
             <Text>
             Android App Development, Frontend, Backend Development, Designing, Networking, Full Stack, anything. Whatever is the colour of that feather on your hat, we&apos;ve got you covered. Choose your domain, and jump directly to the best resources available out there to help you upskill and sharpen your swords.
