@@ -77,7 +77,7 @@ export default function AlumniConnect() {
           <Flex flex={1} justify={"center"} align={"center"}>
             <Image
               height="200"
-              width="500"
+              width="400"
               alt="zigbee hero"
               src={EventHeroImg}
             />

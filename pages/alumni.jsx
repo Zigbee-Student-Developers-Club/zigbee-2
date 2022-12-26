@@ -529,8 +529,6 @@ export default function Alumni() {
           </Stack>
           <Flex flex={1} justify={'center'} align={'center'}>
             <Image
-              // boxSize={{ base: "sm", md: "lg" }}
-              // objectFit="contain"
               width='500'
               height='200'
               alt='zigbee hero'

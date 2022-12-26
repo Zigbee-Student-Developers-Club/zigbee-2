@@ -1,29 +1,37 @@
 import {
+  Box,
   Button,
   Card,
   CardBody,
   CardFooter,
+  Flex,
   Heading,
-  Image,
   Stack,
   Text,
 } from "@chakra-ui/react";
 import { NextPage } from "next";
+import Image from "next/image";
 
 interface EventDataProps {
   data?: any;
 }
 
 const EventCard: NextPage<EventDataProps> = ({ data }) => {
+  console.log(data.thumbnail);
   // console.log(data);
   return (
     <Card maxW="sm" height="100%" m="auto" background={"gray.100"}>
       <CardBody>
-        <Image
-          src={data.thumbnail}
-          alt="Green double couch with wooden legs"
-          borderRadius="lg"
-        />
+        <Flex justifyContent={"center"}>
+          <Box overflow={"hidden"} rounded="lg">
+            <Image
+              src={data.thumbnail}
+              alt={data.topic}
+              width="300"
+              height="250"
+            />
+          </Box>
+        </Flex>
         <Stack mt="4" spacing="1">
           <Heading size="md">{data.speaker.name}</Heading>
           <Text size="12px">{data.date}</Text>

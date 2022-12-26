@@ -5,7 +5,6 @@ import {
   Grid,
   GridItem,
   Heading,
-  Image,
   Select,
   Stack,
   Text,
@@ -17,6 +16,7 @@ import ResourceCard from "components/resource/ResourceCard";
 import { useState } from "react";
 import Link from "next/link";
 import { ResourceData } from "../components/resource/resourceData";
+import Image from "next/image";
 
 export default function Resources() {
   const [resourceOption, setResourceOption] = useState("all");
@@ -48,9 +48,7 @@ export default function Resources() {
           </Stack>
           <Flex flex={1} justify={"center"} align={"center"}>
             <Image
-              boxSize={{ base: "sm", md: "sm" }}
-              objectFit="contain"
-              width="500"
+              width="350"
               height="200"
               alt="zigbee hero"
               src={ResourceHeroImg.src}

@@ -1,5 +1,6 @@
-import { Image, Heading, Flex, Container, Stack, Text } from "@chakra-ui/react";
+import { Heading, Flex, Container, Stack, Text } from "@chakra-ui/react";
 import InfinityImg from "assets/infinity.png";
+import Image from "next/image";
 
 export default function Infinity() {
   return (
@@ -17,10 +18,9 @@ export default function Infinity() {
       >
         <Flex flex={1} justify={"center"} align={"center"}>
           <Image
-            boxSize={{ base: "xs", md: "md" }}
-            objectFit="contain"
             alt="zigbee hero"
             src={InfinityImg.src}
+            width="400" height="200" 
           />
         </Flex>
         <Stack flex={1} spacing={{ base: 5, md: 10 }}>

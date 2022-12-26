@@ -4,7 +4,6 @@ import {
   Heading,
   Stack,
   Text,
-  Image,
   Grid,
   GridItem,
 } from "@chakra-ui/react";
@@ -14,6 +13,7 @@ import DraftsHeroImg from "assets/drafts-hero.png";
 import ReflectionBanner from "assets/magazine/reflectionHero.png";
 import MagazineCard from "components/magazineCard/MagazineCard";
 import Link from "next/link";
+import Image from "next/image";
 
 const magazineData = [
   {
@@ -54,9 +54,7 @@ const drafts = () => {
           </Stack>
           <Flex flex={1} justify={"center"} align={"center"}>
             <Image
-              boxSize={{ base: "sm", md: "sm" }}
-              objectFit="contain"
-              width="500"
+              width="300"
               height="200"
               alt="zigbee hero"
               src={DraftsHeroImg.src}

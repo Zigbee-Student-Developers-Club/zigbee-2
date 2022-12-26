@@ -1,5 +1,6 @@
-import { Image, Heading, Flex, Container, Stack, Text } from "@chakra-ui/react";
+import {Heading, Flex, Container, Stack, Text } from "@chakra-ui/react";
 import OverTheCoffeeImg from "assets/over-the-coffee.png";
+import Image from "next/image";
 
 export default function OverTheCoffee() {
   return (
@@ -23,10 +24,9 @@ export default function OverTheCoffee() {
         </Stack>
         <Flex flex={1} justify={"center"} align={"center"}>
           <Image
-            boxSize={{ base: "xs", md: "md" }}
-            objectFit="contain"
             alt="zigbee hero"
             src={OverTheCoffeeImg.src}
+            width="400" height="200" 
           />
         </Flex>
       </Stack>
