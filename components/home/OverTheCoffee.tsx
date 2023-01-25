@@ -19,7 +19,7 @@ export default function OverTheCoffee() {
             A lot can happen over coffee, right?
           </Heading>
           <Text>
-          One fine winter afternoon, a clump of mates casually chilling over some delicious coffee, random (but usually funny) discussions, and that’s how Zigbee OUTR came into being! Originally established as a college’s development club for the Department of Computer Science and Applications, we’ve had a very humble beginning, with the first team consisting of only about ten members. 
+          One fine winter afternoon, a clump of mates casually chilling over some delicious coffee, random (but mostly funny) discussions, and that’s how Zigbee OUTR came into being! Originally established as a college’s development club for the Department of Computer Science and Applications, we’ve had a very humble beginning, with the first team consisting of only about ten members. 
           </Text>
         </Stack>
         <Flex flex={1} justify={"center"} align={"center"}>

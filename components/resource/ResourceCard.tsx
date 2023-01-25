@@ -44,10 +44,10 @@ const ResourceCard: NextPage<ResourceCardProps> = ({ data }) => {
           opacity={"0.3"}
           className={`${ResourceCardStyles.blob} ${ResourceCardStyles.blob1}`}
           left={positionArr[Math.floor(Math.random() * positionArr.length)]}
-          borderTopRightRadius={Math.random() * 100/Math.random() * 100}
-          borderTopLeftRadius={Math.random() * 100/Math.random() * 100}
-          borderBottomRightRadius={Math.random() * 100/Math.random() * 100}
-          borderBottomLeftRadius={Math.random() * 100/Math.random() * 100}
+          borderTopRightRadius={Math.floor(Math.random() * 89) + 10}
+          borderTopLeftRadius={Math.floor(Math.random() * 89) + 10}
+          borderBottomRightRadius={Math.floor(Math.random() * 89) + 10}
+          borderBottomLeftRadius={Math.floor(Math.random() * 89) + 10}
         ></Box>
         <Box
           bg={blobColorArray[Math.floor(Math.random() * bgColorArray.length)]}
@@ -55,20 +55,20 @@ const ResourceCard: NextPage<ResourceCardProps> = ({ data }) => {
           className={`${ResourceCardStyles.blob} ${ResourceCardStyles.blob2}`}
           left="40%"
           bottom={"10"}
-          borderTopRightRadius={Math.random() * 100/Math.random() * 100}
-          borderTopLeftRadius={Math.random() * 100/Math.random() * 100}
-          borderBottomRightRadius={Math.random() * 100/Math.random() * 100}
-          borderBottomLeftRadius={Math.random() * 100/Math.random() * 100}
+          borderTopRightRadius={Math.floor(Math.random() * 89) + 10}
+          borderTopLeftRadius={Math.floor(Math.random() * 89) + 10}
+          borderBottomRightRadius={Math.floor(Math.random() * 89) + 10}
+          borderBottomLeftRadius={Math.floor(Math.random() * 89) + 10}
         ></Box>
         <Box
           bg={blobColorArray[Math.floor(Math.random() * bgColorArray.length)]}
           opacity={"0.3"}
           className={`${ResourceCardStyles.blob} ${ResourceCardStyles.blob3}`}
           right={positionArr[Math.floor(Math.random() * positionArr.length)]}
-          borderTopRightRadius={Math.random() * 100/Math.random() * 100}
-          borderTopLeftRadius={Math.random() * 100/Math.random() * 100}
-          borderBottomRightRadius={Math.random() * 100/Math.random() * 100}
-          borderBottomLeftRadius={Math.random() * 100/Math.random() * 100}
+          borderTopRightRadius={Math.floor(Math.random() * 89) + 10}
+          borderTopLeftRadius={Math.floor(Math.random() * 89) + 10}
+          borderBottomRightRadius={Math.floor(Math.random() * 89) + 10}
+          borderBottomLeftRadius={Math.floor(Math.random() * 89) + 10}
         ></Box>
         <Heading
           fontWeight={"extrabold"}
