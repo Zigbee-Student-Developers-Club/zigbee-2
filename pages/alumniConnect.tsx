@@ -14,24 +14,20 @@ import EventHeroImg from 'assets/event-img.png';
 import Navbar from 'components/navbar/Navbar';
 import Salesforce from 'assets/salesforce.png';
 import Game from 'assets/game.png';
+import ZairzaAndZigbee from 'assets/zairzaandzigbee.png';
 import Image from 'next/image';
+import { nanoid } from 'nanoid';
 
 const eventsData = [
   {
-    id: 1,
-    date: '28th Nov 2022',
-    batch: '2011',
-    speaker: {
-      role: 'Tech Lead',
-      name: 'Debasis Jena',
-      company: 'Dubai Multi Commodities Center',
-    },
-    topic: 'Cloud Application Development with Salesforce Platform',
+    id: nanoid(),
+    date: '16th July 2023',
+    topic: 'Alumini Connect',
     expired: true,
-    thumbnail: Salesforce.src,
+    thumbnail: ZairzaAndZigbee.src,
   },
   {
-    id: 2,
+    id: nanoid(),
     date: '24th Jan 2023',
     batch: '2020',
     speaker: {
@@ -42,6 +38,19 @@ const eventsData = [
     topic: 'Game Development with Unity 3D',
     expired: true,
     thumbnail: Game.src,
+  },
+  {
+    id: nanoid(),
+    date: '28th Nov 2022',
+    batch: '2011',
+    speaker: {
+      role: 'Tech Lead',
+      name: 'Debasis Jena',
+      company: 'Dubai Multi Commodities Center',
+    },
+    topic: 'Cloud Application Development with Salesforce Platform',
+    expired: true,
+    thumbnail: Salesforce.src,
   },
 ];
 

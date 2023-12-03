@@ -36,10 +36,14 @@ const EventCard: NextPage<EventDataProps> = ({ data }) => {
           <Heading size='md' mb={'1'}>
             {data.topic}
           </Heading>
-          <Heading size='sm'>{data.speaker.name}</Heading>
-          <Text size='xs'>
-            {data.speaker.role}, {data.speaker.company}
-          </Text>
+          {data.speaker && (
+            <>
+              <Heading size='sm'>{data.speaker.name}</Heading>
+              <Text size='xs'>
+                {data.speaker.role}, {data.speaker.company}
+              </Text>
+            </>
+          )}
           <Text size='xs' fontWeight={'bold'}>
             {data.date}
           </Text>

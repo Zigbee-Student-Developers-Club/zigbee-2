@@ -22,7 +22,7 @@ const faqs = [
 
 export default function FAQ() {
   return (
-    <Container my='4' py='4' maxW={'3xl'}>
+    <Container my={16} py='4' maxW={'3xl'}>
       <Heading
         textAlign='center'
         fontWeight='black'

@@ -1,33 +1,34 @@
-import { Heading, Flex, Container, Stack, Text } from "@chakra-ui/react";
-import InfinityImg from "assets/infinity.png";
-import Image from "next/image";
+import { Heading, Flex, Container, Stack, Text } from '@chakra-ui/react';
+import InfinityImg from 'assets/infinity.png';
+import Image from 'next/image';
 
 export default function Infinity() {
   return (
     <Container
-      maxW={"7xl"}
-      backgroundColor={"purple.100"}
-      borderRadius="2xl"
-      my="4"
-      py="4"
+      maxW={'7xl'}
+      backgroundColor={'purple.100'}
+      borderRadius='2xl'
+      my={16}
+      py={16}
     >
       <Stack
-        align={"center"}
+        align={'center'}
         spacing={{ base: 8, md: 10 }}
-        direction={{ base: "column", md: "row" }}
+        direction={{ base: 'column', md: 'row' }}
       >
-        <Flex flex={1} justify={"center"} align={"center"}>
+        <Flex flex={1} justify={'center'} align={'center'}>
           <Image
-            alt="zigbee hero"
+            alt='zigbee hero'
             src={InfinityImg.src}
-            width="400" height="200" 
+            width='400'
+            height='200'
           />
         </Flex>
         <Stack flex={1} spacing={{ base: 5, md: 10 }}>
           <Heading
-            fontWeight="black"
-            fontSize={{ base: "3xl", sm: "4xl", lg: "6xl" }}
-            as="h2"
+            fontWeight='black'
+            fontSize={{ base: '3xl', sm: '4xl', lg: '6xl' }}
+            as='h2'
           >
             To Infinity and Beyond!
           </Heading>

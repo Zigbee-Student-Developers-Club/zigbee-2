@@ -26,7 +26,7 @@ export default function App({ Component, pageProps }: AppProps) {
           content="Zigbee Student Developers&apos; Club, tech club, odisha tech club, odisha college club, college club, MCA club, mca club, 2023, club, tech conference, outr, odisha university of technology and research, cet, college of engineering and technology"
         />
         <meta name="robots" content="index, follow" />
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="language" content="English" />
         <meta name="revisit-after" content="2 days" />
         <meta
