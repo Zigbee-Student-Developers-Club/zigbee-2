@@ -22,34 +22,36 @@ const faqs = [
 
 export default function FAQ() {
   return (
-    <Container my={16} py='4' maxW={'3xl'}>
-      <Heading
-        textAlign='center'
-        fontWeight='black'
-        fontSize={{ base: '3xl', sm: '4xl', lg: '6xl' }}
-        as='h2'
-      >
-        FAQs
-      </Heading>
-      <Box my='2em'>
-        {faqs.map((faq, i) => (
-          <Accordion allowToggle key={i}>
-            <AccordionItem border='none'>
-              <h2>
-                <AccordionButton
-                  _expanded={{ bg: 'teal.100', borderRadius: 'md' }}
-                >
-                  <Box as='span' flex='1' textAlign='left'>
-                    {faq.title}
-                  </Box>
-                  <AccordionIcon />
-                </AccordionButton>
-              </h2>
-              <AccordionPanel pb={4}>{faq.content}</AccordionPanel>
-            </AccordionItem>
-          </Accordion>
-        ))}
-      </Box>
-    </Container>
+    <div>
+      <Container my={16} py='4' maxW={'3xl'}>
+        <Heading
+          textAlign='center'
+          fontWeight='black'
+          fontSize={{ base: '3xl', sm: '4xl', lg: '6xl' }}
+          as='h2'
+        >
+          FAQs
+        </Heading>
+        <Box my='2em'>
+          {faqs.map((faq, i) => (
+            <Accordion allowToggle key={i}>
+              <AccordionItem border='none'>
+                <h2>
+                  <AccordionButton
+                    _expanded={{ bg: 'teal.100', borderRadius: 'md' }}
+                  >
+                    <Box as='span' flex='1' textAlign='left'>
+                      {faq.title}
+                    </Box>
+                    <AccordionIcon />
+                  </AccordionButton>
+                </h2>
+                <AccordionPanel pb={4}>{faq.content}</AccordionPanel>
+              </AccordionItem>
+            </Accordion>
+          ))}
+        </Box>
+      </Container>
+    </div>
   );
 }

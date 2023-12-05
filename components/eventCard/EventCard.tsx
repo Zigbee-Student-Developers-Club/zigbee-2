@@ -17,7 +17,7 @@ interface EventDataProps {
 }
 
 const EventCard: NextPage<EventDataProps> = ({ data }) => {
-  console.log(data.thumbnail);
+  // console.log(data.thumbnail);
   // console.log(data);
   return (
     <Card maxW='sm' height='100%' m='auto' background={'gray.100'}>
