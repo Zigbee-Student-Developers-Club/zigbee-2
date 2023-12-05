@@ -16,18 +16,17 @@ import Salesforce from 'assets/salesforce.png';
 import Game from 'assets/game.png';
 import ZairzaAndZigbee from 'assets/zairzaandzigbee.png';
 import Image from 'next/image';
-import { nanoid } from 'nanoid';
 
 const eventsData = [
   {
-    id: nanoid(),
+    id: 1,
     date: '16th July 2023',
     topic: 'Alumini Connect',
     expired: true,
     thumbnail: ZairzaAndZigbee.src,
   },
   {
-    id: nanoid(),
+    id: 2,
     date: '24th Jan 2023',
     batch: '2020',
     speaker: {
@@ -40,7 +39,7 @@ const eventsData = [
     thumbnail: Game.src,
   },
   {
-    id: nanoid(),
+    id: 3,
     date: '28th Nov 2022',
     batch: '2011',
     speaker: {
@@ -55,6 +54,7 @@ const eventsData = [
 ];
 
 export default function AlumniConnect() {
+  // console.log(eventsData);
   return (
     <>
       <Navbar />
