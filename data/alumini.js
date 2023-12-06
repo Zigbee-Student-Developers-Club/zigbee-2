@@ -1,10 +1,19 @@
 export const alumniData = {
+  // 2025: [],
   2024: [
     {
       name: 'Amar Kishore Senapati',
+      position: 'CR',
+      imgURL:
+        'https://media.licdn.com/dms/image/D4D03AQExhkFktE6NdA/profile-displayphoto-shrink_800_800/0/1698165350875?e=1707350400&v=beta&t=nyFXdyipVVBdzNyBZ3oDjRlEw-YDqPmvBDHmh2uLx5I',
+      linkedinURL:
+        'https://www.linkedin.com/in/amar-kishore-senapati-046850136/',
     },
     {
       name: 'Dinesh Rout',
+      imgURL:
+        'https://media.licdn.com/dms/image/C5603AQHlpv_OcpB28Q/profile-displayphoto-shrink_800_800/0/1651861172503?e=1707350400&v=beta&t=Bd9KSj-2bRzL4eHQIqFi5-ocsHRhsr5N6GMi8vuKWcw',
+      linkedinURL: 'https://www.linkedin.com/in/dineshrout7',
     },
     {
       name: 'Siddhant Kumar Sahu',
@@ -62,12 +71,14 @@ export const alumniData = {
     },
     {
       name: 'Pariseema Routray',
+      position: 'GR',
     },
     {
       name: 'Priyanka Mishra',
     },
     {
       name: 'Priyanka Mittal',
+      position: 'PC',
     },
     {
       name: 'Rajiv Kumar Jena',
