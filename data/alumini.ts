@@ -90,6 +90,7 @@ export const alumniData = {
     },
     {
       name: 'Chinmaya Kumar Jena',
+      linkedinURL: 'https://www.linkedin.com/in/chinmaya0706/',
     },
     {
       name: 'Chinmayee Sabar',
@@ -225,92 +226,177 @@ export const alumniData = {
     {
       name: 'Sudipta Behera',
       position: 'CR',
+      linkedinURL: 'https://www.linkedin.com/in/sudipta-behera/',
+      imgURL:
+        'https://media.licdn.com/dms/image/C4E03AQHaRzMDhtoU2g/profile-displayphoto-shrink_100_100/0/1639487671731?e=1707350400&v=beta&t=8W7YMx5obSUoGihkX0_IXaQHr05ISxL2vPeEuvOuYEc',
     },
     {
       name: 'Ashutosh Dash',
       position: 'PC',
+      linkedinURL: 'https://www.linkedin.com/in/ashutoshdash1999/',
+      imgURL:
+        'https://media.licdn.com/dms/image/C4D03AQFmebXb_Bln4Q/profile-displayphoto-shrink_400_400/0/1650807332853?e=1707350400&v=beta&t=tPPvhm8riQaAVED-N3UVw1duj4l-Ko9ug-RIcdhXtVI',
     },
     {
       name: 'BibhuDatta Nayak',
+      linkedinURL: 'https://www.linkedin.com/in/bibhudatta-nayak-10628b238/',
     },
     {
       name: 'Biswanath Sahoo',
+      linkedinURL: 'https://www.linkedin.com/in/biswanath-sahoo-034192191/',
+      imgURL:
+        'https://media.licdn.com/dms/image/C4E03AQFXsq4FR8ds9A/profile-displayphoto-shrink_400_400/0/1642950344758?e=1707350400&v=beta&t=MPsMgOguLVutUFcHemnufLKI1_cM5N6tkVTFUJDRi5c',
     },
     {
       name: 'Debasis Rout',
+      linkedinURL: 'https://www.linkedin.com/in/debasis-rout-97b965228/',
+      imgURL:
+        'https://media.licdn.com/dms/image/C4D03AQE-2kSPUiGLGw/profile-displayphoto-shrink_100_100/0/1667911609791?e=1707350400&v=beta&t=UpIM6r24XJZOz-8MaZRGjBJ-2ldEOLCvY69w8RijHaQ',
     },
     {
       name: 'Devi Prasad Mohanty',
+      linkedinURL: 'https://www.linkedin.com/in/devi-prasad-mohanty-67b218232/',
+      imgURL:
+        'https://media.licdn.com/dms/image/D4D03AQEYMpNCrzZJpQ/profile-displayphoto-shrink_400_400/0/1673595213691?e=1707350400&v=beta&t=0aL8BadUMuTcyuxnVieclg7CAJxkf8AEIakiEjGFCuE',
     },
     {
       name: 'Gyana Ranjan Sahoo',
+      linkedinURL: 'https://www.linkedin.com/in/gyana-ranjan-sahoo/',
+      imgURL:
+        'https://media.licdn.com/dms/image/D4D03AQHaTVmsoi3fMA/profile-displayphoto-shrink_100_100/0/1692812819741?e=1707350400&v=beta&t=dR6BDeVt1rZxvkdLRpponitipdtrMF2c7oYMjlSGLFM',
     },
     {
       name: 'Happy Sahu',
+      linkedinURL: 'https://www.linkedin.com/in/happy-sahu-1a417322a/',
     },
     {
       name: 'Jagannath Nayak',
+      linkedinURL: 'https://www.linkedin.com/in/jagannath-nayak-031bbb229/',
+      imgURL:
+        'https://media.licdn.com/dms/image/D5603AQGC-DOBHMP8Lw/profile-displayphoto-shrink_100_100/0/1680198687463?e=1707350400&v=beta&t=-OeFeRpVSnLiG-MEn7PZINL4B_777t3iaSUP9d84qtU',
     },
     {
       name: 'Jyotshnarani Sahoo',
+      linkedinURL: 'https://www.linkedin.com/in/jyotshnarani-sahoo-7b79a520b/',
+      imgURL:
+        'https://media.licdn.com/dms/image/D4D03AQGg0_0pc-NXgg/profile-displayphoto-shrink_100_100/0/1697083012707?e=1707350400&v=beta&t=C2XR6LUqTC3qjTKk9ppzuyj5EQo8Y4hi_vvHV8WIhQs',
     },
     {
       name: 'Lipsa Sethy',
+      linkedinURL: 'https://www.linkedin.com/in/lipsa-sethy-214761228/',
+      imgURL:
+        'https://media.licdn.com/dms/image/C4D03AQGlXDs9UbAMeA/profile-displayphoto-shrink_100_100/0/1667932445485?e=1707350400&v=beta&t=_IUBSwsCHj_mQw8KEZhdEpHMXJlI35qvtGMqlT3klzU',
     },
     {
       name: 'Manoj Siknku',
+      linkedinURL: 'https://www.linkedin.com/in/manoj-sinku-559897227/',
+      imgURL:
+        'https://media.licdn.com/dms/image/C4D03AQF-rUEQ2MReEg/profile-displayphoto-shrink_100_100/0/1650721835971?e=1707350400&v=beta&t=l61pH4oZe0chNUxLlWMgQNw4vuUxgCLRoZLdnpFlfZU',
     },
     {
       name: 'Muskan Agrawal',
       position: 'GR',
+      linkedinURL: 'https://www.linkedin.com/in/muskan-agrawal-14650b1aa/',
+      imgURL:
+        'https://media.licdn.com/dms/image/D4D03AQHKO0lJ3GXCoQ/profile-displayphoto-shrink_100_100/0/1701699869666?e=1707350400&v=beta&t=CvddDHUA898uMzQT8C9bUkLhyyhYOD7rFhm6E5qOJUc',
     },
     {
       name: 'Nishikanta Parida',
+      linkedinURL: 'https://www.linkedin.com/in/nishikanta-parida-b8aaaa173/',
+      imgURL:
+        'https://media.licdn.com/dms/image/C5603AQGy7UugmX9CEg/profile-displayphoto-shrink_100_100/0/1638115094981?e=1707350400&v=beta&t=AZj_jKGmbv7ph2aP-9-47ZsEDXWi-mglF9MD2Cyvu5w',
     },
     {
       name: 'Nitu Mohapatra',
+      linkedinURL: 'https://www.linkedin.com/in/nitu-mohapatra-376942230/',
+      imgURL:
+        'https://media.licdn.com/dms/image/D5603AQE7Fwdx_3z7gA/profile-displayphoto-shrink_100_100/0/1690527642718?e=1707350400&v=beta&t=m2nx8w0prPJycmAmAE8nvksTVgSo50Q6GRBncuElf-g',
     },
     {
       name: 'Niyatee Rashmee Sahoo',
+      linkedinURL: 'https://www.linkedin.com/in/niyatee-sahoo/',
+      imgURL:
+        'https://media.licdn.com/dms/image/D4D03AQHlmZodziF_Lw/profile-displayphoto-shrink_100_100/0/1671505883380?e=1707350400&v=beta&t=TRKe9sbbMWaie3Y7RV3wfWEkieKMYdLcDaM3yxFgUJI',
     },
     {
       name: 'Rashmi Mahana',
+      linkedinURL: 'https://www.linkedin.com/in/rashmi-mahana-0442611a9/',
+      imgURL:
+        'https://media.licdn.com/dms/image/D5603AQHM_gTIqexjrA/profile-displayphoto-shrink_100_100/0/1671177917286?e=1707350400&v=beta&t=rxe34CkhEIp2w4Lt2aPKt9k2JlyEyerBKsfToGSSoq8',
     },
     {
       name: 'Saloman Kanhar',
+      linkedinURL: 'https://www.linkedin.com/in/saloman-kanhar-b5814b17b/',
+      imgURL:
+        'https://media.licdn.com/dms/image/D5603AQF_IPCV61yqVA/profile-displayphoto-shrink_100_100/0/1647960048369?e=1707350400&v=beta&t=HXqvZabVfM4OauGfoVSj3WUcK9GOVJ298n3FidgpOPs',
     },
     {
       name: 'Shaktee Biswal',
+      linkedinURL: 'https://www.linkedin.com/in/shakteebiswal/',
+      imgURL:
+        'https://media.licdn.com/dms/image/C4D03AQG9-Ivkc_0XsA/profile-displayphoto-shrink_100_100/0/1656090641663?e=1707350400&v=beta&t=ez604L2bImmRFjAOq72eviQKkHiI7QjsEjoUt4Wbogg',
     },
     {
       name: 'Shubhasmita Kar',
+      linkedinURL: 'https://www.linkedin.com/in/shubhasmitakar/',
+      imgURL:
+        'https://media.licdn.com/dms/image/D4D03AQH0f7DJgp-ugw/profile-displayphoto-shrink_400_400/0/1701409845970?e=1707350400&v=beta&t=l5Fz92Jqk3Rh1A2-zmLw0BO6-yCPWphqJAZnknutmWg',
     },
     {
       name: 'Sisir Kumar Das',
+      linkedinURL: 'https://www.linkedin.com/in/sisir-kumar-das/',
+      imgURL:
+        'https://media.licdn.com/dms/image/C4D03AQFQcYsgTmTTZA/profile-displayphoto-shrink_100_100/0/1661068911617?e=1707350400&v=beta&t=o7fhlRQnf7zwjlyKfm5cFRdLO5zUs3avFQZr3owgt_E',
     },
     {
       name: 'Snehasis Mohanty',
+      linkedinURL: 'https://www.linkedin.com/in/snehasis-mohanty-a3a298225/',
+      imgURL:
+        'https://media.licdn.com/dms/image/D4D35AQFOYPP-LCMFpQ/profile-framedphoto-shrink_100_100/0/1688111695134?e=1702555200&v=beta&t=flVSJIYhKp5T8mhxgYRLItvWLrlN-AALXVqmQJtPmUc',
     },
     {
       name: 'Soumya Ranjan Mohanty',
+      linkedinURL:
+        'https://www.linkedin.com/in/soumya-ranjan-mohanty-703305224/',
+      imgURL:
+        'https://media.licdn.com/dms/image/C5603AQHE_74Z-_SBSQ/profile-displayphoto-shrink_100_100/0/1647407272119?e=1707350400&v=beta&t=tyIRZ2P5ht1hQLYg9zz18v2fKgwHGTTZIJViIwgQGQY',
     },
     {
       name: 'Subarna Pani',
+      linkedinURL: 'https://www.linkedin.com/in/subarna-pani-0112b5244/',
+      imgURL:
+        'https://media.licdn.com/dms/image/C5603AQHYpog7X0nzpw/profile-displayphoto-shrink_100_100/0/1656957772674?e=1707350400&v=beta&t=6524_GkFheuNvERyEJEnRINSed_uV7024T0JKVFz3bI',
     },
     {
       name: 'Suraj Kumar Behera',
+      linkedinURL: 'https://www.linkedin.com/in/suraj-kumar-behera-1b9142262/',
+      imgURL:
+        'https://media.licdn.com/dms/image/D4D03AQFOvi7_4UQn3A/profile-displayphoto-shrink_100_100/0/1696170333140?e=1707350400&v=beta&t=2oR5jpWuPJND-bVwx6HNwbekY0jGnn1ShnpSa3tIvlE',
     },
     {
       name: 'Suraj Kumar Sahani',
+      linkedinURL: 'https://www.linkedin.com/in/suraj-kumar-sahani/',
+      imgURL:
+        'https://media.licdn.com/dms/image/D4D03AQEOUJVj-eAHyw/profile-displayphoto-shrink_100_100/0/1700154304398?e=1707350400&v=beta&t=ZCMXbLQCeyH8P9Bp5ipf00wSrjw3fmLVqtwOFbojmFU',
     },
     {
       name: 'Tanuj Tanmay Pattanaik',
+      linkedinURL:
+        'https://www.linkedin.com/in/tanuj-tanmaya-pattnaik-483621215/',
+      imgURL:
+        'https://media.licdn.com/dms/image/D5635AQEiPZyCt2Upug/profile-framedphoto-shrink_100_100/0/1694001539062?e=1702555200&v=beta&t=LrkuuSZx8CB7MDvh2Mh3Yp0dQzrLwjat1IkNLqWMsB4',
     },
     {
       name: 'Tofan Kumar Parida',
+      linkedinURL: 'https://www.linkedin.com/in/tofan-parida-5678tofan/',
+      imgURL:
+        'https://media.licdn.com/dms/image/D5603AQHIU5mpXKedBQ/profile-displayphoto-shrink_100_100/0/1696740544329?e=1707350400&v=beta&t=ONf-sOAKF8xSiF5brJnw5O7hS3ej33aLioTccaNNFmk',
     },
     {
       name: 'Swagatika Nayak',
+      linkedinURL: 'https://www.linkedin.com/in/swagatika-nayak-328339163/',
+      imgURL:
+        'https://media.licdn.com/dms/image/C5603AQEKWFSu8gCi7Q/profile-displayphoto-shrink_100_100/0/1639212767241?e=1707350400&v=beta&t=yFA2Q_Ao9kVNqkFC3_XVJ7DeD8Jx_r0NHlugLBriyyI',
     },
   ],
   2022: [

@@ -16,6 +16,26 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import Alum from 'components/alumniCard/Alum';
 import { alumniData } from '../data/alumini';
+import { motion } from 'framer-motion';
+
+const container = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      delayChildren: 0.5,
+      staggerChildren: 0.2,
+    },
+  },
+  transition: 0.5,
+};
+
+const item = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+  },
+};
 
 const Tabs = ({ selectedYear, setSelectedYear }) => {
   return (
@@ -63,20 +83,24 @@ const TabContent = ({ alums }) => {
   // console.log(alums);
   return (
     <Box minH={'30em'} w='100%' py={4} borderRadius={'8px'}>
-      <Grid
-        templateColumns={{
-          base: 'repeat(1, 1fr)',
-          sm: 'repeat(2,1fr)',
-          md: 'repeat(3, 1fr)',
-          lg: 'repeat(4, 1fr)',
-          xl: 'repeat(5, 1fr)',
-        }}
-        gap={6}
-      >
-        {alums.map((alum, i) => (
-          <Alum key={i} alumData={alum} />
-        ))}
-      </Grid>
+      <motion.section variants={container} initial='hidden' animate='visible'>
+        <Grid
+          templateColumns={{
+            base: 'repeat(1, 1fr)',
+            sm: 'repeat(2,1fr)',
+            md: 'repeat(3, 1fr)',
+            lg: 'repeat(4, 1fr)',
+            xl: 'repeat(5, 1fr)',
+          }}
+          gap={6}
+        >
+          {alums.map((alum, i) => (
+            <motion.div key={i} variants={item}>
+              <Alum key={i} alumData={alum} />
+            </motion.div>
+          ))}
+        </Grid>
+      </motion.section>
     </Box>
   );
 };
@@ -133,6 +157,7 @@ export default function Alumni() {
 
         <Flex my={'2em'} gap='1em' direction={'row'}>
           <Tabs selectedYear={selectedYear} setSelectedYear={setSelectedYear} />
+
           <TabContent
             alums={alumni.sort((a, b) => a?.name.localeCompare(b?.name))}
           />
