@@ -20,20 +20,18 @@ import { alumniData } from '../data/alumini';
 const Tabs = ({ selectedYear, setSelectedYear }) => {
   return (
     <Flex
-      bg='gray.50'
-      p='1em'
       borderRadius={'4px'}
-      minW='140px'
+      py={4}
+      minW='120px'
+      h={'100vh'}
       position={'sticky'}
       top='0'
       zIndex={'999'}
-      direction={{
-        base: 'row',
-        md: 'column',
-      }}
+      direction={'column'}
       gap='2'
       flexWrap={'wrap'}
     >
+      <Text fontWeight={'bold'}>Batch of</Text>
       {Object.keys(alumniData)
         .reverse()
         .map((alum, i) => (
@@ -62,13 +60,13 @@ const Tabs = ({ selectedYear, setSelectedYear }) => {
 };
 
 const TabContent = ({ alums }) => {
-  console.log(alums);
+  // console.log(alums);
   return (
-    <Box minH={'30em'} bg='gray.50' p='1em' w='100%' borderRadius={'8px'}>
+    <Box minH={'30em'} w='100%' py={4} borderRadius={'8px'}>
       <Grid
         templateColumns={{
           base: 'repeat(1, 1fr)',
-          sm: 'repeat(2, 1fr)',
+          sm: 'repeat(2,1fr)',
           md: 'repeat(3, 1fr)',
           lg: 'repeat(4, 1fr)',
           xl: 'repeat(5, 1fr)',
@@ -100,7 +98,7 @@ export default function Alumni() {
         <Stack
           align={'center'}
           spacing={{ base: 8, md: 10 }}
-          direction={{ base: 'column', md: 'row' }}
+          direction={'row'}
           backgroundColor={'blue.100'}
           borderRadius='2xl'
           py='4'
@@ -130,7 +128,7 @@ export default function Alumni() {
           </Flex>
         </Stack>
 
-        <Flex my={'2em'} gap='1em' direction={{ base: 'column', md: 'row' }}>
+        <Flex my={'2em'} gap='1em' direction={'row'}>
           <Tabs selectedYear={selectedYear} setSelectedYear={setSelectedYear} />
           <TabContent
             alums={alumni.sort((a, b) => a?.name.localeCompare(b?.name))}

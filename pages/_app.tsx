@@ -12,26 +12,20 @@ export default function App({ Component, pageProps }: AppProps) {
       <Head>
         <meta name='viewport' content='width=device-width, initial-scale=1' />
         <title>Zigbee Student Developers&apos; Club</title>
-        <meta property="og:title" content="ICCCT 2023" key="title" />
+        <meta property='og:title' content='Zigbee' key='title' />
+        <meta name='title' content="Zigbee Student Developers' Club" />
+        <meta name='description' content="Zigbee Student Developers' Club" />
         <meta
-          name="title"
-          content="Zigbee Student Developers&apos; Club"
+          name='keywords'
+          content="Zigbee Student Developers' Club, tech club, odisha tech club, odisha college club, college club, MCA club, mca club, 2023, club, tech conference, outr, odisha university of technology and research, cet, college of engineering and technology"
         />
+        <meta name='robots' content='index, follow' />
+        <meta httpEquiv='Content-Type' content='text/html; charset=utf-8' />
+        <meta name='language' content='English' />
+        <meta name='revisit-after' content='2 days' />
         <meta
-          name="description"
-          content="Zigbee Student Developers&apos; Club"
-        />
-        <meta
-          name="keywords"
-          content="Zigbee Student Developers&apos; Club, tech club, odisha tech club, odisha college club, college club, MCA club, mca club, 2023, club, tech conference, outr, odisha university of technology and research, cet, college of engineering and technology"
-        />
-        <meta name="robots" content="index, follow" />
-        <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
-        <meta name="language" content="English" />
-        <meta name="revisit-after" content="2 days" />
-        <meta
-          name="author"
-          content="Odisha University of Technology and Research"
+          name='author'
+          content='Odisha University of Technology and Research'
         />
         <link
           rel='apple-touch-icon'

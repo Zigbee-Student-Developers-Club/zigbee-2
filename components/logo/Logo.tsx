@@ -9,6 +9,7 @@ const Logo = () => {
       py='8px'
       pr={'16px'}
       fontSize='4xl'
+      display={'block'}
     >
       &lt; Zigbee /&gt;
     </Text>
