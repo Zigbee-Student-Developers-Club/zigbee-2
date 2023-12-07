@@ -98,7 +98,10 @@ export default function Alumni() {
         <Stack
           align={'center'}
           spacing={{ base: 8, md: 10 }}
-          direction={'row'}
+          direction={{
+            base: 'column',
+            md: 'row',
+          }}
           backgroundColor={'blue.100'}
           borderRadius='2xl'
           py='4'
