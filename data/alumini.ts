@@ -3,32 +3,31 @@ export const alumniData = {
     {
       name: 'Babita Mohalik',
       imgURL:
-        'https://media.licdn.com/dms/image/D5603AQFutxzCxLzMRg/profile-displayphoto-shrink_800_800/0/1693811790764?e=1707350400&v=beta&t=QfG_rJ610812lyWNJ_f5BlLGVicq9cKdkkb512IMC_E',
+        'https://media.licdn.com/dms/image/D5603AQH_L3OYk4BiEA/profile-displayphoto-shrink_800_800/0/1702212496872?e=1707955200&v=beta&t=MYSrUZ4Tr0oaKI_-KsFzZKNdjzkBYUZ1iMNpqeu_Qww',
       linkedinURL: 'https://www.linkedin.com/in/babitamohalik/',
     },
     {
-      name: 'Bhubanesh Maharana ',
+      name: 'Bhubanesh Maharana',
       imgURL:
         'https://media.licdn.com/dms/image/D5603AQGcNuWCrVhQhg/profile-displayphoto-shrink_800_800/0/1701962651548?e=1707350400&v=beta&t=YnaXJlBQyaltgIytN3zP7M02Hxa1m8UypSxunl43ZwI',
       linkedinURL: 'https://www.linkedin.com/in/bhubanesh-maharana',
     },
     {
-      name: 'Bibhusita Behera ',
+      name: 'Bibhusita Behera',
       imgURL:
         'https://media.licdn.com/dms/image/D4E03AQGHHUtAfFjs3A/profile-displayphoto-shrink_800_800/0/1696440116841?e=1707350400&v=beta&t=VMEC-FS6arJDugmkvZ2QOqGwGNkVRNNS4V77YVU_v3Q',
       linkedinURL: 'https://www.linkedin.com/in/bibhusita-behera',
     },
     {
       name: 'Chandan Kumar Sahoo',
-      imgURL:
-        '',
+      imgURL: '',
       linkedinURL: 'https://www.linkedin.com/in/chandan-kumar-sahoo-148806286',
     },
     {
       name: 'ChittaRanjan Mangaraj ',
-      imgURL:
-        '',
-      linkedinURL: 'https://www.linkedin.com/in/chittaranjan-mangaraj-7ab1972a3/',
+      imgURL: '',
+      linkedinURL:
+        'https://www.linkedin.com/in/chittaranjan-mangaraj-7ab1972a3/',
     },
     {
       name: 'Dipti Ranjan Patra',
@@ -38,18 +37,17 @@ export const alumniData = {
     },
     {
       name: 'Gobinda Sahoo',
-      imgURL:
-        '',
+      imgURL: '',
       linkedinURL: 'https://www.linkedin.com/in/gobinda-sahoo-4b89691a1/',
     },
     {
-      name: 'Himanshu Kumar Patra ',
+      name: 'Himanshu Kumar Patra',
       imgURL:
         'https://media.licdn.com/dms/image/D4D03AQHttCETNATK1Q/profile-displayphoto-shrink_800_800/0/1699927485520?e=1707350400&v=beta&t=xvF30Hsbkilw1XmLKYsFCyYgsdVVEEXopXDYrNW4XyI',
       linkedinURL: 'https://www.linkedin.com/in/himanshu-kumar-patra-958199275',
     },
     {
-      name: 'Laxmipriya kar',
+      name: 'Laxmipriya Kar',
       imgURL:
         'https://media.licdn.com/dms/image/D4D03AQEwVlmYR0tcSA/profile-displayphoto-shrink_800_800/0/1696588423736?e=1707350400&v=beta&t=iG-K2MW_NfbMHnfMtNnIyRHtZ_hjxnMEXAGk4RIc2iU',
       linkedinURL: 'https://www.linkedin.com/in/laxmipriya-kar-823117295',
@@ -65,13 +63,11 @@ export const alumniData = {
       position: 'PV',
       imgURL:
         'https://media.licdn.com/dms/image/D4D03AQEX2iPvHy9rAw/profile-displayphoto-shrink_800_800/0/1702210511218?e=1707955200&v=beta&t=jB8_bMV_BzE_HbiG96vMQQS7oYM-N3r4NzZOQf5TzhQ',
-      linkedinURL:
-        'https://www.linkedin.com/in/imaurobindo/',
+      linkedinURL: 'https://www.linkedin.com/in/imaurobindo/',
     },
     {
       name: 'Manas Mandal',
-      imgURL:
-        '',
+      imgURL: '',
       linkedinURL: 'linkedin.com/in/manas-mandal-4ba2652a4',
     },
     {
@@ -91,7 +87,8 @@ export const alumniData = {
       name: 'Model Manasmruti Mishra',
       imgURL:
         'https://media.licdn.com/dms/image/D4D03AQFDW-MonjOHCA/profile-displayphoto-shrink_800_800/0/1687458723307?e=1707350400&v=beta&t=7DkxkX-_8zV4o-yIorAz3xJiXWeTyGLveLmqL35fEIU',
-      linkedinURL: 'https://www.linkedin.com/in/model-manasmruti-mishra-7368b6247',
+      linkedinURL:
+        'https://www.linkedin.com/in/model-manasmruti-mishra-7368b6247',
     },
     {
       name: 'Nabajeeban Panda',
@@ -137,7 +134,7 @@ export const alumniData = {
     {
       name: 'Rabinarayan Basantia',
       imgURL:
-      'https://media.licdn.com/dms/image/D5603AQH9SU_jwV3vBQ/profile-displayphoto-shrink_400_400/0/1690958639758?e=1707350400&v=beta&t=mgdFKoI-l3_8aB-vy087k5adidBk4ZiS28YJV9UTKoM',
+        'https://media.licdn.com/dms/image/D5603AQH9SU_jwV3vBQ/profile-displayphoto-shrink_400_400/0/1690958639758?e=1707350400&v=beta&t=mgdFKoI-l3_8aB-vy087k5adidBk4ZiS28YJV9UTKoM',
 
       linkedinURL: 'https://www.linkedin.com/in/rabinarayan-basantia-99931b286',
     },
@@ -160,14 +157,16 @@ export const alumniData = {
       imgURL:
         'https://media.licdn.com/dms/image/D5635AQE5D5KQnT1sjQ/profile-framedphoto-shrink_800_800/0/1687012093645?e=1702580400&v=beta&t=poD66jzj2iitGas8YBo2jGNE5BlIrSl2OZw8sfab71w',
 
-      linkedinURL: 'https://www.linkedin.com/in/simhadri-naveen-b25124209?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app',
+      linkedinURL:
+        'https://www.linkedin.com/in/simhadri-naveen-b25124209?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app',
     },
     {
       name: 'Sangita Das',
       imgURL:
         'https://media.licdn.com/dms/image/D5603AQHCRXiPnjXGIw/profile-displayphoto-shrink_800_800/0/1699267181349?e=1707350400&v=beta&t=IcidC-YqD2t2T-gNSYnaMXOZjsc-6hgNgwHTNAuWRVI',
 
-      linkedinURL: 'https://www.linkedin.com/in/sangita-das-648825270?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app',
+      linkedinURL:
+        'https://www.linkedin.com/in/sangita-das-648825270?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app',
     },
     {
       name: 'Satish Kumar Pradhan ',
@@ -203,7 +202,8 @@ export const alumniData = {
       imgURL:
         'https://media.licdn.com/dms/image/D4D03AQE4ITGUfb_HDQ/profile-displayphoto-shrink_800_800/0/1698113725655?e=1707350400&v=beta&t=dldK1SzK01FR2cjOYJJbS2TrdbTFJfNAbAFh0Tx8DYc',
 
-      linkedinURL: 'https://www.linkedin.com/in/sriram-sahoo-666a36207?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app',
+      linkedinURL:
+        'https://www.linkedin.com/in/sriram-sahoo-666a36207?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app',
     },
     {
       name: 'Suman Mohanty ',
@@ -238,7 +238,8 @@ export const alumniData = {
       imgURL:
         'https://media.licdn.com/dms/image/D4D03AQFdM2urpV510w/profile-displayphoto-shrink_800_800/0/1701964595875?e=1707350400&v=beta&t=GC1tgQ71tG016AY533uUe1CRQX-axE3X59exVfGLw_A',
 
-      linkedinURL: 'https://www.linkedin.com/in/tanmaya-kumar-ghadei-9797842a3?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app',
+      linkedinURL:
+        'https://www.linkedin.com/in/tanmaya-kumar-ghadei-9797842a3?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app',
     },
     {
       name: 'Tapaswini Tarai',
