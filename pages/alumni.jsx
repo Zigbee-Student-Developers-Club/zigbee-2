@@ -107,7 +107,7 @@ const TabContent = ({ alums }) => {
 
 export default function Alumni() {
   const [alumni, setAlumni] = useState([]);
-  const [selectedYear, setSelectedYear] = useState('2024');
+  const [selectedYear, setSelectedYear] = useState('2025');
 
   useEffect(() => {
     setAlumni(alumniData[selectedYear]);
