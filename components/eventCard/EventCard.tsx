@@ -54,7 +54,9 @@ const EventCard: NextPage<EventDataProps> = ({ data }) => {
                     <Person size={'25'} />
                   </Flex>
                   <Box>
-                    <Heading size='sm'>{s.name}</Heading>
+                    <Heading size='sm'>
+                      {s.name} (Batch {s.batch})
+                    </Heading>
                     <Text size='xs'>
                       {s.role}, {s.company}
                     </Text>
