@@ -11,9 +11,7 @@ import {
   DrawerContent,
   DrawerCloseButton,
   Spacer,
-  Stack,
   Container,
-  Text,
 } from '@chakra-ui/react';
 import Link from 'next/link';
 import { HamburgerIcon } from '@chakra-ui/icons';
@@ -80,4 +78,5 @@ function Navbar() {
     </Container>
   );
 }
+
 export default Navbar;
