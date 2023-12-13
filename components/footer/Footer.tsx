@@ -36,11 +36,9 @@ export default function Footer() {
           <Text>Dept. of CSA, OUTR, Bhubaneswar.</Text>
         </VStack>
         <Stack direction={'column'} spacing={3} my={{ base: '6', md: '0' }}>
-          <Link href='/department'>Department</Link>
-          <Link href='/alumni'>Alumni</Link>
-          <Link href='/events'>Events</Link>
-          <Link href='/resources'>Resources</Link>
-          <Link href='/drafts'>Drafts</Link>
+          <Link href='/codewars'>Codewars</Link>
+          <Link href='/codewars'>Gallery</Link>
+          <Link href='/codewars'>Blogs</Link>
         </Stack>
 
         <Stack direction={'column'} spacing={3} my={{ base: '6', md: '0' }}>
@@ -52,7 +50,7 @@ export default function Footer() {
         </Stack>
 
         <Stack direction={'row'} spacing={6}>
-          <Link href='https://www.instagram.com/zigbee.cetb/' target='_blank'>
+          <Link href='https://www.instagram.com/zigbee.outr' target='_blank'>
             <Instagram size={'20'} />
           </Link>
           <Link href='https://t.me/joinchat/wgUy8eMWplM2MGQ1' target='_blank'>
