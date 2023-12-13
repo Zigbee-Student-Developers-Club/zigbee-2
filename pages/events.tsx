@@ -24,16 +24,39 @@ const eventsData = [
     topic: 'Alumini Connect',
     expired: true,
     thumbnail: ZairzaAndZigbee.src,
+    speakers: [
+      {
+        role: 'Software Engineer',
+        name: 'Supriya Sinha',
+        company: 'Apple Inc.',
+        batch: '2006',
+      },
+      {
+        role: 'Software Engineer',
+        name: 'Tanmay Padhi',
+        company: '8x8',
+        batch: '2006',
+      },
+      {
+        role: 'Software Engineer',
+        name: 'Manas R. Mohanty(B.Tech)',
+        company: 'Amazon',
+        batch: '2006',
+      },
+    ],
   },
   {
     id: 2,
     date: '24th Jan 2023',
-    batch: '2020',
-    speaker: {
-      role: 'Game Developer',
-      name: 'Mallik Ebadat',
-      company: 'Amgo Games',
-    },
+
+    speakers: [
+      {
+        role: 'Game Developer',
+        name: 'Mallik Ebadat',
+        company: 'Amgo Games',
+        batch: '2020',
+      },
+    ],
     topic: 'Game Development with Unity 3D',
     expired: true,
     thumbnail: Game.src,
@@ -41,12 +64,15 @@ const eventsData = [
   {
     id: 3,
     date: '28th Nov 2022',
-    batch: '2011',
-    speaker: {
-      role: 'Tech Lead',
-      name: 'Debasis Jena',
-      company: 'Dubai Multi Commodities Center',
-    },
+
+    speakers: [
+      {
+        role: 'Tech Lead',
+        name: 'Debasis Jena',
+        company: 'Dubai Multi Commodities Center',
+        batch: '2011',
+      },
+    ],
     topic: 'Cloud Application Development with Salesforce Platform',
     expired: true,
     thumbnail: Salesforce.src,
@@ -101,7 +127,6 @@ export default function AlumniConnect() {
             base: 'repeat(1, 1fr)',
             md: 'repeat(2, 1fr)',
             lg: 'repeat(3, 1fr)',
-            xl: 'repeat(4, 1fr)',
           }}
           gap={8}
           my={'10'}
