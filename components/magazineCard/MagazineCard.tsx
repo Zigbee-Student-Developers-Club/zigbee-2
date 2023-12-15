@@ -1,4 +1,4 @@
-import { Box, Card, CardBody, Image } from '@chakra-ui/react';
+import { Box, Card, CardBody, Image, Text } from '@chakra-ui/react';
 import { NextPage } from 'next';
 
 interface EventDataProps {
@@ -9,23 +9,31 @@ const MagazineCard: NextPage<EventDataProps> = ({ data }) => {
   // console.log(data);
 
   return (
-    <Box
-      maxW='sm'
-      overflow={'hidden'}
-      height='100%'
-      m='auto'
-      background={'gray.100'}
-      borderRadius={'lg'}
-      shadow='md'
-    >
-      <Image
+    <>
+      <Box
+        maxW='sm'
+        overflow={'hidden'}
+        height='100%'
+        m='auto'
+        background={'gray.100'}
         borderRadius={'lg'}
-        alt='magazine banner'
-        src={data.imgSrc.src}
-        transition='0.2s'
-        _hover={{ transform: 'scale(1.2)' }}
-      />
-    </Box>
+        shadow='md'
+      >
+        <Image
+          height={'full'}
+          width={'full'}
+          objectFit={'cover'}
+          borderRadius={'lg'}
+          alt='magazine banner'
+          src={data.imgSrc.src}
+          transition='0.2s'
+          _hover={{ transform: 'scale(1.2)' }}
+        />
+      </Box>
+      <Text as='h2' fontSize={'xl'} mt={4}>
+        Reflections {data.year}
+      </Text>
+    </>
   );
 };
 export default MagazineCard;
