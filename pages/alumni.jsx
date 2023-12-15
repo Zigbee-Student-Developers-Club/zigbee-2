@@ -41,23 +41,15 @@ const highlightedAlumini = [
     name: 'Biswanath Sahoo',
     company: 'IserveU',
     batch: '2023',
-    text: 'It is a great honor to be the part of MCA family, OUTR.',
+    text: 'The Department of CSA is recognized for its dedicated faculty and innovative curriculum molding versatile tech professionals.',
     imgURL:
       'https://media.licdn.com/dms/image/C4E03AQFXsq4FR8ds9A/profile-displayphoto-shrink_400_400/0/1642950344758?e=1707350400&v=beta&t=MPsMgOguLVutUFcHemnufLKI1_cM5N6tkVTFUJDRi5c',
   },
   {
-    name: 'Ashutosh Dash',
-    company: 'Badho',
-    batch: '2023',
-    text: 'It is a great honor to be the part of MCA family, OUTR.',
-    imgURL:
-      'https://media.licdn.com/dms/image/C4D03AQFmebXb_Bln4Q/profile-displayphoto-shrink_400_400/0/1650807332853?e=1707350400&v=beta&t=tPPvhm8riQaAVED-N3UVw1duj4l-Ko9ug-RIcdhXtVI',
-  },
-  {
     name: 'Soumya Ranjan Sahoo',
     company: 'IserveU',
-    batch: '2023',
-    text: 'It is a great honor to be the part of MCA family, OUTR.',
+    batch: '2024',
+    text: 'Fostering a culture of innovation and collaboration is the first priority of this ',
     imgURL:
       'https://media.licdn.com/dms/image/D5603AQF-4rv0uSW6Rw/profile-displayphoto-shrink_800_800/0/1686553949770?e=1707350400&v=beta&t=Ml3Jf68K7iyABjrXqEiqdAb4Ijz9o5cNNNIXpuJg51g',
   },
@@ -210,11 +202,9 @@ export default function Alumni() {
 
           {/* highlights */}
 
-          <Text fontSize={24} mt={8}>
+          <Text fontSize={24} my={10} mb={4}>
             Highlights
           </Text>
-
-          <Box my={8}></Box>
 
           <Swiper
             slidesPerView={1}
@@ -238,7 +228,7 @@ export default function Alumni() {
           >
             {highlightedAlumini.map((h, i) => (
               <SwiperSlide key={i}>
-                <Card maxW='md' border={'1px solid #eee'}>
+                <Card maxW='md' minH={'240px'} border={'1px solid #eee'}>
                   <CardHeader>
                     <Flex spacing='4'>
                       <Flex
@@ -264,7 +254,7 @@ export default function Alumni() {
                       </Flex>
                     </Flex>
                   </CardHeader>
-                  <CardBody>
+                  <CardBody my={1}>
                     <Text>{h.text}</Text>
                   </CardBody>
                 </Card>
@@ -273,7 +263,7 @@ export default function Alumni() {
           </Swiper>
 
           {/* alumni data */}
-          <Flex my={'2em'} gap='1em' direction={'row'}>
+          <Flex my={'2em'} mt={'16'} gap='1em' direction={'row'}>
             <Tabs
               selectedYear={selectedYear}
               setSelectedYear={setSelectedYear}
