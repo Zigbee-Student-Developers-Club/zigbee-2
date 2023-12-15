@@ -16,6 +16,7 @@ import Salesforce from 'assets/salesforce.png';
 import Game from 'assets/game.png';
 import ZairzaAndZigbee from 'assets/zairzaandzigbee.png';
 import Image from 'next/image';
+import { motion } from 'framer-motion';
 
 const eventsData = [
   {
@@ -84,60 +85,67 @@ export default function AlumniConnect() {
   return (
     <>
       <Navbar />
-      <Container maxW={'7xl'}>
-        <Stack
-          align={'center'}
-          spacing={{ base: 8, md: 10 }}
-          direction={{ base: 'column', md: 'row' }}
-          backgroundColor={'purple.100'}
-          borderRadius='2xl'
-          py='4'
-          px='14'
-        >
-          <Stack flex={1} spacing={{ base: 5, md: 10 }}>
-            <Heading
-              fontWeight='black'
-              fontSize={{ base: '3xl', sm: '4xl', lg: '6xl' }}
-              as='h2'
-            >
-              Events
-            </Heading>
-            <Text>
-              Yes, we’ve been really busy and happening lately. Or maybe it’s
-              just that we love making it to the headlines time and again.
-              Nevertheless, here’s to take you on a quick tour on all our
-              ventures in the recent past.
-            </Text>
+      <motion.div
+        initial={{ y: 100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.8 }}
+      >
+        <Container maxW={'7xl'}>
+          <Stack
+            align={'center'}
+            spacing={{ base: 8, md: 10 }}
+            direction={{ base: 'column', md: 'row' }}
+            backgroundColor={'purple.100'}
+            borderRadius='2xl'
+            py='4'
+            px='14'
+          >
+            <Stack flex={1} spacing={{ base: 5, md: 10 }}>
+              <Heading
+                fontWeight='black'
+                fontSize={{ base: '3xl', sm: '4xl', lg: '6xl' }}
+                as='h2'
+              >
+                Events
+              </Heading>
+              <Text>
+                Yes, we’ve been really busy and happening lately. Or maybe it’s
+                just that we love making it to the headlines time and again.
+                Nevertheless, here’s to take you on a quick tour on all our
+                ventures in the recent past.
+              </Text>
+            </Stack>
+            <Flex flex={1} justify={'center'} align={'center'}>
+              <Image
+                height='200'
+                width='400'
+                alt='zigbee hero'
+                src={EventHeroImg}
+              />
+            </Flex>
           </Stack>
-          <Flex flex={1} justify={'center'} align={'center'}>
-            <Image
-              height='200'
-              width='400'
-              alt='zigbee hero'
-              src={EventHeroImg}
-            />
-          </Flex>
-        </Stack>
 
-        <Grid
-          justifyContent={'center'}
-          alignContent='center'
-          gridAutoRows={'1fr'}
-          templateColumns={{
-            base: 'repeat(1, 1fr)',
-            md: 'repeat(2, 1fr)',
-            lg: 'repeat(3, 1fr)',
-          }}
-          gap={8}
-          my={'10'}
-        >
-          {eventsData.map((data: any, i) => (
-            <GridItem key={i} justifyContent={'center'} alignContent='center'>
-              <EventCard data={data} />
-            </GridItem>
-          ))}
-        </Grid>
-      </Container>
+          <Grid
+            justifyContent={'center'}
+            alignContent='center'
+            gridAutoRows={'1fr'}
+            templateColumns={{
+              base: 'repeat(1, 1fr)',
+              md: 'repeat(2, 1fr)',
+              lg: 'repeat(3, 1fr)',
+            }}
+            gap={8}
+            my={'10'}
+          >
+            {eventsData.map((data: any, i) => (
+              <GridItem key={i} justifyContent={'center'} alignContent='center'>
+                <EventCard data={data} />
+              </GridItem>
+            ))}
+          </Grid>
+        </Container>
+      </motion.div>
+
       <Footer />
     </>
   );
