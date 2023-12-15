@@ -4,16 +4,13 @@ import {
   Button,
   Card,
   CardBody,
-  CardFooter,
   CardHeader,
   Container,
   Flex,
   Grid,
   Heading,
-  IconButton,
   Stack,
   Text,
-  VStack,
 } from '@chakra-ui/react';
 import Footer from 'components/footer/Footer';
 import Navbar from 'components/navbar/Navbar';
@@ -23,8 +20,12 @@ import { useEffect, useState } from 'react';
 import Alum from 'components/alumniCard/Alum';
 import { alumniData } from '../data/alumini';
 import { motion } from 'framer-motion';
-import { useKeenSlider } from 'keen-slider/react';
-import 'keen-slider/keen-slider.min.css';
+// import { useKeenSlider } from 'keen-slider/react';
+// import 'keen-slider/keen-slider.min.css';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import { Pagination } from 'swiper/modules';
 
 const highlightedAlumini = [
   {
@@ -43,6 +44,14 @@ const highlightedAlumini = [
     text: 'It is a great honor to be the part of MCA family, OUTR.',
     imgURL:
       'https://media.licdn.com/dms/image/C4E03AQFXsq4FR8ds9A/profile-displayphoto-shrink_400_400/0/1642950344758?e=1707350400&v=beta&t=MPsMgOguLVutUFcHemnufLKI1_cM5N6tkVTFUJDRi5c',
+  },
+  {
+    name: 'Ashutosh Dash',
+    company: 'Badho',
+    batch: '2023',
+    text: 'It is a great honor to be the part of MCA family, OUTR.',
+    imgURL:
+      'https://media.licdn.com/dms/image/C4D03AQFmebXb_Bln4Q/profile-displayphoto-shrink_400_400/0/1650807332853?e=1707350400&v=beta&t=tPPvhm8riQaAVED-N3UVw1duj4l-Ko9ug-RIcdhXtVI',
   },
   {
     name: 'Soumya Ranjan Sahoo',
@@ -77,15 +86,16 @@ const Tabs = ({ selectedYear, setSelectedYear }) => {
   return (
     <Flex
       borderRadius={'4px'}
-      py={4}
-      minW='120px'
+      // py={4}
+      minW='140px'
       h={'100vh'}
+      overflowY={'scroll'}
       position={'sticky'}
       top='0'
       zIndex={'999'}
       direction={'column'}
       gap='2'
-      flexWrap={'wrap'}
+      pr={4}
     >
       <Text fontWeight={'bold'}>Batch of</Text>
       {Object.keys(alumniData)
@@ -108,7 +118,7 @@ const Tabs = ({ selectedYear, setSelectedYear }) => {
               bg: '#5879f1',
             }}
           >
-            {alum}
+            {alum === '2024' || alum === '2025' ? alum + '*' : alum}
           </Button>
         ))}
     </Flex>
@@ -130,11 +140,15 @@ const TabContent = ({ alums }) => {
           }}
           gap={6}
         >
-          {alums.map((alum, i) => (
-            <motion.div key={i} variants={item}>
-              <Alum key={i} alumData={alum} />
-            </motion.div>
-          ))}
+          {alums.length === 0 ? (
+            <Text>No Data Available</Text>
+          ) : (
+            alums.map((alum, i) => (
+              <motion.div key={i} variants={item}>
+                <Alum key={i} alumData={alum} />
+              </motion.div>
+            ))
+          )}
         </Grid>
       </motion.section>
     </Box>
@@ -146,26 +160,26 @@ export default function Alumni() {
   const [selectedYear, setSelectedYear] = useState('2025');
   const [currentSlide, setCurrentSlide] = useState(0);
   const [loaded, setLoaded] = useState(false);
-  const [sliderRef, instanceRef] = useKeenSlider({
-    initial: 0,
-    slideChanged(slider) {
-      setCurrentSlide(slider.track.details.rel);
-    },
-    created() {
-      setLoaded(true);
-    },
-    breakpoints: {
-      '(min-width: 200px)': {
-        slides: { perView: 1, spacing: 5 },
-      },
-      '(min-width: 400px)': {
-        slides: { perView: 2, spacing: 5 },
-      },
-      '(min-width: 1000px)': {
-        slides: { perView: 3, spacing: 10 },
-      },
-    },
-  });
+  // const [sliderRef, instanceRef] = useKeenSlider({
+  //   initial: 0,
+  //   slideChanged(slider) {
+  //     setCurrentSlide(slider.track.details.rel);
+  //   },
+  //   created() {
+  //     setLoaded(true);
+  //   },
+  //   breakpoints: {
+  //     '(min-width: 200px)': {
+  //       slides: { perView: 1, spacing: 5 },
+  //     },
+  //     '(min-width: 400px)': {
+  //       slides: { perView: 2, spacing: 5 },
+  //     },
+  //     '(min-width: 1000px)': {
+  //       slides: { perView: 3, spacing: 10 },
+  //     },
+  //   },
+  // });
 
   useEffect(() => {
     setAlumni(alumniData[selectedYear]);
@@ -221,57 +235,58 @@ export default function Alumni() {
           Highlights
         </Text>
 
-        <Box ref={sliderRef} className='keen-slider' my={8}>
-          {highlightedAlumini.map((h, i) => (
-            <Card
-              key={i}
-              className={'keen-slider__slide number-slide' + i + 1}
-              maxW='md'
-              border={'1px solid #eee'}
-            >
-              <CardHeader>
-                <Flex spacing='4'>
-                  <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
-                    <Avatar
-                      name={h.name}
-                      src={
-                        h.imgURL ||
-                        'https://xsgames.co/randomusers/assets/avatars/male/63.jpg'
-                      }
-                    />
+        <Box my={8}></Box>
 
-                    <Box>
-                      <Heading size='sm'>{h.name}</Heading>
-                      <Text>
-                        {h.company}, Batch of {h.batch}{' '}
-                      </Text>
-                    </Box>
+        <Swiper
+          slidesPerView={1}
+          spaceBetween={10}
+          pagination={{
+            clickable: true,
+          }}
+          breakpoints={{
+            640: {
+              slidesPerView: 2,
+              spaceBetween: 10,
+            },
+
+            1024: {
+              slidesPerView: 3,
+              spaceBetween: 10,
+            },
+          }}
+          modules={[Pagination]}
+          className='mySwiper'
+        >
+          {highlightedAlumini.map((h, i) => (
+            <SwiperSlide key={i}>
+              <Card maxW='md' border={'1px solid #eee'}>
+                <CardHeader>
+                  <Flex spacing='4'>
+                    <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
+                      <Avatar
+                        name={h.name}
+                        src={
+                          h.imgURL ||
+                          'https://xsgames.co/randomusers/assets/avatars/male/63.jpg'
+                        }
+                      />
+
+                      <Box>
+                        <Heading size='sm'>{h.name}</Heading>
+                        <Text>
+                          {h.company}, Batch of {h.batch}{' '}
+                        </Text>
+                      </Box>
+                    </Flex>
                   </Flex>
-                </Flex>
-              </CardHeader>
-              <CardBody>
-                <Text>{h.text}</Text>
-              </CardBody>
-            </Card>
+                </CardHeader>
+                <CardBody>
+                  <Text>{h.text}</Text>
+                </CardBody>
+              </Card>
+            </SwiperSlide>
           ))}
-        </Box>
-        {loaded && instanceRef.current && (
-          <div className='dots'>
-            {[
-              ...Array(instanceRef.current.track.details.slides.length).keys(),
-            ].map((idx) => {
-              return (
-                <button
-                  key={idx}
-                  onClick={() => {
-                    instanceRef.current?.moveToIdx(idx);
-                  }}
-                  className={'dot' + (currentSlide === idx ? ' active' : '')}
-                ></button>
-              );
-            })}
-          </div>
-        )}
+        </Swiper>
 
         {/* alumni data */}
         <Flex my={'2em'} gap='1em' direction={'row'}>
