@@ -158,145 +158,134 @@ const TabContent = ({ alums }) => {
 export default function Alumni() {
   const [alumni, setAlumni] = useState([]);
   const [selectedYear, setSelectedYear] = useState('2025');
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const [loaded, setLoaded] = useState(false);
-  // const [sliderRef, instanceRef] = useKeenSlider({
-  //   initial: 0,
-  //   slideChanged(slider) {
-  //     setCurrentSlide(slider.track.details.rel);
-  //   },
-  //   created() {
-  //     setLoaded(true);
-  //   },
-  //   breakpoints: {
-  //     '(min-width: 200px)': {
-  //       slides: { perView: 1, spacing: 5 },
-  //     },
-  //     '(min-width: 400px)': {
-  //       slides: { perView: 2, spacing: 5 },
-  //     },
-  //     '(min-width: 1000px)': {
-  //       slides: { perView: 3, spacing: 10 },
-  //     },
-  //   },
-  // });
 
   useEffect(() => {
     setAlumni(alumniData[selectedYear]);
   }, [alumni, selectedYear]);
 
-  useEffect(() => {}, []);
-
-  // console.log(Object.keys(alumniData));
-
   return (
     <>
       <Navbar />
-      <Container maxW={'7xl'}>
-        <Stack
-          align={'center'}
-          spacing={{ base: 8, md: 10 }}
-          direction={{
-            base: 'column',
-            md: 'row',
-          }}
-          backgroundColor={'blue.100'}
-          borderRadius='2xl'
-          py='4'
-          px='14'
-        >
-          <Stack flex={1} spacing={{ base: 5, md: 10 }}>
-            <Heading
-              fontWeight='black'
-              fontSize={{ base: '3xl', sm: '4xl', lg: '6xl' }}
-              as='h2'
-            >
-              Alumni
-            </Heading>
-            <Text>
-              They’re exemplary, they’re buoyant, they’re the high fliers,
-              they’re the veterans. Here’s to help you learn more and connect
-              with our respected alumni.
-            </Text>
+      <motion.div
+        initial={{ y: 100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.8 }}
+      >
+        <Container maxW={'7xl'}>
+          <Stack
+            align={'center'}
+            spacing={{ base: 8, md: 10 }}
+            direction={{
+              base: 'column',
+              md: 'row',
+            }}
+            backgroundColor={'blue.100'}
+            borderRadius='2xl'
+            py='4'
+            px='14'
+          >
+            <Stack flex={1} spacing={{ base: 5, md: 10 }}>
+              <Heading
+                fontWeight='black'
+                fontSize={{ base: '3xl', sm: '4xl', lg: '6xl' }}
+                as='h2'
+              >
+                Alumni
+              </Heading>
+              <Text>
+                They’re exemplary, they’re buoyant, they’re the high fliers,
+                they’re the veterans. Here’s to help you learn more and connect
+                with our respected alumni.
+              </Text>
+            </Stack>
+            <Flex flex={1} justify={'center'} align={'center'}>
+              <Image
+                width='500'
+                height='200'
+                alt='zigbee hero'
+                src={AlumniHeroImg}
+              />
+            </Flex>
           </Stack>
-          <Flex flex={1} justify={'center'} align={'center'}>
-            <Image
-              width='500'
-              height='200'
-              alt='zigbee hero'
-              src={AlumniHeroImg}
+
+          {/* highlights */}
+
+          <Text fontSize={24} mt={8}>
+            Highlights
+          </Text>
+
+          <Box my={8}></Box>
+
+          <Swiper
+            slidesPerView={1}
+            spaceBetween={10}
+            pagination={{
+              clickable: true,
+            }}
+            breakpoints={{
+              640: {
+                slidesPerView: 2,
+                spaceBetween: 10,
+              },
+
+              1024: {
+                slidesPerView: 3,
+                spaceBetween: 10,
+              },
+            }}
+            modules={[Pagination]}
+            className='mySwiper'
+          >
+            {highlightedAlumini.map((h, i) => (
+              <SwiperSlide key={i}>
+                <Card maxW='md' border={'1px solid #eee'}>
+                  <CardHeader>
+                    <Flex spacing='4'>
+                      <Flex
+                        flex='1'
+                        gap='4'
+                        alignItems='center'
+                        flexWrap='wrap'
+                      >
+                        <Avatar
+                          name={h.name}
+                          src={
+                            h.imgURL ||
+                            'https://xsgames.co/randomusers/assets/avatars/male/63.jpg'
+                          }
+                        />
+
+                        <Box>
+                          <Heading size='sm'>{h.name}</Heading>
+                          <Text>
+                            {h.company}, Batch of {h.batch}{' '}
+                          </Text>
+                        </Box>
+                      </Flex>
+                    </Flex>
+                  </CardHeader>
+                  <CardBody>
+                    <Text>{h.text}</Text>
+                  </CardBody>
+                </Card>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+
+          {/* alumni data */}
+          <Flex my={'2em'} gap='1em' direction={'row'}>
+            <Tabs
+              selectedYear={selectedYear}
+              setSelectedYear={setSelectedYear}
+            />
+
+            <TabContent
+              alums={alumni.sort((a, b) => a?.name.localeCompare(b?.name))}
             />
           </Flex>
-        </Stack>
+        </Container>
+      </motion.div>
 
-        {/* highlights */}
-
-        <Text fontSize={24} mt={8}>
-          Highlights
-        </Text>
-
-        <Box my={8}></Box>
-
-        <Swiper
-          slidesPerView={1}
-          spaceBetween={10}
-          pagination={{
-            clickable: true,
-          }}
-          breakpoints={{
-            640: {
-              slidesPerView: 2,
-              spaceBetween: 10,
-            },
-
-            1024: {
-              slidesPerView: 3,
-              spaceBetween: 10,
-            },
-          }}
-          modules={[Pagination]}
-          className='mySwiper'
-        >
-          {highlightedAlumini.map((h, i) => (
-            <SwiperSlide key={i}>
-              <Card maxW='md' border={'1px solid #eee'}>
-                <CardHeader>
-                  <Flex spacing='4'>
-                    <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
-                      <Avatar
-                        name={h.name}
-                        src={
-                          h.imgURL ||
-                          'https://xsgames.co/randomusers/assets/avatars/male/63.jpg'
-                        }
-                      />
-
-                      <Box>
-                        <Heading size='sm'>{h.name}</Heading>
-                        <Text>
-                          {h.company}, Batch of {h.batch}{' '}
-                        </Text>
-                      </Box>
-                    </Flex>
-                  </Flex>
-                </CardHeader>
-                <CardBody>
-                  <Text>{h.text}</Text>
-                </CardBody>
-              </Card>
-            </SwiperSlide>
-          ))}
-        </Swiper>
-
-        {/* alumni data */}
-        <Flex my={'2em'} gap='1em' direction={'row'}>
-          <Tabs selectedYear={selectedYear} setSelectedYear={setSelectedYear} />
-
-          <TabContent
-            alums={alumni.sort((a, b) => a?.name.localeCompare(b?.name))}
-          />
-        </Flex>
-      </Container>
       <Footer />
     </>
   );
