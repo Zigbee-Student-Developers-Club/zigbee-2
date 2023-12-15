@@ -19,8 +19,8 @@ const navItemsData = [
     route: '/resources',
   },
   {
-    name: 'Drafts',
-    route: '/drafts',
+    name: 'Magazines',
+    route: '/magazines',
   },
 ];
 

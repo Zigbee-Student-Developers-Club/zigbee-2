@@ -37,8 +37,8 @@ export default function Footer() {
         </VStack>
         <Stack direction={'column'} spacing={3} my={{ base: '6', md: '0' }}>
           <Link href='/codewars'>Codewars</Link>
-          <Link href='/codewars'>Gallery</Link>
-          <Link href='/codewars'>Blogs</Link>
+          <Link href='/gallery'>Gallery</Link>
+          {/* <Link href='/blogs'>Blogs</Link> */}
         </Stack>
 
         <Stack direction={'column'} spacing={3} my={{ base: '6', md: '0' }}>

@@ -20,11 +20,11 @@
     "eslint": "8.29.0",
     "eslint-config-next": "13.0.7",
     "framer-motion": "^7.10.3",
-    "keen-slider": "^6.8.6",
     "next": "13.0.7",
     "react": "18.2.0",
     "react-bootstrap-icons": "^1.10.2",
     "react-dom": "18.2.0",
+    "swiper": "^11.0.5",
     "typescript": "4.9.4",
     "uuid": "^9.0.1"
   },
