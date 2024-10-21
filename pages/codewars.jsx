@@ -17,6 +17,12 @@ import Codewars1 from '/assets/events/codewars/codewars1.jpeg';
 import Codewars2 from '/assets/events/codewars/codewars2.jpeg';
 import Codewars3 from '/assets/events/codewars/codewars3.jpeg';
 import Codewars4 from '/assets/events/codewars/codewars4.jpeg';
+
+import BabitaImg from '/assets/events/codewars/winners/babita.jpg';
+import PankajImg from '/assets/events/codewars/winners/pankaj.jpg';
+import SatyabratImg from '/assets/events/codewars/winners/satyabrat.jpeg';
+import BhubenshImg from '/assets/events/codewars/winners/bhubensh.jpg';
+import SriramImg from '/assets/events/codewars/winners/sriram.JPG';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { EffectCards } from 'swiper/modules';
 import { motion } from 'framer-motion';
@@ -25,6 +31,43 @@ import 'swiper/css';
 import 'swiper/css/effect-cards';
 
 const codewarsGallery = [Codewars1, Codewars2, Codewars3, Codewars4];
+const codewarsWinnersGallery = [
+  ,
+  ,
+  ,
+  ,
+  {
+    imgSrc: BabitaImg,
+    name: 'Babita Mohalik',
+    position: '1st',
+    competition: 'Coding & Aptitude',
+  },
+  {
+    imgSrc: PankajImg,
+    name: 'Pankaj Kar',
+    position: '2nd',
+    competition: 'Coding & Aptitude',
+  },
+  {
+    imgSrc: SatyabratImg,
+    name: 'Satyabrat Jena',
+    position: '3rd',
+    competition: 'Coding & Aptitude',
+  },
+
+  {
+    imgSrc: SriramImg,
+    name: 'Sriram Sahoo',
+    position: 'Winner',
+    competition: 'Web Dev',
+  },
+  {
+    imgSrc: BhubenshImg,
+    name: 'Bhubanesh Maharana',
+    position: 'Runner Up',
+    competition: 'Web Dev',
+  },
+];
 
 const Events = () => {
   // console.log(Codewars1);
@@ -86,25 +129,64 @@ const Events = () => {
 
           {/* 2023 */}
           <Flex
-            my='32'
+            mt={20}
+            mb='4'
             justifyContent={'center'}
             alignItems={'center'}
             flexDir={'column'}
           >
-            <Text fontSize={'4xl'} mb={'4'} fontWeight={'bold'}>
+            <Text
+              mb={'4'}
+              fontWeight={'bold'}
+              fontSize={{
+                base: '2xl',
+                sm: '3xl',
+                md: '4xl',
+              }}
+            >
               Codewars 2023 🚀
-            </Text>
-            <Text as={'p'}>
-              Stay Tuned! Winners will be announced soon...🎉
             </Text>
           </Flex>
 
-          {/* Gallery */}
+          <Grid
+            my='8'
+            mb={32}
+            templateColumns='repeat(3, 1fr)'
+            justifyContent={'center'}
+            gap={8}
+          >
+            {codewarsWinnersGallery.map((w, i) => (
+              <GridItem key={i}>
+                <Image
+                  height='400'
+                  width='400'
+                  objectFit={'cover'}
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    aspectRatio: 1,
+                  }}
+                  alt='codewars hero'
+                  src={w.imgSrc.src}
+                  borderRadius={'2xl'}
+                  transition={'0.2s'}
+                />
+                <Text fontSize={'xl'} my={2} fontWeight={'semibold'}>
+                  {w.name}
+                </Text>
+                <Text>
+                  {w.position} in CodeWars ({w.competition})
+                </Text>
+              </GridItem>
+            ))}
+          </Grid>
 
+          {/* Gallery */}
           <Text
             as={'h1'}
             textAlign={'center'}
             fontSize={{
+              base: '2xl',
               sm: '3xl',
               md: '4xl',
             }}
@@ -181,7 +263,8 @@ const Events = () => {
               base: 'block',
               md: 'none',
             }}
-            mx='8'
+            m='8'
+            mx='10'
           >
             <Swiper
               effect={'cards'}
@@ -189,8 +272,6 @@ const Events = () => {
               modules={[EffectCards]}
               className='mySwiper'
             >
-              <SwiperSlide></SwiperSlide>
-
               {codewarsGallery.map((c, i) => (
                 <SwiperSlide key={i}>
                   <Image
