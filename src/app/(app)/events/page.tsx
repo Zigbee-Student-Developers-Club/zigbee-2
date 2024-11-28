@@ -96,7 +96,7 @@ export default function AlumniConnect() {
           <InfoSection
             imageSrc="/event-img.png"
             heading="Events"
-            text="                Yes, we’ve been really busy and happening lately. Or maybe it’s
+            text=" Yes, we’ve been really busy and happening lately. Or maybe it’s
                 just that we love making it to the headlines time and again.
                 Nevertheless, here’s to take you on a quick tour on all our
                 ventures in the recent past."
@@ -107,10 +107,12 @@ export default function AlumniConnect() {
             placedImage={false}
           />
 
-          <div className="mt-10 grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3
-          container mx-auto my-16 max-w-[1200px]">
+          <div
+            className="mt-10 grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3
+          container mx-auto my-16 max-w-[1200px]"
+          >
             {eventsData.map((data, i) => (
-              <Card key={i} className="hover:shadow-lg ">
+              <Card key={i} className="flex flex-col hover:shadow-lg h-auto">
                 <CardHeader>
                   <Image
                     className="rounded-t-lg"
@@ -119,22 +121,22 @@ export default function AlumniConnect() {
                     width={400}
                     height={200}
                   />
-                  <CardTitle className="mt-4 text-xl font-bold">
+                </CardHeader>
+                <CardContent className="flex-grow text-gray-500 dark:text-gray-200">
+                  <CardTitle className="my-4 text-xl font-bold">
                     {data.topic}
                   </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-gray-500">{data.date}</p>
+                  <p className="text-sm ">{data.date}</p>
                   <ul className="mt-4 space-y-2 text-sm">
                     {data.speakers.map((speaker, idx) => (
-                      <li key={idx} className="text-gray-700">
+                      <li key={idx} >
                         <span className="font-medium">{speaker.name}</span> (
                         {speaker.batch}) - {speaker.role}, {speaker.company}
                       </li>
                     ))}
                   </ul>
                 </CardContent>
-                <CardFooter>
+                <CardFooter className="mt-auto">
                   <Button variant="outline" className="w-full">
                     {data.expired ? "Event Expired" : "View Details"}
                   </Button>
