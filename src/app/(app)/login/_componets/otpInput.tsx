@@ -20,15 +20,16 @@ const OtpInput: React.FC<OtpInputProps> = ({ length, onOtpSubmit }) => {
 
   const handleChange = (index: number, e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    if (isNaN(Number(value))) return; 
+
+    if (isNaN(Number(value))) return; // Prevent non-numeric input
 
     const newOtp = [...otp];
-    newOtp[index] = value.substring(value.length - 1); 
+    newOtp[index] = value.substring(value.length - 1); // Take only the last entered digit
     setOtp(newOtp);
 
-    // Trigger submission when all fields are filled
+    // If the last input field is updated and all fields are filled, trigger submission
     const combinedOtp = newOtp.join("");
-    if (combinedOtp.length === length) {
+    if (index === length - 1 && combinedOtp.length === length) {
       onOtpSubmit(combinedOtp);
     }
 
@@ -51,7 +52,6 @@ const OtpInput: React.FC<OtpInputProps> = ({ length, onOtpSubmit }) => {
 
   return (
     <div className="flex flex-col justify-center items-center gap-4">
-
       <div className="flex gap-1">
         {otp.map((value, index) => (
           <input
@@ -67,17 +67,6 @@ const OtpInput: React.FC<OtpInputProps> = ({ length, onOtpSubmit }) => {
           />
         ))}
       </div>
-
-      <button
-        type="submit"
-        className={`rounded w-[50%] bg-blue-500 text-white  p-2 mt-6 mb-12 ${
-          otp.includes("") ? "cursor-not-allowed bg-gray-600" : "cursor-pointer"
-        }`}
-        disabled={otp.includes("")}
-        onClick={() => onOtpSubmit(otp.join(""))}
-      >
-        Verify
-      </button>
     </div>
   );
 };

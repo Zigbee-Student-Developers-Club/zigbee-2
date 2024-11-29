@@ -1,14 +1,12 @@
 "use client";
 
 import { motion } from "framer-motion";
-// import { Button } from "@/components/ui/button";
-import { useState } from "react";
-import Link from "next/link";
-import { Card, CardHeader, CardContent } from "@/components/ui/card";
+import InfoSection from "@/components/common/InfoSection";
 import { Select2 } from "@/components/ui/select2";
 import { Text } from "@/components/ui/text";
-import InfoSection from "@/components/common/InfoSection";
 import { ResourceData } from "@/Data/ResourceData";
+import Link from "next/link";
+import { useState } from "react";
 import ResourceCard from "./_components/Resourcecard";
 
 export default function Resources() {

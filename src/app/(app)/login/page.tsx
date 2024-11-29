@@ -14,6 +14,7 @@ const Page = () => {
   // states
   const [email, setEmail] = useState("");
   const [showOtpInput, setShowOtpInput] = useState(false);
+  const [isEmailValid, setIsEmailValid] = useState(false);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
   const [messageColor, setMessageColor] = useState("text-red-500");
@@ -24,12 +25,16 @@ const Page = () => {
   const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value); // Update email state
   };
+
   // Validate email on every change using useEffect
   useEffect(() => {
     if (!emailPattern.test(email)) {
+      setIsEmailValid(false);
       return;
     } else {
       console.log("email valid");
+      setIsEmailValid(true);
+
       // Check if the email is registered
       if (email === "abc@gmail.com") {
         setMessage("Email registered");
@@ -51,12 +56,23 @@ const Page = () => {
     setTimeout(() => {
       // Hide the loading spinner after 2 seconds
       setLoading(false);
-      setShowOtpInput(true); // You can add your OTP input logic here
+      alert("OTP sent to your email!");
     }, 2000); // Adjust time as needed
   };
+
   const onOtpSubmit = (otp: string) => {
     console.log("Login Successful with OTP:", otp);
     alert(`otp  : ${otp}`);
+  };
+  const handleOtpSubmit = () => {
+    setLoading(true);
+
+    // Simulate API call or some async process
+    setTimeout(() => {
+      // Hide the loading spinner after 2 seconds
+      setLoading(false);
+      setShowOtpInput(true); // You can add your OTP input logic here
+    }, 2000);
   };
   return (
     <>
@@ -104,7 +120,7 @@ const Page = () => {
                 className="mt-6 flex items-center gap-2"
                 type="submit"
                 onClick={handleEmailSubmit}
-                disabled={loading} // Disable the button when loading
+                disabled={!isEmailValid || loading} // Disable if email is invalid or loading
               >
                 GET OTP
                 {loading && <LoadingSpinner />}
@@ -124,7 +140,15 @@ const Page = () => {
                 onOtpSubmit={onOtpSubmit}
                 setDisplayArea={setShowOtpInput}
               />
-              <LoadingSpinner />
+              <Button
+                type="button"
+                className="mt-6 flex items-center gap-2"
+                onClick={handleOtpSubmit}
+                disabled={loading}
+              >
+                Verify
+                {loading && <LoadingSpinner />}
+              </Button>
             </div>
           )}
         </div>
