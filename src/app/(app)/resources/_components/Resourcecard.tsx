@@ -1,11 +1,18 @@
-import { Card, CardHeader, CardContent } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
+import { Text } from "@/components/ui/text";
+import Title from "@/components/ui/title";
 import { NextPage } from "next";
 import clsx from "clsx";
+import "./resourceCard.module.css"
 
 interface ResourceCardProps {
-  data?: any;
+  data: {
+    courseName: string;
+    author: string;
+  };
 }
 
+// Tailwind classes for colors
 const bgColorArray = [
   "bg-red-50",
   "bg-orange-50",
@@ -26,61 +33,55 @@ const blobColorArray = [
   "bg-purple-200",
   "bg-pink-200",
 ];
-const positionArr = ["1", "1.5", "2", "2.5", "3", "3.5"];
-
-const getRandom = (array: string[]) => array[Math.floor(Math.random() * array.length)];
-const getRandomRadius = () => Math.floor(Math.random() * 89) + 10;
+const positionArr = ["top-2", "top-4", "top-6", "top-8", "top-10", "top-12"];
 
 const ResourceCard: NextPage<ResourceCardProps> = ({ data }) => {
   return (
-    <Card className={clsx("p-4 h-full mx-auto", getRandom(bgColorArray))}>
-      <div className="relative h-full">
-        {/* Blobs */}
-        <div
-          className={clsx(
-            "absolute rounded-full opacity-30 blur-md",
-            getRandom(blobColorArray),
-            "w-24 h-24"
-          )}
-          style={{
-            top: `${getRandom(positionArr)}rem`,
-            left: `${getRandom(positionArr)}rem`,
-            borderRadius: `${getRandomRadius()}%`,
-          }}
-        ></div>
-        <div
-          className={clsx(
-            "absolute rounded-full opacity-30 blur-md",
-            getRandom(blobColorArray),
-            "w-24 h-24"
-          )}
-          style={{
-            top: "10%",
-            left: "40%",
-            borderRadius: `${getRandomRadius()}%`,
-          }}
-        ></div>
-        <div
-          className={clsx(
-            "absolute rounded-full opacity-30 blur-md",
-            getRandom(blobColorArray),
-            "w-24 h-24"
-          )}
-          style={{
-            bottom: `${getRandom(positionArr)}rem`,
-            right: `${getRandom(positionArr)}rem`,
-            borderRadius: `${getRandomRadius()}%`,
-          }}
-        ></div>
+    <Card
+      className={clsx(
+        "relative p-4 h-72 m-auto overflow-hidden card",
+        bgColorArray[Math.floor(Math.random() * bgColorArray.length)]
+      )}
+    >
+      {/* Blob 1 */}
+      <div
+        className={clsx(
+          "absolute h-24 w-24 rounded-full opacity-30 transition-transform duration-300 transform ",
+          blobColorArray[Math.floor(Math.random() * blobColorArray.length)],
+          positionArr[Math.floor(Math.random() * positionArr.length)],
+          "left-4"
+        )}
+      ></div>
 
-        {/* Card Content */}
-        <CardHeader>
-          <h3 className="font-extrabold text-xl">{data.courseName}</h3>
-        </CardHeader>
-        <CardContent>
-          <p className="px-4 text-gray-600">with</p>
-          <p className="px-4 font-black text-lg">{data.author}</p>
-        </CardContent>
+      {/* Blob 2 */}
+      <div
+        className={clsx(
+          "absolute h-24 w-24 rounded-full opacity-30 transition-transform duration-300 transform ",
+          blobColorArray[Math.floor(Math.random() * blobColorArray.length)],
+          "top-12 right-10"
+        )}
+      ></div>
+
+      {/* Blob 3 */}
+      <div
+        className={clsx(
+          "absolute h-24 w-24 rounded-full opacity-30 transition-transform duration-300 transform ",
+          blobColorArray[Math.floor(Math.random() * blobColorArray.length)],
+          "bottom-4 left-8"
+        )}
+      ></div>
+
+      {/* Card Content */}
+      <div className="relative z-10">
+        <Title size="medium"
+          className="font-extrabold  text-lg text-gray-900  mb-2"
+        >
+          {data.courseName}
+        </Title>
+        <Text className="text-gray-700 px-2">with</Text>
+        <Text className="font-black text-xl text-gray-900  px-2">
+          {data.author}
+        </Text>
       </div>
     </Card>
   );
