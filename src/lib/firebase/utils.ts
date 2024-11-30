@@ -1,6 +1,7 @@
 import { addDoc, collection, doc, getDoc, getDocs, getFirestore, query, updateDoc, where } from 'firebase/firestore';
 import firebaseApp from './config';
 import { userData } from '../types';
+import { sendVerificationEmail } from '../resend/utils';
 
 const db = getFirestore(firebaseApp);
 
@@ -54,6 +55,16 @@ export const sendOtp = async (email: string) => {
             });
         } else {
             await addDoc(userCollection, data);
+        }
+
+        // send OTP
+        const response = await sendVerificationEmail(email, tempOtp);
+
+        if (!response.success) {
+            return {
+                result: false,
+                error: response.message
+            }
         }
 
         result = true;
