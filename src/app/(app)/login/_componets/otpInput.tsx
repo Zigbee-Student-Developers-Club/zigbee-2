@@ -1,73 +1,64 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState, useEffect } from "react";
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSlot,
+} from "@/components/ui/input-otp";
 
 interface OtpInputProps {
   length: number;
   onOtpSubmit: (otp: string) => void;
-  setDisplayArea: (visible: boolean) => void;
 }
 
 const OtpInput: React.FC<OtpInputProps> = ({ length, onOtpSubmit }) => {
-  const [otp, setOtp] = useState<string[]>(new Array(length).fill(""));
-  const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
+  const [otp, setOtp] = useState<string>("");
 
+  // This effect runs every time the otp changes
   useEffect(() => {
-    if (inputRefs.current[0]) {
-      inputRefs.current[0].focus();
+    // If the OTP value is complete, submit the OTP
+    if (otp.length === length) {
+      console.log("OTP is complete:", otp); // Debug log
+      onOtpSubmit(otp); // Trigger the submit action
     }
-  }, []);
-
-  const handleChange = (index: number, e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-
-    if (isNaN(Number(value))) return; // Prevent non-numeric input
-
-    const newOtp = [...otp];
-    newOtp[index] = value.substring(value.length - 1); // Take only the last entered digit
-    setOtp(newOtp);
-
-    // If the last input field is updated and all fields are filled, trigger submission
-    const combinedOtp = newOtp.join("");
-    if (index === length - 1 && combinedOtp.length === length) {
-      onOtpSubmit(combinedOtp);
-    }
-
-    // Move to the next input if not the last input
-    if (value && index < length - 1 && inputRefs.current[index + 1]) {
-      inputRefs.current[index + 1]?.focus();
-    }
-  };
-
-  const handleKeyDown = (index: number, e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (
-      e.key === "Backspace" &&
-      !otp[index] &&
-      index > 0 &&
-      inputRefs.current[index - 1]
-    ) {
-      inputRefs.current[index - 1]?.focus();
-    }
-  };
+  }, [otp, length, onOtpSubmit]); // Trigger the effect when otp or length changes
 
   return (
-    <div className="flex flex-col justify-center items-center gap-4">
-      <div className="flex gap-1">
-        {otp.map((value, index) => (
-          <input
-            key={index}
-            type="text"
-            ref={(el) => {
-              inputRefs.current[index] = el;
-            }}
-            value={value}
-            onChange={(e) => handleChange(index, e)}
-            onKeyDown={(e) => handleKeyDown(index, e)}
+    <>
+      <InputOTP
+        maxLength={length}
+        value={otp}
+        onChange={(newValue) => setOtp(newValue)} // Update value as the user types
+      >
+        <InputOTPGroup className="gap-2">
+          <InputOTPSlot
+            index={0}
             className="h-10 w-10 text-center text-xl border-2 border-blue-400 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
-        ))}
-      </div>
-    </div>
+          <InputOTPSlot
+            index={1}
+            className="h-10 w-10 text-center text-xl border-2 border-blue-400 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <InputOTPSlot
+            index={2}
+            className="h-10 w-10 text-center text-xl border-2 border-blue-400 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <InputOTPSlot
+            index={3}
+            className="h-10 w-10 text-center text-xl border-2 border-blue-400 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <InputOTPSlot
+            index={4}
+            className="h-10 w-10 text-center text-xl border-2 border-blue-400 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <InputOTPSlot
+            index={5}
+            className="h-10 w-10 text-center text-xl border-2 border-blue-400 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </InputOTPGroup>
+      </InputOTP>
+    </>
   );
 };
 

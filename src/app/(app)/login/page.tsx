@@ -8,15 +8,17 @@ import OtpInput from "./_componets/otpInput";
 import { Button } from "@/components/ui/button";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 
+import { checkUserExist, getOtp } from "@/lib/axios/allApiCall";
+
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-const Page = () => {
+const LoginPage = () => {
   // states
   const [email, setEmail] = useState("");
   const [showOtpInput, setShowOtpInput] = useState(false);
   const [isEmailValid, setIsEmailValid] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState(" ");
   const [messageColor, setMessageColor] = useState("text-red-500");
 
   const emailInputRef = useRef<HTMLInputElement>(null);
@@ -26,44 +28,62 @@ const Page = () => {
     setEmail(event.target.value); // Update email state
   };
 
-  // Validate email on every change using useEffect
   useEffect(() => {
-    if (!emailPattern.test(email)) {
-      setIsEmailValid(false);
-      return;
-    } else {
-      console.log("email valid");
-      setIsEmailValid(true);
-
-      // Check if the email is registered
-      if (email === "abc@gmail.com") {
-        setMessage("Email registered");
-        setMessageColor("text-green-500");
+    const validateEmail = async () => {
+      if (!emailPattern.test(email)) {
+        setIsEmailValid(false);
+        setMessage(""); // Clear message if email is invalid
+        return;
       } else {
-        setMessage("Email not registered");
-        setMessageColor("text-red-500");
-      }
-    }
-  }, [email]);
+        try {
+          const response = await checkUserExist({ email });
 
-  const handleEmailSubmit = (event: React.FormEvent) => {
+          // Extract the isRegistered boolean value from the response
+          const isUserRegistered = response.isRegistered;
+
+          console.log("email valid");
+          setIsEmailValid(true);
+
+          // Check if the email is registered
+          if (isUserRegistered) {
+            setMessage("Email registered");
+            setMessageColor("text-green-500");
+          } else {
+            setMessage("Email not registered");
+            setMessageColor("text-red-500");
+          }
+        } catch (error) {
+          console.error("Error while checking user registration:", error);
+          setMessage("Error checking registration");
+          setMessageColor("text-red-500");
+        }
+      }
+    };
+
+    // Call the validateEmail function
+    validateEmail();
+  }, [email]);
+  const handleEmailSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
     // Show loading spinner
     setLoading(true);
 
     // Simulate API call or some async process
-    setTimeout(() => {
-      // Hide the loading spinner after 2 seconds
+    const response = await getOtp({ email });
+    if (response) {
       setLoading(false);
-      alert("OTP sent to your email!");
-    }, 2000); // Adjust time as needed
+      setShowOtpInput(true);
+    } else {
+      alert("unkown error");
+    }
   };
 
   const onOtpSubmit = (otp: string) => {
     console.log("Login Successful with OTP:", otp);
     alert(`otp  : ${otp}`);
   };
+  
   const handleOtpSubmit = () => {
     setLoading(true);
 
@@ -106,14 +126,14 @@ const Page = () => {
                   className="bg-slate-50 border border-black text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[16rem] p-2.5"
                   required
                 />
-                {message && (
-                  <Text
-                    variant="small"
-                    className={`text-center mt-2 ${messageColor}`}
-                  >
-                    {message}
-                  </Text>
-                )}
+
+                {/* Message Text with a reserved height */}
+                <Text
+                  variant="small"
+                  className={`text-center mt-2 ${messageColor} min-h-[1.25rem]`} // Set a minimum height for the Text component
+                >
+                  {message || " "} {/* If no message, show an empty space */}
+                </Text>
               </div>
 
               <Button
@@ -135,11 +155,7 @@ const Page = () => {
                 Back
               </div>
               <Title size="medium">Check your email</Title>
-              <OtpInput
-                length={6}
-                onOtpSubmit={onOtpSubmit}
-                setDisplayArea={setShowOtpInput}
-              />
+              <OtpInput length={6} onOtpSubmit={onOtpSubmit} />
               <Button
                 type="button"
                 className="mt-6 flex items-center gap-2"
@@ -157,4 +173,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default LoginPage;
