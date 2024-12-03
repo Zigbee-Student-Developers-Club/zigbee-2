@@ -12,30 +12,15 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Moon, Sun } from "lucide-react";
+import { Moon, Sun, Menu, X } from "lucide-react";
 import Logo from "./Logo";
 
 const navItemsData = [
-  {
-    name: "Department",
-    route: "/department",
-  },
-  {
-    name: "Alumni",
-    route: "/alumni",
-  },
-  {
-    name: "Events",
-    route: "/events",
-  },
-  {
-    name: "Resources",
-    route: "/resources",
-  },
-  {
-    name: "Magazines",
-    route: "/magazines",
-  },
+  { name: "Department", route: "/department" },
+  { name: "Alumni", route: "/alumni" },
+  { name: "Events", route: "/events" },
+  { name: "Resources", route: "/resources" },
+  { name: "Magazines", route: "/magazines" },
 ];
 
 const Header = () => {
@@ -43,10 +28,13 @@ const Header = () => {
   const router = useRouter();
 
   const [token, setToken] = useState<string | null>(null);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [themeMenuOpen, setThemeMenuOpen] = useState(false);
+  const [profileMenuOpen, setProfileMenuOpen] = useState(false);
 
   useEffect(() => {
-    // setToken(localStorage.getItem("auth-token"));
-    setToken("andggdsvsh");
+    // Mock authentication token
+    setToken("hgygygg");
   }, []);
 
   const handleNavigation = (navigate: string) => {
@@ -56,7 +44,7 @@ const Header = () => {
         break;
       case "logout":
         localStorage.removeItem("auth-token");
-        setToken(null); // Clear the token from state
+        setToken(null);
         router.push("/login");
         break;
       case "login":
@@ -65,26 +53,59 @@ const Header = () => {
       default:
         console.error("Unknown navigation option");
     }
+    // Close dropdowns when navigating
+    setThemeMenuOpen(false);
+    setProfileMenuOpen(false);
   };
 
   return (
-    <div className="w-full flex justify-between items-center gap-4 max-w-[1200px] mx-auto py-8">
+    <header className="w-full flex justify-between items-center max-w-[1200px] mx-auto py-4 px-4 md:py-8">
       <Logo />
 
-      <nav>
-        <ul className="flex items-center gap-8">
-          {navItemsData.map((item, index) => (
-            <Link href={item.route} key={index}>
-              {item.name}
-            </Link>
-          ))}
+      <div className="flex items-center gap-3 flex-row-reverse md:flex-row">
+        {/* Hamburger Menu for mobile */}
+        <button
+          className="block md:hidden text-gray-700 dark:text-gray-300"
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          aria-label="Toggle menu"
+        >
+          {isMenuOpen ? (
+            <X className="h-6 w-6" />
+          ) : (
+            <Menu className="h-6 w-6" />
+          )}
+        </button>
 
-          <DropdownMenu>
+        {/* Navigation */}
+        <nav
+          className={`${
+            isMenuOpen ? "block" : "hidden"
+          } absolute top-16 left-0 w-full bg-white dark:bg-gray-800 shadow-md md:static md:flex md:w-auto md:bg-transparent md:shadow-none z-10`}
+        >
+          <ul className="flex flex-col md:flex-row items-center md:gap-8 p-4 md:p-0">
+            {navItemsData.map((item, index) => (
+              <li key={index} className="mb-2 md:mb-0">
+                <Link
+                  href={item.route}
+                  className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
+                  onClick={() => setIsMenuOpen(false)} // Close menu on link click
+                >
+                  {item.name}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        {/* Theme and Profile */}
+        <div className="flex items-center gap-4">
+          {/* Theme Toggle */}
+          <DropdownMenu open={themeMenuOpen} onOpenChange={setThemeMenuOpen}>
             <DropdownMenuTrigger asChild>
-              <Button variant='outline' size='icon'>
-                <Sun className='h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0' />
-                <Moon className='absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100' />
-                <span className='sr-only'>Toggle theme</span>
+              <Button variant="outline" size="icon">
+                <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+                <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+                <span className="sr-only">Toggle theme</span>
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
@@ -99,17 +120,20 @@ const Header = () => {
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-          <DropdownMenu>
+
+          {/* Profile Dropdown */}
+          <DropdownMenu
+            open={profileMenuOpen}
+            onOpenChange={setProfileMenuOpen}
+          >
             <DropdownMenuTrigger asChild>
-              <Button variant="outline" size="icon" aria-label="User menu">
-                <Avatar>
-                  <AvatarImage
-                    src="https://github.com/shadcn.png"
-                    alt="User Avatar"
-                  />
-                  <AvatarFallback>Profile</AvatarFallback>
-                </Avatar>
-              </Button>
+              <Avatar className="cursor-pointer">
+                <AvatarImage
+                  src={token ? "https://github.com/shadcn.png" : ""}
+                  alt="User Avatar"
+                />
+                <AvatarFallback>{token ? "U" : "?"}</AvatarFallback>
+              </Avatar>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               {token ? (
@@ -128,9 +152,9 @@ const Header = () => {
               )}
             </DropdownMenuContent>
           </DropdownMenu>
-        </ul>
-      </nav>
-    </div>
+        </div>
+      </div>
+    </header>
   );
 };
 
