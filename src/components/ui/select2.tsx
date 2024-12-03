@@ -60,7 +60,7 @@ const Select2 = ({
         onValueChange={onChange}
         disabled={disabled || loading}
       >
-        <SelectTrigger className={cn("min-w-60 w-full", className)}>
+        <SelectTrigger className={cn("w-full min-w-60", className)}>
           <SelectValue placeholder={placeholder}>
             {loading ? (
               <div className="flex items-center gap-2">
@@ -98,7 +98,7 @@ const Select2 = ({
               );
             })
           ) : (
-            <div className="flex flex-col items-center justify-center gap-2 py-8 px-2 text-sm text-gray-500">
+            <div className="flex flex-col items-center justify-center gap-2 px-2 py-8 text-sm text-gray-500">
               <PackageX className="h-6 w-6 text-gray-400" />
               {emptyMessage}
             </div>

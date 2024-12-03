@@ -107,12 +107,9 @@ export default function AlumniConnect() {
             placedImage={false}
           />
 
-          <div
-            className="mt-10 grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3
-          container mx-auto my-16 max-w-[1200px]"
-          >
+          <div className="container mx-auto my-16 mt-10 grid max-w-[1200px] gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
             {eventsData.map((data, i) => (
-              <Card key={i} className="flex flex-col hover:shadow-lg h-auto">
+              <Card key={i} className="flex h-auto flex-col hover:shadow-lg">
                 <CardHeader>
                   <Image
                     className="rounded-t-lg"
@@ -126,10 +123,10 @@ export default function AlumniConnect() {
                   <CardTitle className="my-4 text-xl font-bold">
                     {data.topic}
                   </CardTitle>
-                  <p className="text-sm ">{data.date}</p>
+                  <p className="text-sm">{data.date}</p>
                   <ul className="mt-4 space-y-2 text-sm">
                     {data.speakers.map((speaker, idx) => (
-                      <li key={idx} >
+                      <li key={idx}>
                         <span className="font-medium">{speaker.name}</span> (
                         {speaker.batch}) - {speaker.role}, {speaker.company}
                       </li>

@@ -11,8 +11,8 @@ import Logo from "@/app/_components/Logo";
 
 export default function Footer() {
   return (
-    <div className="mt-6 px-8 bg-gray-100 py-8 text-gray-800 rounded-xl dark:bg-neutral-900 dark:text-gray-300">
-      <div className="container mx-auto flex flex-wrap gap-4 justify-between items-start py-4">
+    <div className="mt-6 rounded-xl bg-gray-100 px-8 py-8 text-gray-800 dark:bg-neutral-900 dark:text-gray-300">
+      <div className="container mx-auto flex flex-wrap items-start justify-between gap-4 py-4">
         {/* Logo and Address */}
         <div className="flex flex-col items-start">
           <Logo />
@@ -20,7 +20,7 @@ export default function Footer() {
         </div>
 
         {/* Navigation Links - Column 1 */}
-        <div className="flex flex-col space-y-3 mt-6 md:mt-0">
+        <div className="mt-6 flex flex-col space-y-3 md:mt-0">
           <Link href="/codewars" className="hover:text-teal-500">
             Codewars
           </Link>
@@ -32,7 +32,7 @@ export default function Footer() {
         </div>
 
         {/* Navigation Links - Column 2 */}
-        <div className="flex flex-col space-y-3 mt-6 md:mt-0">
+        <div className="mt-6 flex flex-col space-y-3 md:mt-0">
           <Link href="/department" className="hover:text-teal-500">
             Department
           </Link>
@@ -51,7 +51,7 @@ export default function Footer() {
         </div>
 
         {/* Social Media Icons */}
-        <div className="flex space-x-6 mt-6 md:mt-0">
+        <div className="mt-6 flex space-x-6 md:mt-0">
           <Link
             href="https://www.instagram.com/zigbee.outr"
             target="_blank"
@@ -101,7 +101,7 @@ export default function Footer() {
       <div className="container mx-auto my-6 border-t border-gray-300"></div>
 
       {/* Footer Text */}
-      <p className="text-center mt-6">
+      <p className="mt-6 text-center">
         © 2022 Zigbee Student Developers&apos; Club. All rights reserved
       </p>
     </div>

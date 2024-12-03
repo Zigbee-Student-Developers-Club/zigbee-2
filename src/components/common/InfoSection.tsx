@@ -22,7 +22,7 @@ export default function InfoSection({
   background,
   darkBackground,
   imageHeight = 200, // Default height
-  imageWidth = 350,  // Default width
+  imageWidth = 350, // Default width
   placedImage = false, // Default to false, image on the left
 }: InfoSectionProps) {
   const ref = useRef(null);
@@ -40,15 +40,17 @@ export default function InfoSection({
         transition={{ duration: 1, ease: "easeOut" }}
       >
         <div
-          className={`max-w-7xl mx-auto rounded-2xl my-16 py-16 px-8 ${background} ${darkBackground}`}
+          className={`mx-auto my-16 max-w-7xl rounded-2xl px-8 py-16 ${background} ${darkBackground}`}
         >
           <div
             className={`flex ${
-              placedImage ? "flex-col-reverse md:flex-row" : "flex-col-reverse md:flex-row-reverse"
+              placedImage
+                ? "flex-col-reverse md:flex-row"
+                : "flex-col-reverse md:flex-row-reverse"
             } items-center justify-center gap-16`}
           >
             {/* Image Section */}
-            <div className="flex-1 flex justify-center items-center">
+            <div className="flex flex-1 items-center justify-center">
               <Image
                 alt={heading}
                 src={imageSrc}
@@ -60,10 +62,12 @@ export default function InfoSection({
 
             {/* Text Section */}
             <div className="flex-1">
-              <h2 className="font-extrabold text-3xl sm:text-4xl lg:text-6xl text-gray-800 dark:text-gray-200">
+              <h2 className="text-3xl font-extrabold text-gray-800 dark:text-gray-200 sm:text-4xl lg:text-6xl">
                 {heading}
               </h2>
-              <p className="small text-gray-800 dark:text-gray-300 mt-8">{text}</p>
+              <p className="small mt-8 text-gray-800 dark:text-gray-300">
+                {text}
+              </p>
             </div>
           </div>
         </div>

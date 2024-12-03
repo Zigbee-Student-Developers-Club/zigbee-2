@@ -1,6 +1,10 @@
 "use client";
 
-import { Accordion, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 
@@ -23,8 +27,8 @@ export default function FAQ() {
   };
 
   return (
-    <div className="my-16 py-4 max-w-3xl mx-auto">
-      <h2 className="text-center font-extrabold text-3xl sm:text-4xl lg:text-6xl">
+    <div className="mx-auto my-16 max-w-3xl py-4">
+      <h2 className="text-center text-3xl font-extrabold sm:text-4xl lg:text-6xl">
         FAQs
       </h2>
       <Accordion type="single" collapsible className="mt-8 space-y-4">

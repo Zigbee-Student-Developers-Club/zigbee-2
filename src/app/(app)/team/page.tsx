@@ -36,7 +36,7 @@ export default function ContributorsPage() {
   ];
 
   return (
-    <div className="max-w-7xl mx-auto  px-4">
+    <div className="mx-auto max-w-7xl px-4">
       <InfoSection
         imageSrc="/about-us.png"
         heading="Our Team"
@@ -45,8 +45,8 @@ export default function ContributorsPage() {
         darkBackground="dark:bg-emerald-900"
         placedImage={true}
       />
-      <h1 className="text-3xl font-bold text-center mb-10">Our Contributors</h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+      <h1 className="mb-10 text-center text-3xl font-bold">Our Contributors</h1>
+      <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
         {contributors.map((contributor, index) => (
           <ContributorCard key={index} {...contributor} />
         ))}

@@ -38,21 +38,21 @@ const User = () => {
     { value: "guest", label: "Guest" },
     { value: "aluminus", label: "Aluminus" },
     { value: "admin", label: "Admins" },
-    { value: "contributors", label: "Contributors"     },
-    { value: "nofilter", label: "No Filter"},
+    { value: "contributors", label: "Contributors" },
+    { value: "nofilter", label: "No Filter" },
   ];
 
   return (
     <>
       <Select2
-        className="w-48 my-6"
+        className="my-6 w-48"
         data={domainOptions}
         value={resourceOption}
         onChange={setResourceOption}
         placeholder="Filter"
       />
 
-      <Table className=" shadow-md rounded-lg overflow-hidden">
+      <Table className="overflow-hidden rounded-lg shadow-md">
         <TableHeader>
           <TableRow className="">
             <TableHead className="w-[150px]">Name</TableHead>

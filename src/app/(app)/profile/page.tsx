@@ -8,7 +8,7 @@ import Title from "@/components/ui/title";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { userData } from "@/lib/types"; 
+import { userData } from "@/lib/types";
 
 // Mock API Calls
 const fetchUserData = async (): Promise<userData> => {
@@ -73,10 +73,10 @@ const ProfilePage = () => {
   return (
     <div className="container mx-auto my-16 max-w-[1200px] px-4 sm:px-6">
       {/* Profile Banner */}
-      <div className="relative w-full h-80 bg-gray-200 dark:bg-gray-800 rounded-lg overflow-hidden">
-        <div className="object-cover w-full h-full bg-lime-400" />
-        <div className="absolute inset-0 bg-black/30 flex flex-col items-center justify-center space-y-4">
-          <Avatar className="w-52 h-52">
+      <div className="relative h-80 w-full overflow-hidden rounded-lg bg-gray-200 dark:bg-gray-800">
+        <div className="h-full w-full bg-lime-400 object-cover" />
+        <div className="absolute inset-0 flex flex-col items-center justify-center space-y-4 bg-black/30">
+          <Avatar className="h-52 w-52">
             <AvatarImage
               src={user.profileImg || "https://github.com/shadcn.png"}
               alt="User Avatar"
@@ -84,7 +84,7 @@ const ProfilePage = () => {
               width={400}
               className="rounded-full border-8 border-white"
             />
-            <AvatarFallback className="w-64 h-64 bg-gray-100 text-gray-700 text-2xl flex items-center justify-center rounded-full border-8 border-white">
+            <AvatarFallback className="flex h-64 w-64 items-center justify-center rounded-full border-8 border-white bg-gray-100 text-2xl text-gray-700">
               {user.name ? user.name[0] : "P"}
             </AvatarFallback>
           </Avatar>
@@ -103,15 +103,14 @@ const ProfilePage = () => {
       </div>
 
       {/* Edit Mode Toggle */}
-      <div className="flex justify-between items-center mt-6">
+      <div className="mt-6 flex items-center justify-between">
         <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
           Profile Details
         </h1>
-        
       </div>
 
       {/* Profile Information */}
-      <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2">
         <div>
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
             Full Name
@@ -191,7 +190,7 @@ const ProfilePage = () => {
               href={user.linkedInUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-blue-600 dark:text-blue-400 underline"
+              className="text-blue-600 underline dark:text-blue-400"
             >
               {user.linkedInUrl}
             </a>
@@ -230,7 +229,7 @@ const ProfilePage = () => {
 
       {/* Save Button */}
       {editMode && (
-        <div className="flex justify-end mt-6">
+        <div className="mt-6 flex justify-end">
           <Button onClick={handleSaveChanges} disabled={loading}>
             Save Changes
           </Button>
@@ -238,8 +237,8 @@ const ProfilePage = () => {
       )}
 
       {loading && (
-        <div className="flex justify-center mt-4">
-          <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-b-2 border-gray-500"></div>
+        <div className="mt-4 flex justify-center">
+          <div className="h-6 w-6 animate-spin rounded-full border-b-2 border-t-2 border-gray-500"></div>
         </div>
       )}
     </div>

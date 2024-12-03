@@ -54,10 +54,8 @@ export default function Resources() {
 
           {/* Select2 Dropdown */}
           <section className="container mx-auto my-16 max-w-[1200px] text-black dark:text-gray-200">
-            <div className="flex flex-col md:flex-row items-center justify-center py-8 gap-4">
-              <Text className="font-medium ">
-                Choose your domain:
-              </Text>
+            <div className="flex flex-col items-center justify-center gap-4 py-8 md:flex-row">
+              <Text className="font-medium">Choose your domain:</Text>
               <Select2
                 data={domainOptions}
                 value={resourceOption}
@@ -67,7 +65,7 @@ export default function Resources() {
             </div>
 
             {/* Resource Cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mt-8">
+            <div className="mt-8 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {filteredResources.map((item, index) => (
                 <motion.div
                   key={index}

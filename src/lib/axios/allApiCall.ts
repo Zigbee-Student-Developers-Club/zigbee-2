@@ -16,7 +16,7 @@ export const checkUserExist = async (
       if (response.status == 200) {
         return response.data;
       } else {
-        throw new Error("Error checking user")
+        throw new Error("Error checking user");
       }
     })
     .catch((error) => {
@@ -45,13 +45,15 @@ interface userCredential {
   otp: string;
 }
 interface getUserDetails {
-  isProvidedBasicData: boolean,
+  isProvidedBasicData: boolean;
 }
 
-export const verifyEmailOtp = async (data: userCredential): Promise<getUserDetails> => {
+export const verifyEmailOtp = async (
+  data: userCredential
+): Promise<getUserDetails> => {
   return apiClient.post("/api/verifyotp", data).then((response) => {
     if (response.status == 200) {
-      return response.data
+      return response.data;
     } else return null;
   });
 };

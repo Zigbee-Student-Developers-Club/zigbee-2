@@ -105,10 +105,10 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="h-auto w-full flex justify-center items-center flex-col md:h-[80dvh]">
-      <div className="h-auto min-w-[50vw] grid grid-cols-1 bg-cyan-200 dark:bg-indigo-500 rounded-xl md:grid-cols-2 md:h-[25rem] ">
+    <div className="flex h-auto w-full flex-col items-center justify-center md:h-[80dvh]">
+      <div className="grid h-auto min-w-[50vw] grid-cols-1 rounded-xl bg-cyan-200 dark:bg-indigo-500 md:h-[25rem] md:grid-cols-2">
         {/* Left Section */}
-        <div className="flex flex-col justify-center items-center px-6 py-4 gap-4">
+        <div className="flex flex-col items-center justify-center gap-4 px-6 py-4">
           <Image
             alt="login page image"
             src="/person-with-vr.png"
@@ -165,7 +165,7 @@ const EmailInputSection = ({
   loading: boolean;
   handleEmailSubmit: () => void;
 }) => (
-  <div className="flex flex-col justify-center items-center py-4 gap-4 bg-cyan-50 dark:bg-indigo-300 h-full">
+  <div className="flex h-full flex-col items-center justify-center gap-4 bg-cyan-50 py-4 dark:bg-indigo-300">
     <Title size="medium">Get Started</Title>
     <div className="flex flex-col items-center gap-2">
       <Input
@@ -173,12 +173,12 @@ const EmailInputSection = ({
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         placeholder="Enter Your Email"
-        className="bg-slate-50 border border-black text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[16rem] p-2.5"
+        className="block w-[16rem] rounded-lg border border-black bg-slate-50 p-2.5 text-sm text-black focus:border-blue-500 focus:ring-blue-500"
         required
       />
       <Text
         variant="small"
-        className={`text-center mt-2 ${messageColor} h-1.5`}
+        className={`mt-2 text-center ${messageColor} h-1.5`}
       >
         {message || " "}
       </Text>
@@ -213,9 +213,9 @@ const OtpInputSection = ({
   message: string;
   messageColor: string;
 }) => (
-  <div className="relative flex flex-col justify-center items-center px-6 py-10 gap-2 bg-cyan-50 dark:bg-indigo-300 text-back">
+  <div className="text-back relative flex flex-col items-center justify-center gap-2 bg-cyan-50 px-6 py-10 dark:bg-indigo-300">
     <div
-      className="absolute top-5 left-5 cursor-pointer"
+      className="absolute left-5 top-5 cursor-pointer"
       onClick={resetOtpState}
     >
       Back
@@ -228,7 +228,7 @@ const OtpInputSection = ({
         setISOtpFilled(value.length === 6);
       }}
     />
-    <Text variant="small" className={`text-center mt-2 ${messageColor} h-1.5`}>
+    <Text variant="small" className={`mt-2 text-center ${messageColor} h-1.5`}>
       {message || " "}
     </Text>
     <Button

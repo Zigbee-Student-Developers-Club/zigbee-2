@@ -59,13 +59,13 @@ const Header = () => {
   };
 
   return (
-    <header className="w-full flex justify-between items-center max-w-[1200px] mx-auto py-4 px-4 md:py-8">
+    <header className="mx-auto flex w-full max-w-[1200px] items-center justify-between px-4 py-4 md:py-8">
       <Logo />
 
-      <div className="flex items-center gap-3 flex-row-reverse md:flex-row">
+      <div className="flex flex-row-reverse items-center gap-3 md:flex-row">
         {/* Hamburger Menu for mobile */}
         <button
-          className="block md:hidden text-gray-700 dark:text-gray-300"
+          className="block text-gray-700 dark:text-gray-300 md:hidden"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           aria-label="Toggle menu"
         >
@@ -80,14 +80,14 @@ const Header = () => {
         <nav
           className={`${
             isMenuOpen ? "block" : "hidden"
-          } absolute top-16 left-0 w-full bg-white dark:bg-gray-800 shadow-md md:static md:flex md:w-auto md:bg-transparent md:shadow-none z-10`}
+          } absolute left-0 top-16 z-10 w-full bg-white shadow-md dark:bg-gray-800 md:static md:flex md:w-auto md:bg-transparent md:shadow-none`}
         >
-          <ul className="flex flex-col md:flex-row items-center md:gap-8 p-4 md:p-0">
+          <ul className="flex flex-col items-center p-4 md:flex-row md:gap-8 md:p-0">
             {navItemsData.map((item, index) => (
               <li key={index} className="mb-2 md:mb-0">
                 <Link
                   href={item.route}
-                  className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
+                  className="text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white"
                   onClick={() => setIsMenuOpen(false)} // Close menu on link click
                 >
                   {item.name}

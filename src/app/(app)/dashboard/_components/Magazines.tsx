@@ -1,11 +1,7 @@
-import React from 'react'
+import React from "react";
 
 const Magazines = () => {
-  return (
-    <div>
-      magazines
-    </div>
-  )
-}
+  return <div>magazines</div>;
+};
 
-export default Magazines
+export default Magazines;

@@ -4,8 +4,7 @@ const page = () => {
 
 export default page;
 
-// "use client" ; 
-
+// "use client" ;
 
 // import { useEffect, useState } from "react";
 // import { motion } from "framer-motion";
@@ -114,13 +113,11 @@ export default page;
 //           />
 //         </motion.div>
 
-
-
 //         {/* Highlights Section */}
 //         <Text className="text-2xl font-semibold mt-10">Highlights</Text>
-        
+
 //           {highlightedAlumini.map((h, i) => (
-          
+
 //               <Card key={i}>
 //                 <CardHeader>
 //                   <div className="flex items-center space-x-4">
@@ -135,9 +132,8 @@ export default page;
 //                   <Text>{h.text}</Text>
 //                 </CardContent>
 //               </Card>
-       
-//           ))}
 
+//           ))}
 
 //         {/* Alumni Data Section */}
 //         <div className="flex gap-4 mt-16">
@@ -149,4 +145,3 @@ export default page;
 //     </>
 //   );
 // }
-

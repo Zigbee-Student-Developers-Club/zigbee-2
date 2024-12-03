@@ -18,7 +18,7 @@ const OtpInput: React.FC<OtpInputProps> = ({ length, onOtpFilled }) => {
   // This effect runs every time the otp changes
   useEffect(() => {
     onOtpFilled(otp); // Trigger the submit action
-  }, [otp, length, onOtpFilled]); 
+  }, [otp, length, onOtpFilled]);
 
   return (
     <>
@@ -30,27 +30,27 @@ const OtpInput: React.FC<OtpInputProps> = ({ length, onOtpFilled }) => {
         <InputOTPGroup className="gap-2">
           <InputOTPSlot
             index={0}
-            className="h-10 w-10 text-center text-xl border-2 border-blue-400 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="h-10 w-10 rounded border-2 border-blue-400 text-center text-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
           <InputOTPSlot
             index={1}
-            className="h-10 w-10 text-center text-xl border-2 border-blue-400 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="h-10 w-10 rounded border-2 border-blue-400 text-center text-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
           <InputOTPSlot
             index={2}
-            className="h-10 w-10 text-center text-xl border-2 border-blue-400 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="h-10 w-10 rounded border-2 border-blue-400 text-center text-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
           <InputOTPSlot
             index={3}
-            className="h-10 w-10 text-center text-xl border-2 border-blue-400 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="h-10 w-10 rounded border-2 border-blue-400 text-center text-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
           <InputOTPSlot
             index={4}
-            className="h-10 w-10 text-center text-xl border-2 border-blue-400 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="h-10 w-10 rounded border-2 border-blue-400 text-center text-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
           <InputOTPSlot
             index={5}
-            className="h-10 w-10 text-center text-xl border-2 border-blue-400 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="h-10 w-10 rounded border-2 border-blue-400 text-center text-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </InputOTPGroup>
       </InputOTP>

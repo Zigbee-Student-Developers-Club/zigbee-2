@@ -1,7 +1,7 @@
-import { NextResponse } from "next/server"
+import { NextResponse } from "next/server";
 
 export const GET = () => {
-    return NextResponse.json({
-        msg: "Welcome to Zigbee Backend"
-    })
-}
+  return NextResponse.json({
+    msg: "Welcome to Zigbee Backend",
+  });
+};

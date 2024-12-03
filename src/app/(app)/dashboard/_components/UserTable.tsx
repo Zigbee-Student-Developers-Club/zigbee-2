@@ -151,7 +151,7 @@ const UserTable = () => {
 
     getDocs(q).then((querySnapshot) => {
       const result: UserData[] = querySnapshot.docs.map(
-        (doc) => ({ ...doc.data() } as UserData)
+        (doc) => ({ ...doc.data() }) as UserData
       );
       setData(result);
     });

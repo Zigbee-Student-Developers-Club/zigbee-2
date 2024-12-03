@@ -32,7 +32,7 @@ export default function Title({
   }
 
   return (
-    <HeadingTag className={cn(`${sizeClasses} text-primary my-4`, className)}>
+    <HeadingTag className={cn(`${sizeClasses} my-4 text-primary`, className)}>
       {children}
     </HeadingTag>
   );

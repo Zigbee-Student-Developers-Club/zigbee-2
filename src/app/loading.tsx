@@ -2,7 +2,7 @@ import LoadingSpinner from "@/components/common/LoadingSpinner";
 
 const Loading = () => {
   return (
-    <div className="h-screen flex justify-center items-center">
+    <div className="flex h-screen items-center justify-center">
       <LoadingSpinner size={80} />
     </div>
   );
