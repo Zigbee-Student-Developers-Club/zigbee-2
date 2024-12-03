@@ -9,20 +9,20 @@ import {
 
 interface OtpInputProps {
   length: number;
-  onOtpSubmit: (otp: string) => void;
+  onOtpFilled: (otp: string) => void;
 }
 
-const OtpInput: React.FC<OtpInputProps> = ({ length, onOtpSubmit }) => {
+const OtpInput: React.FC<OtpInputProps> = ({ length, onOtpFilled }) => {
   const [otp, setOtp] = useState<string>("");
 
   // This effect runs every time the otp changes
   useEffect(() => {
     // If the OTP value is complete, submit the OTP
     if (otp.length === length) {
-      console.log("OTP is complete:", otp); // Debug log
-      onOtpSubmit(otp); // Trigger the submit action
+      console.log("OTP is complete:", otp); 
+      onOtpFilled(otp); // Trigger the submit action
     }
-  }, [otp, length, onOtpSubmit]); // Trigger the effect when otp or length changes
+  }, [otp, length, onOtpFilled]); 
 
   return (
     <>

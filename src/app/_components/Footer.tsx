@@ -11,8 +11,7 @@ import Logo from "@/app/_components/Logo";
 
 export default function Footer() {
   return (
-    <div className="bg-gray-100 py-8 text-gray-800 rounded-xl dark:bg-neutral-900 dark:text-gray-300">
-      {/* Main Container */}
+    <div className="mt-6 px-8 bg-gray-100 py-8 text-gray-800 rounded-xl dark:bg-neutral-900 dark:text-gray-300">
       <div className="container mx-auto flex flex-wrap gap-4 justify-between items-start py-4">
         {/* Logo and Address */}
         <div className="flex flex-col items-start">
