@@ -3,11 +3,11 @@ import { resend } from "./config";
 
 export const sendVerificationEmail = async (
     email: string,
-    otp: number
+    otp: string
 ) => {
     try {
         const { error } = await resend.emails.send({
-            from: 'Acme <onboarding@resend.dev>',
+            from: 'Zigbee MCA Department, OUTR (CETB) <noreply@urlsnip.online>',
             to: email,
             subject: 'Verification Code for Zigbee Login',
             react: OTPSendTemplate({email, otp}),

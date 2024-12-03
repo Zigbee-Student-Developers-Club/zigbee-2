@@ -1,12 +1,10 @@
 import apiClient from "./axiosConfig";
 
-//1. check user existance
+//1. check user existence
 interface email {
   email: string;
 }
 interface CheckUserExistResponse {
-  message: string;
-  success: boolean;
   isRegistered: boolean;
 }
 export const checkUserExist = async (
@@ -15,7 +13,11 @@ export const checkUserExist = async (
   return apiClient
     .post("/api/check-user", data)
     .then((response) => {
-      return response.data;
+      if (response.status == 200) {
+        return response.data;
+      } else {
+        throw new Error("Error checking user")
+      }
     })
     .catch((error) => {
       console.error("Error:", error);
@@ -42,18 +44,15 @@ interface userCredential {
   email: string;
   otp: string;
 }
-interface getUserDetails{
-  message: string,
-  success: boolean,
-  isProvidedBasicData:boolean,
-  authToken: string,
+interface getUserDetails {
+  isProvidedBasicData: boolean,
 }
 
-export const varifyOtp = async (data: userCredential): Promise<getUserDetails> => {
+export const verifyEmailOtp = async (data: userCredential): Promise<getUserDetails> => {
   return apiClient.post("/api/verifyotp", data).then((response) => {
-    if(response.status == 200){
-          return response.data
-    }
+    if (response.status == 200) {
+      return response.data
+    } else return null;
   });
 };
 

@@ -2,6 +2,7 @@ import { addDoc, collection, doc, getDoc, getDocs, getFirestore, query, updateDo
 import firebaseApp from './config';
 import { userData } from '../types';
 import { sendVerificationEmail } from '../resend/utils';
+import { generateToken } from '../jwt';
 
 const db = getFirestore(firebaseApp);
 
@@ -34,7 +35,7 @@ export const sendOtp = async (email: string) => {
     let result = false;
     let error = null;
 
-    const tempOtp = Math.floor(100000 + Math.random() * 900000);
+    const tempOtp = Math.floor(100000 + Math.random() * 900000).toString();
 
     const data = {
         email,
@@ -47,18 +48,19 @@ export const sendOtp = async (email: string) => {
         const q = query(userCollection, where('email', '==', email));
         const querySnapshot = await getDocs(q);
 
+        // send OTP
+        const response = await sendVerificationEmail(email, tempOtp);
+
         if (!querySnapshot.empty) {
             const id = querySnapshot.docs[0].id;
             await updateDoc(doc(db, 'users', id), {
                 tempOtp,
-                isVerified: false
+                isVerified: false,
+                accessToken: null
             });
         } else {
             await addDoc(userCollection, data);
         }
-
-        // send OTP
-        const response = await sendVerificationEmail(email, tempOtp);
 
         if (!response.success) {
             return {
@@ -76,7 +78,7 @@ export const sendOtp = async (email: string) => {
 };
 
 // verify OTP
-export const verifyOtp = async (email: string, otp: number) => {
+export const verifyOtp = async (email: string, otp: string) => {
     let result = null;
     let error = null;
 
@@ -87,14 +89,18 @@ export const verifyOtp = async (email: string, otp: number) => {
 
         if (!querySnapshot.empty) {
             const docData = querySnapshot.docs[0];
+
+            const token = generateToken(docData.id);
+
             await updateDoc(doc(db, 'users', docData.id), {
                 tempOtp: 0,
-                isVerified: true
+                isVerified: true,
+                accessToken: token
             });
 
             result = {
                 isProvidedBasicData: !!docData.data().isProvidedBasicData,
-                id: docData.id
+                token
             };
         }
     } catch (err) {
@@ -128,7 +134,8 @@ export const addUsersBasicDetails = async (id: string, data: userData) => {
             domain: data.domain,
             about: data.about || '',
             isProvidedBasicData: true,
-            role: 'guest'
+            role: 'guest',
+            isContributor: false,
         });
 
         result = 'Basic details added successfully.';

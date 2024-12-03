@@ -2,7 +2,7 @@ import { FC } from "react";
 
 interface VerificationEmailProps {
   email: string;
-  otp: number;
+  otp: string;
 }
 
 const OTPSendTemplate: FC<VerificationEmailProps> = ({ email, otp }) => {
