@@ -22,7 +22,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <body className={`${nunito.className} antialiased`}>
+      <body className={`${nunito.className} antialiased min-w-80`}>
         <ThemeProvider
           attribute='class'
           defaultTheme='system'

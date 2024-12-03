@@ -7,9 +7,9 @@ import Title from "@/components/ui/title";
 import OtpInput from "./_componets/otpInput";
 import { Button } from "@/components/ui/button";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
-import { checkUserExist, getOtp } from "@/lib/axios/allApiCall";
+import { checkUserExist, getOtp, verifyEmailOtp } from "@/lib/axios/allApiCall";
 import { Input } from "@/components/ui/input";
-
+import { useRouter } from "next/navigation";
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -22,7 +22,8 @@ const LoginPage = () => {
   const [message, setMessage] = useState("");
   const [messageColor, setMessageColor] = useState("text-gray-500"); // Default color
   const [isOtpFilled, setISOtpFilled] = useState(false);
-  const [isEmailRegistered, setIsEmailRegistered] = useState(false); // Track if email is registered
+
+  const router = useRouter();
 
   // Effect to validate email and check user existence
   useEffect(() => {
@@ -30,7 +31,6 @@ const LoginPage = () => {
       if (!emailPattern.test(email)) {
         setMessage(""); // Clear message if the email is invalid
         setMessageColor("text-gray-500"); // Reset to default
-        setIsEmailRegistered(false);
         return;
       }
 
@@ -39,17 +39,14 @@ const LoginPage = () => {
         if (response?.isRegistered) {
           setMessage("Email is registered.");
           setMessageColor("text-green-500"); // Green for registered email
-          setIsEmailRegistered(true);
         } else {
           setMessage("Email is not registered.");
           setMessageColor("text-red-500"); // Red for unregistered email
-          setIsEmailRegistered(false);
         }
       } catch (error) {
         console.error("Error checking email existence:", error);
         setMessage("Error verifying email.");
         setMessageColor("text-red-500");
-        setIsEmailRegistered(false);
       }
     };
 
@@ -58,11 +55,6 @@ const LoginPage = () => {
 
   // Handlers
   const handleEmailSubmit = async () => {
-    if (!isEmailRegistered) {
-      setMessage("Email must be registered to proceed.");
-      return;
-    }
-
     setLoading(true);
     try {
       const response = await getOtp({ email });
@@ -74,16 +66,35 @@ const LoginPage = () => {
     } catch (error) {
       setMessage("Error sending OTP. Please try again. ");
       console.log(error);
-      
     } finally {
       setLoading(false);
+      setMessage("");
     }
   };
 
-  const handleOtpSubmit = () => {
+  const handleOtpSubmit = async () => {
     setLoading(true);
-    console.log("OTP Submitted:", otp);
-    setLoading(false);
+    try {
+      const response = await verifyEmailOtp({ email, otp });
+      if (response) {
+        const { isProvidedBasicData } = response;
+        setMessage("");
+        if (isProvidedBasicData) {
+          router.push("/profile");
+        } else {
+          router.push("/update-profile");
+        }
+      } else {
+        setMessage("Failed to verify OTP. Try again.");
+        setMessageColor("text-red-500");
+      }
+    } catch (error) {
+      console.error("Error verifying OTP:", error);
+      setMessage("Invalid OTP or server error. Please try again.");
+      setMessageColor("text-red-500");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const resetOtpState = () => {
@@ -119,11 +130,12 @@ const LoginPage = () => {
             loading={loading}
             handleOtpSubmit={handleOtpSubmit}
             resetOtpState={resetOtpState}
+            message={message}
+            messageColor={messageColor}
           />
         ) : (
           <EmailInputSection
             email={email}
-
             setEmail={setEmail}
             message={message}
             messageColor={messageColor}
@@ -164,7 +176,10 @@ const EmailInputSection = ({
         className="bg-slate-50 border border-black text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[16rem] p-2.5"
         required
       />
-      <Text variant="small" className={`text-center mt-2 ${messageColor} h-1.5`}>
+      <Text
+        variant="small"
+        className={`text-center mt-2 ${messageColor} h-1.5`}
+      >
         {message || " "}
       </Text>
     </div>
@@ -179,26 +194,30 @@ const EmailInputSection = ({
   </div>
 );
 
-
 const OtpInputSection = ({
-
   setOtp,
   isOtpFilled,
   setISOtpFilled,
   loading,
   handleOtpSubmit,
   resetOtpState,
+  message,
+  messageColor,
 }: {
-
   setOtp: React.Dispatch<React.SetStateAction<string>>;
   isOtpFilled: boolean;
   setISOtpFilled: React.Dispatch<React.SetStateAction<boolean>>;
   loading: boolean;
   handleOtpSubmit: () => void;
   resetOtpState: () => void;
+  message: string;
+  messageColor: string;
 }) => (
   <div className="relative flex flex-col justify-center items-center px-6 py-10 gap-2 bg-cyan-50 dark:bg-indigo-300 text-back">
-    <div className="absolute top-5 left-5 cursor-pointer" onClick={resetOtpState}>
+    <div
+      className="absolute top-5 left-5 cursor-pointer"
+      onClick={resetOtpState}
+    >
       Back
     </div>
     <Title size="medium">Check your email</Title>
@@ -209,6 +228,9 @@ const OtpInputSection = ({
         setISOtpFilled(value.length === 6);
       }}
     />
+    <Text variant="small" className={`text-center mt-2 ${messageColor} h-1.5`}>
+      {message || " "}
+    </Text>
     <Button
       type="button"
       className="mt-6 flex items-center gap-2"
