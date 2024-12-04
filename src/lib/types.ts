@@ -1,10 +1,20 @@
-export type userData = {
-  batch: number;
-  phoneNumber: number | null;
+export interface UserData {
   name: string;
+  batch: number;
   linkedInUrl: string;
-  position: string;
   profileImg: string;
   domain: string;
-  about: string;
-};
+  phoneNumber?: string;
+  about?: string;
+  position?: string;
+  role?: string;
+  isContributor?: boolean;
+}
+
+export interface FirebaseFetchUserType {
+  id: string;
+  [key: string]: unknown; // Additional dynamic fields from Firestore
+}
+
+export const validPositions = ["CR", "GR", "PC", "PV"];
+export const validRoles = ["alumni", "admin", "guest"];
