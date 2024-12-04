@@ -73,14 +73,6 @@ export const PUT = async (
       isContributor,
     } = await req.json();
 
-    // Validate required fields
-    if (!name || !batch || !linkedInUrl || !profileImg) {
-      return NextResponse.json(
-        { error: "Name, Batch, LinkedIn URL and Profile Image are required." },
-        { status: 400 }
-      );
-    }
-
     // Prepare updated user data
     const userDetails = {
       name,
@@ -92,7 +84,7 @@ export const PUT = async (
       about,
       position: validPositions.includes(position) && position,
       role: validRoles.includes(role) && role,
-      isContributor: isContributor === true,
+      isContributor: isContributor,
     };
 
     const { result, error } = await addOrUpdateUserDetails(
@@ -136,6 +128,12 @@ export const DELETE = async (
     if (adminResponse.status !== 200) return adminResponse;
 
     const { id } = params;
+
+    const user = await getUserById(id);
+
+    if (!user.result) {
+      return NextResponse.json(null, { status: 404 });
+    }
 
     const { result, error } = await deleteUserById(id);
 

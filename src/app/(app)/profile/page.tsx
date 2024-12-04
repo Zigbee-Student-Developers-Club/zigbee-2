@@ -3,9 +3,7 @@ import React, { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
-import { Text } from "@/components/ui/text";
 import Title from "@/components/ui/title";
-import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { UserData } from "@/lib/types";
@@ -14,7 +12,7 @@ import { UserData } from "@/lib/types";
 const fetchUserData = async (): Promise<UserData> => {
   return {
     batch: 2022,
-    phoneNumber: 1234567890,
+    phoneNumber: "1234567890",
     name: "John Doe",
     linkedInUrl: "https://www.linkedin.com/in/johndoe/",
     position: "Software Engineer",

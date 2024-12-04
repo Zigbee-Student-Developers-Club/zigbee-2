@@ -2,7 +2,6 @@
 
 import React from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import User from "./_components/User";
 import Events from "./_components/Events";
 import Gallery from "./_components/Gallery";
 import Resources from "./_components/Resources";
