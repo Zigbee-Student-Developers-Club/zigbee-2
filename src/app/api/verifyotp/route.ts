@@ -34,7 +34,8 @@ export const POST = async (req: NextRequest) => {
 
       response.cookies.set("token", `Bearer ${token}`, {
         httpOnly: true,
-        // secure: true         // for https
+        // secure: true,         // for https
+        sameSite: "strict",
       });
 
       return response;

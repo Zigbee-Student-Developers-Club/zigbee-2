@@ -8,10 +8,10 @@ import Title from "@/components/ui/title";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { userData } from "@/lib/types";
+import { UserData } from "@/lib/types";
 
 // Mock API Calls
-const fetchUserData = async (): Promise<userData> => {
+const fetchUserData = async (): Promise<UserData> => {
   return {
     batch: 2022,
     phoneNumber: 1234567890,
@@ -24,14 +24,14 @@ const fetchUserData = async (): Promise<userData> => {
   };
 };
 
-const saveUserData = async (data: userData) => {
+const saveUserData = async (data: UserData) => {
   console.log("Saving user data:", data);
   // Replace this with an actual API call
   return true;
 };
 
 const ProfilePage = () => {
-  const [user, setUser] = useState<userData | null>(null);
+  const [user, setUser] = useState<UserData | null>(null);
   const [editMode, setEditMode] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -59,7 +59,7 @@ const ProfilePage = () => {
   };
 
   const handleInputChange = (
-    field: keyof userData,
+    field: keyof UserData,
     value: string | number | null
   ) => {
     if (!user) return;
