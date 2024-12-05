@@ -158,34 +158,90 @@ export const getUserById = async (id: string) => {
 };
 
 // fetch all users
-export const fetchAllUser = async () => {
+export const fetchUser = async (role?: string, batch?: string) => {
   let result = null;
   let error = null;
 
   try {
     const userCollection = collection(db, "users");
-    const querySnapshot = await getDocs(userCollection);
+
+    let q = query(userCollection);
+
+    if (role) {
+      q = query(q, where("role", "==", role));
+    }
+
+    const numBatch = Number(batch);
+
+    if (batch) {
+      q = query(q, where("batch", "==", numBatch));
+    }
+
+    const querySnapshot = await getDocs(q);
 
     if (querySnapshot.empty) {
       return { result, error };
-    } else {
-      result = querySnapshot.docs.map((doc) => {
-        const data = doc.data();
+    }
 
-        const filteredData: FirebaseFetchUserType = {
-          id: doc.id,
-          ...data,
-        };
+    result = querySnapshot.docs.map((doc) => {
+      const data = doc.data();
 
-        delete filteredData.tempOtp;
-        delete filteredData.accessToken;
-        delete filteredData.isProvidedBasicData;
-        delete filteredData.isVerified;
+      const filteredData: FirebaseFetchUserType = {
+        id: doc.id,
+        ...data,
+      };
 
-        return filteredData;
-      });
+      delete filteredData.tempOtp;
+      delete filteredData.accessToken;
+      delete filteredData.isProvidedBasicData;
+      delete filteredData.isVerified;
+
+      return filteredData;
+    });
+
+    return { result, error };
+  } catch (err) {
+    error = handleError(err);
+  }
+  return { result, error };
+};
+
+export const fetchUserByField = async (
+  field: string,
+  value: string | boolean
+) => {
+  let result = null;
+  let error = null;
+
+  try {
+    const userCollection = collection(db, "users");
+    const q = query(userCollection, where(field, "==", value));
+    const querySnapshot = await getDocs(q);
+
+    if (querySnapshot.empty) {
       return { result, error };
     }
+
+    result = querySnapshot.docs.map((doc) => {
+      const data = doc.data();
+
+      const filteredData: FirebaseFetchUserType = {
+        id: doc.id,
+        ...data,
+      };
+
+      delete filteredData.tempOtp;
+      delete filteredData.accessToken;
+      delete filteredData.isProvidedBasicData;
+      delete filteredData.isVerified;
+      delete filteredData.role;
+      delete filteredData.email;
+      delete filteredData.phoneNumber;
+
+      return filteredData;
+    });
+
+    return { result, error };
   } catch (err) {
     error = handleError(err);
   }

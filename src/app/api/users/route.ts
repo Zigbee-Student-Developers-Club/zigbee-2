@@ -1,10 +1,10 @@
-import { addOrUpdateUserDetails, fetchAllUser } from "@/lib/firebase/utils";
+import { addOrUpdateUserDetails, fetchUser } from "@/lib/firebase/utils";
 import { authenticate } from "@/lib/middleware/authenticate";
 import { adminOnly } from "@/lib/middleware/authorize";
 import { validPositions, validRoles } from "@/lib/types";
 import { NextRequest, NextResponse } from "next/server";
 
-// Get all users - admin only
+// Get users - admin only
 export const GET = async (req: NextRequest) => {
   try {
     const authResponse = await authenticate(req);
@@ -13,10 +13,15 @@ export const GET = async (req: NextRequest) => {
     const adminResponse = await adminOnly(req);
     if (adminResponse.status !== 200) return adminResponse;
 
-    const { result, error } = await fetchAllUser();
+    const { searchParams } = new URL(req.url);
 
-    if (error || !result) {
-      console.error("Error in fetchAllUser:", error);
+    const role = searchParams.get("role") || "";
+    const batch = searchParams.get("batch") || "";
+
+    const { result, error } = await fetchUser(role, batch);
+
+    if (error) {
+      console.error("Error in fetchUser:", error);
       return NextResponse.json(
         { error: "Failed to fetch users." },
         { status: 500 }

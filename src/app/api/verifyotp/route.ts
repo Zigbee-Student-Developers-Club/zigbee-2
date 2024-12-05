@@ -36,6 +36,7 @@ export const POST = async (req: NextRequest) => {
         httpOnly: true,
         // secure: true,         // for https
         sameSite: "strict",
+        maxAge: 30 * 24 * 60 * 60, // 30 days
       });
 
       return response;
