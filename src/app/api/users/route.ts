@@ -22,19 +22,13 @@ export const GET = async (req: NextRequest) => {
 
     if (error) {
       console.error("Error in fetchUser:", error);
-      return NextResponse.json(
-        { error: "Failed to fetch users." },
-        { status: 500 }
-      );
+      return NextResponse.json(null, { status: 500 });
     }
 
     return NextResponse.json(result, { status: 200 });
   } catch (error) {
     console.error("Error while fetching all users:", error);
-    return NextResponse.json(
-      { error: "Unexpected error occurred." },
-      { status: 500 }
-    );
+    return NextResponse.json(null, { status: 500 });
   }
 };
 
@@ -95,21 +89,12 @@ export const POST = async (req: NextRequest) => {
 
     if (error || !result) {
       console.error("Error updating user data:", error);
-      return NextResponse.json(
-        { error: "Failed to update user data." },
-        { status: 500 }
-      );
+      return NextResponse.json(null, { status: 500 });
     }
 
-    return NextResponse.json(
-      { message: "User data updated successfully." },
-      { status: 200 }
-    );
+    return NextResponse.json(null, { status: 200 });
   } catch (error) {
     console.error("Unexpected error in POST handler:", error);
-    return NextResponse.json(
-      { error: "Unexpected error occurred." },
-      { status: 500 }
-    );
+    return NextResponse.json(null, { status: 500 });
   }
 };

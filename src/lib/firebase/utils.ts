@@ -206,6 +206,7 @@ export const fetchUser = async (role?: string, batch?: string) => {
   return { result, error };
 };
 
+// fetch user by field like role, isContributor
 export const fetchUserByField = async (
   field: string,
   value: string | boolean

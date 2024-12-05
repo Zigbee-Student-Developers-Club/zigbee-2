@@ -23,25 +23,19 @@ export const GET = async (
     const userData = req.user;
 
     if (id !== userData.id) {
-      return NextResponse.json(
-        { error: "Invalid Id. User not found." },
-        { status: 404 }
-      );
+      return NextResponse.json(null, { status: 404 });
     }
 
     const user = await getUserById(id);
 
     if (!user) {
-      return NextResponse.json({ error: "User not found." }, { status: 404 });
+      return NextResponse.json(null, { status: 404 });
     }
 
     return NextResponse.json(user, { status: 200 });
   } catch (error) {
     console.error("Unexpected error in GET handler:", error);
-    return NextResponse.json(
-      { error: "Unexpected error occurred." },
-      { status: 500 }
-    );
+    return NextResponse.json(null, { status: 500 });
   }
 };
 
@@ -95,22 +89,13 @@ export const PUT = async (
 
     if (error || !result) {
       console.error("Error updating user data:", error);
-      return NextResponse.json(
-        { error: "Failed to update user data." },
-        { status: 500 }
-      );
+      return NextResponse.json(null, { status: 500 });
     }
 
-    return NextResponse.json(
-      { message: "User data updated successfully." },
-      { status: 200 }
-    );
+    return NextResponse.json(null, { status: 200 });
   } catch (error) {
     console.error("Unexpected error in PUT handler:", error);
-    return NextResponse.json(
-      { error: "Unexpected error occurred." },
-      { status: 500 }
-    );
+    return NextResponse.json(null, { status: 500 });
   }
 };
 
@@ -142,15 +127,9 @@ export const DELETE = async (
       return NextResponse.json(null, { status: 500 });
     }
 
-    return NextResponse.json(
-      { message: "User data deleted successfully." },
-      { status: 200 }
-    );
+    return NextResponse.json(null, { status: 200 });
   } catch (error) {
     console.error("Unexpected error in DELETE handler:", error);
-    return NextResponse.json(
-      { error: "Unexpected error occurred." },
-      { status: 500 }
-    );
+    return NextResponse.json(null, { status: 500 });
   }
 };

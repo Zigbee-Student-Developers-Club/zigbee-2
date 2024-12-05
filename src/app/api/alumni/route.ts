@@ -12,18 +12,12 @@ export const GET = async (req: NextRequest) => {
 
     if (error) {
       console.error("Error in fetching alumnus:", error);
-      return NextResponse.json(
-        { error: "Failed to fetch alumnus." },
-        { status: 500 }
-      );
+      return NextResponse.json(null, { status: 500 });
     }
 
     return NextResponse.json(result, { status: 200 });
   } catch (error) {
     console.error("Error while fetching alumnus:", error);
-    return NextResponse.json(
-      { error: "Unexpected error occurred." },
-      { status: 500 }
-    );
+    return NextResponse.json(null, { status: 500 });
   }
 };
