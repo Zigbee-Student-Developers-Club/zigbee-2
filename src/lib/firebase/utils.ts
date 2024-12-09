@@ -6,7 +6,10 @@ import {
   getDoc,
   getDocs,
   getFirestore,
+  limit,
+  orderBy,
   query,
+  startAt,
   updateDoc,
   where,
 } from "firebase/firestore";
@@ -16,26 +19,25 @@ import { sendVerificationEmail } from "../resend/utils";
 import { generateToken } from "../jwt";
 
 const db = getFirestore(firebaseApp);
+const userCollection = collection(db, "users");
 
 // handling error
-const handleError = (err: unknown): string => {
-  console.error("Firebase Error:", err); // Log the error
+const handleError = (err: unknown, method: string): string => {
+  console.error(`Firebase Error in ${method} :: `, err); // Log the error
   return "An unexpected error occurred. Please try again later.";
 };
 
 // check if a user is registered
 export const checkUserRegistered = async (email: string) => {
-  let result = false;
-  let error = null;
+  let result: boolean = false;
+  let error: string | null = null;
 
   try {
-    const userCollection = collection(db, "users");
     const q = query(userCollection, where("email", "==", email));
     const querySnapshot = await getDocs(q);
-
     result = !querySnapshot.empty;
   } catch (err) {
-    error = handleError(err);
+    error = handleError(err, "checkUserRegistered");
   }
 
   return { result, error };
@@ -43,8 +45,8 @@ export const checkUserRegistered = async (email: string) => {
 
 // send OTP to user
 export const sendOtp = async (email: string) => {
-  let result = false;
-  let error = null;
+  let result: boolean = false;
+  let error: string | null = null;
 
   const tempOtp = Math.floor(100000 + Math.random() * 900000).toString();
 
@@ -55,23 +57,11 @@ export const sendOtp = async (email: string) => {
   };
 
   try {
-    const userCollection = collection(db, "users");
     const q = query(userCollection, where("email", "==", email));
     const querySnapshot = await getDocs(q);
 
     // send OTP
     const response = await sendVerificationEmail(email, tempOtp);
-
-    if (!querySnapshot.empty) {
-      const id = querySnapshot.docs[0].id;
-      await updateDoc(doc(db, "users", id), {
-        tempOtp,
-        isVerified: false,
-        accessToken: null,
-      });
-    } else {
-      await addDoc(userCollection, data);
-    }
 
     if (!response.success) {
       return {
@@ -80,9 +70,19 @@ export const sendOtp = async (email: string) => {
       };
     }
 
+    if (!querySnapshot.empty) {
+      const id = querySnapshot.docs[0].id;
+      await updateDoc(doc(db, "users", id), {
+        tempOtp,
+        isVerified: false,
+      });
+    } else {
+      await addDoc(userCollection, data);
+    }
+
     result = true;
   } catch (err) {
-    error = handleError(err);
+    error = handleError(err, "sendOtp");
   }
 
   return { result, error };
@@ -90,36 +90,51 @@ export const sendOtp = async (email: string) => {
 
 // verify OTP
 export const verifyOtp = async (email: string, otp: string) => {
-  let result = null;
-  let error = null;
+  let result: {
+    isProvidedBasicData: boolean;
+    token: string | null;
+  } | null = null;
+  let error: string | null = null;
 
   try {
-    const userCollection = collection(db, "users");
     const q = query(
       userCollection,
       where("email", "==", email),
-      where("tempOtp", "==", otp)
+      where("tempOtp", "==", otp),
+      where("isVerified", "==", false)
     );
     const querySnapshot = await getDocs(q);
 
-    if (!querySnapshot.empty) {
-      const docData = querySnapshot.docs[0];
-
-      const token = generateToken(docData.id);
-
-      await updateDoc(doc(db, "users", docData.id), {
-        tempOtp: "",
-        isVerified: true,
-        accessToken: token,
-      });
-
-      result = {
-        isProvidedBasicData: !!docData.data().isProvidedBasicData,
-        token,
+    if (querySnapshot.empty) {
+      return {
+        result: null,
+        error: "Invalid email or OTP provided. Please try again.",
       };
     }
+
+    const docData = querySnapshot.docs[0];
+
+    const token = await generateToken(docData.id);
+
+    if (!token) {
+      return {
+        result: null,
+        error: "Failed to generate authentication token. Please try again.",
+      };
+    }
+
+    await updateDoc(doc(userCollection, docData.id), {
+      tempOtp: null,
+      isVerified: true,
+      accessToken: token,
+    });
+
+    result = {
+      isProvidedBasicData: !!docData.data().isProvidedBasicData,
+      token,
+    };
   } catch (err) {
-    error = handleError(err);
+    error = handleError(err, "verifyOtp");
   }
 
   return { result, error };
@@ -128,10 +143,10 @@ export const verifyOtp = async (email: string, otp: string) => {
 // check user by id
 export const getUserById = async (id: string) => {
   let result = null;
-  let error = null;
+  let error: string | null = null;
 
   try {
-    const docRef = doc(db, "users", id);
+    const docRef = doc(userCollection, id);
     const userDoc = await getDoc(docRef);
 
     if (!userDoc.exists()) {
@@ -151,30 +166,86 @@ export const getUserById = async (id: string) => {
     error = null;
     return { result, error };
   } catch (err) {
-    result = null;
-    error = handleError(err);
+    error = handleError(err, "getUserById");
   }
   return { result, error };
 };
 
-// fetch all users
-export const fetchUser = async (role?: string, batch?: string) => {
+// fetch all users by role, batch with pagination
+export const fetchUser = async (
+  role?: string,
+  batch?: number,
+  page: number = 1,
+  countLimit: number = 20
+) => {
   let result = null;
   let error = null;
+  let totalUsers = 0;
 
   try {
-    const userCollection = collection(db, "users");
-
     let q = query(userCollection);
 
     if (role) {
       q = query(q, where("role", "==", role));
     }
 
-    const numBatch = Number(batch);
+    if (batch) {
+      q = query(q, where("batch", "==", batch));
+    }
+
+    // Get total users
+    const allDocs = await getDocs(q);
+    totalUsers = allDocs.size;
+
+    // Apply pagination
+    const startIndex = (page - 1) * countLimit;
+    const paginatedQuery = query(
+      q,
+      orderBy("name"),
+      limit(countLimit),
+      startAt(startIndex)
+    );
+
+    const querySnapshot = await getDocs(paginatedQuery);
+
+    if (querySnapshot.empty) {
+      return { result, totalUsers, error };
+    }
+
+    result = querySnapshot.docs.map((doc) => {
+      const data = doc.data();
+
+      const filteredData: FirebaseFetchUserType = {
+        id: doc.id,
+        ...data,
+      };
+
+      // Remove sensitive fields
+      delete filteredData.tempOtp;
+      delete filteredData.accessToken;
+      delete filteredData.isProvidedBasicData;
+      delete filteredData.isVerified;
+
+      return filteredData;
+    });
+
+    return { result, totalUsers, error };
+  } catch (err) {
+    error = handleError(err, "fetchUser");
+  }
+  return { result, totalUsers, error };
+};
+
+// fetch alumni
+export const fetchAlumni = async (batch?: number) => {
+  let result = null;
+  let error: string | null = null;
+
+  try {
+    let q = query(userCollection, where("role", "==", "alumni"));
 
     if (batch) {
-      q = query(q, where("batch", "==", numBatch));
+      q = query(q, where("batch", "==", batch));
     }
 
     const querySnapshot = await getDocs(q);
@@ -195,28 +266,27 @@ export const fetchUser = async (role?: string, batch?: string) => {
       delete filteredData.accessToken;
       delete filteredData.isProvidedBasicData;
       delete filteredData.isVerified;
+      delete filteredData.email;
+      delete filteredData.phoneNumber;
 
       return filteredData;
     });
 
     return { result, error };
   } catch (err) {
-    error = handleError(err);
+    error = handleError(err, "fetchUserByField");
   }
   return { result, error };
 };
 
-// fetch user by field like role, isContributor
-export const fetchUserByField = async (
-  field: string,
-  value: string | boolean
-) => {
+// fetch contributors
+export const fetchContributors = async () => {
   let result = null;
-  let error = null;
+  let error: string | null = null;
 
   try {
-    const userCollection = collection(db, "users");
-    const q = query(userCollection, where(field, "==", value));
+    const q = query(userCollection, where("isContributor", "==", true));
+
     const querySnapshot = await getDocs(q);
 
     if (querySnapshot.empty) {
@@ -244,33 +314,28 @@ export const fetchUserByField = async (
 
     return { result, error };
   } catch (err) {
-    error = handleError(err);
+    error = handleError(err, "fetchUserByField");
   }
   return { result, error };
 };
 
 // Check user role
 export const checkUserRole = async (id: string) => {
-  let result = null;
-  let error = null;
-
   try {
-    const docRef = doc(db, "users", id);
+    const docRef = doc(userCollection, id);
     const userDoc = await getDoc(docRef);
 
     if (!userDoc.exists()) {
-      error = "User not found.";
-      return { result, error };
+      return { result: null, error: "User not found." };
     }
 
-    const userData = userDoc.data();
+    const role = userDoc.data()?.role || null;
 
-    result = userData.role;
+    return { result: role, error: null };
   } catch (err) {
-    error = handleError(err);
+    const error = handleError(err, "checkUserRole");
+    return { result: null, error };
   }
-
-  return { result, error };
 };
 
 // Add or update user details
@@ -280,7 +345,7 @@ export const addOrUpdateUserDetails = async (
   isAdmin: boolean
 ) => {
   let result: boolean = false;
-  let error = null;
+  let error: string | null = null;
 
   try {
     // For new user creation
@@ -299,7 +364,6 @@ export const addOrUpdateUserDetails = async (
         isProvidedBasicData: true,
       };
 
-      const userCollection = collection(db, "users");
       const newDoc = await addDoc(userCollection, newUser);
 
       if (!newDoc) {
@@ -315,7 +379,7 @@ export const addOrUpdateUserDetails = async (
       throw new Error("User ID is required for updating details.");
     }
 
-    const docRef = doc(db, "users", id);
+    const docRef = doc(userCollection, id);
     const userDoc = await getDoc(docRef);
 
     if (!userDoc.exists()) {
@@ -365,31 +429,46 @@ export const addOrUpdateUserDetails = async (
     }
 
     result = true;
-    error = null;
-    return { result, error };
   } catch (err) {
-    console.error("Error in addOrUpdateUserDetails:", err);
-
-    const errorMessage =
-      err instanceof Error ? err.message : "An unknown error occurred.";
-    result = false;
-    error = errorMessage;
-    return { result, error };
+    error = handleError(err, "addOrUpdateUserDetails");
   }
+
+  return { result, error };
 };
 
 // delete user by id
 export const deleteUserById = async (id: string) => {
   let result = false;
-  let error = null;
+  let error: string | null = null;
 
   try {
-    const docRef = doc(db, "users", id);
+    const docRef = doc(userCollection, id);
+
+    if (!docRef.id) {
+      throw new Error("User not found. Cannot delete.");
+    }
+
     await deleteDoc(docRef);
 
     result = true;
   } catch (err) {
-    error = handleError(err);
+    error = handleError(err, "deleteUserById");
+  }
+
+  return { result, error };
+};
+
+// verify access token
+export const verifyAccessToken = async (token: string) => {
+  let result: boolean = false;
+  let error: string | null = null;
+
+  try {
+    const q = query(userCollection, where("accessToken", "==", token));
+    const querySnapshot = await getDocs(q);
+    result = !querySnapshot.empty;
+  } catch (err) {
+    error = handleError(err, "verifyAccessToken");
   }
 
   return { result, error };

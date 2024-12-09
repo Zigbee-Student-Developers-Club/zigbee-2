@@ -1,4 +1,4 @@
-import { fetchUserByField } from "@/lib/firebase/utils";
+import { fetchAlumni } from "@/lib/firebase/utils";
 import { authenticate } from "@/lib/middleware/authenticate";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -8,16 +8,30 @@ export const GET = async (req: NextRequest) => {
     const authResponse = await authenticate(req);
     if (authResponse.status !== 200) return authResponse;
 
-    const { result, error } = await fetchUserByField("role", "alumni");
+    const { searchParams } = new URL(req.url);
+
+    const batch = parseInt(searchParams.get("batch") || "", 10);
+
+    const { result, error } = await fetchAlumni(batch);
 
     if (error) {
-      console.error("Error in fetching alumnus:", error);
-      return NextResponse.json(null, { status: 500 });
+      return NextResponse.json({ error }, { status: 500 });
     }
 
-    return NextResponse.json(result, { status: 200 });
+    return NextResponse.json(
+      {
+        alumnus: result,
+        message: "Alumnus fetched successfully",
+      },
+      { status: 200 }
+    );
   } catch (error) {
-    console.error("Error while fetching alumnus:", error);
-    return NextResponse.json(null, { status: 500 });
+    console.error("Unexpected error while fetching alumnus:", error);
+    return NextResponse.json(
+      {
+        error: "Unexpected error while fetching alumnus",
+      },
+      { status: 500 }
+    );
   }
 };

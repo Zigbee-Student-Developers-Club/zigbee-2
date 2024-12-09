@@ -16,6 +16,7 @@ interface FirebaseConfig {
   measurementId?: string;
 }
 
+// Your web app's Firebase configuration
 const firebaseConfig: FirebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY || "",
   authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN || "",
@@ -26,10 +27,17 @@ const firebaseConfig: FirebaseConfig = {
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID || "",
 };
 
-// Initialize Firebase
+// Initialize Firebase App
 const firebaseApp = initializeApp(firebaseConfig);
-export const analytics = isSupported().then((yes) =>
-  yes ? getAnalytics(firebaseApp) : null
-);
 
+// Analytics (Only on the client side)
+let analytics: Promise<ReturnType<typeof getAnalytics> | null> | null = null;
+
+if (typeof window !== "undefined") {
+  analytics = isSupported().then((supported) =>
+    supported ? getAnalytics(firebaseApp) : null
+  );
+}
+
+export { analytics };
 export default firebaseApp;
