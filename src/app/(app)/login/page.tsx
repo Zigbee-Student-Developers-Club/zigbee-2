@@ -78,11 +78,11 @@ const LoginPage = () => {
       const response = await verifyEmailOtp({ email, otp });
       if (response) {
         const { isProvidedBasicData } = response;
-        setMessage("");
+  
         if (isProvidedBasicData) {
-          router.push("/profile");
+          router.push("/home");
         } else {
-          router.push("/update-profile");
+          router.push("/upload-profile");
         }
       } else {
         setMessage("Failed to verify OTP. Try again.");

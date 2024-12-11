@@ -12,7 +12,7 @@ const Hero = () => {
     >
       <div className="container mx-auto my-16 max-w-[1200px]">
         <div className="flex flex-col items-center space-y-8 md:flex-row md:space-x-10 md:space-y-0">
-          <div className="flex-1 space-y-5 md:space-y-10">
+          <div className="flex-1 space-y-5 md:space-y-10 text-center">
             <h2 className="text-3xl font-black sm:text-4xl lg:text-6xl">
               Learn . Apply . Grow
             </h2>

@@ -3,6 +3,8 @@
 import Image from "next/image";
 import { motion, useInView } from "framer-motion";
 import { useEffect, useRef } from "react";
+import Title from "../ui/title";
+import { Text } from "../ui/text";
 
 interface InfoSectionProps {
   imageSrc: string;
@@ -62,12 +64,12 @@ export default function InfoSection({
 
             {/* Text Section */}
             <div className="flex-1">
-              <h2 className="text-3xl font-extrabold text-gray-800 dark:text-gray-200 sm:text-4xl lg:text-6xl">
+              <Title size="large" className=" font-extrabold text-gray-800 dark:text-gray-200 ">
                 {heading}
-              </h2>
-              <p className="small mt-8 text-gray-800 dark:text-gray-300">
+              </Title>
+              <Text variant="p" className=" mt-8 text-gray-800 dark:text-gray-300">
                 {text}
-              </p>
+              </Text>
             </div>
           </div>
         </div>

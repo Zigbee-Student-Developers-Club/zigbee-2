@@ -16,7 +16,8 @@ import { Moon, Sun, Menu, X } from "lucide-react";
 import Logo from "./Logo";
 
 const navItemsData = [
-  { name: "Department", route: "/department" },
+  {name: "Code Wars", route:"/codewars"},
+  { name: "Our Team", route: "/team" },
   { name: "Alumni", route: "/alumni" },
   { name: "Events", route: "/events" },
   { name: "Resources", route: "/resources" },

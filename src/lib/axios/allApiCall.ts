@@ -1,72 +1,132 @@
 import apiClient from "./axiosConfig";
+import { AxiosResponse, AxiosError } from "axios";
 
-//1. check user existence
-interface email {
+// Define interfaces
+interface EmailPayload {
   email: string;
 }
-interface CheckUserExistResponse {
+
+interface UserExistenceResponse {
   isRegistered: boolean;
 }
-export const checkUserExist = async (
-  data: email
-): Promise<CheckUserExistResponse> => {
-  return apiClient
-    .post("/api/check-user", data)
-    .then((response) => {
-      if (response.status == 200) {
-        return response.data;
-      } else {
-        throw new Error("Error checking user");
-      }
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-      throw error;
-    });
-};
 
-//2. get otp
-export const getOtp = async (data: email) => {
-  return apiClient
-    .post("/api/sendotp", data)
-    .then((response) => {
-      if (response.status == 200) return true;
-      else return false;
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-      return false;
-    });
-};
-
-//3. verify otp
-interface userCredential {
+interface UserCredential {
   email: string;
   otp: string;
 }
-interface getUserDetails {
+
+interface verifyEmailOtpResponse {
   isProvidedBasicData: boolean;
 }
 
-export const verifyEmailOtp = async (
-  data: userCredential
-): Promise<getUserDetails> => {
-  return apiClient.post("/api/verifyotp", data).then((response) => {
-    if (response.status == 200) {
+interface UserDetails{
+
+  name : string;
+  batch : string;
+  linkedInUrl : string ; 
+  profileImg : string ;
+  domain : string;
+  phoneNumber : string ;
+  aboutUser: string;
+  aboutZigbee: string ; 
+}
+
+// 1. Check User Existence
+export const checkUserExist = async (
+  data: EmailPayload
+): Promise<UserExistenceResponse> => {
+  try {
+    const response: AxiosResponse<UserExistenceResponse> = await apiClient.post(
+      "/api/check-user",
+      data
+    );
+
+    if (response.status === 200 && typeof response.data.isRegistered === "boolean") {
       return response.data;
-    } else return null;
-  });
+    }
+
+    throw new Error(`Unexpected response format: ${JSON.stringify(response.data)}`);
+  } catch (error: unknown) {
+    if (error instanceof AxiosError) {
+      console.error("API Error in checkUserExist:", error.message);
+    } else {
+      console.error("Unexpected Error in checkUserExist:", error);
+    }
+    throw new Error("Failed to check user existence");
+  }
 };
 
-// // Example function for making a POST request
-// export const postData = async (data) => {
-//   try {
-//     const response = await apiClient.post('/data', data);
-//     return response.data;
-//   } catch (error) {
-//     console.error('Error posting data:', error);
-//     throw error;
-//   }
-// };
 
-// // Add other API call functions as needed
+// 2. Get OTP
+export const getOtp = async (data: EmailPayload): Promise<boolean> => {
+  try {
+    const response: AxiosResponse = await apiClient.post("/api/sendotp", data);
+
+    if (response.status === 200) {
+      return true;
+    }
+
+    return false;
+  } catch (error: unknown) {
+    if (error instanceof AxiosError) {
+      console.error("API Error in getOtp:", error.message);
+    } else {
+      console.error("Unexpected Error in getOtp:", error);
+    }
+    return false;
+  }
+};
+
+
+// 3. Verify Email OTP
+export const verifyEmailOtp = async (
+  data: UserCredential
+): Promise<verifyEmailOtpResponse | null> => {
+  try {
+    const response: AxiosResponse<verifyEmailOtpResponse> = await apiClient.post(
+      "/api/verifyotp",
+      data
+    );
+
+    if (response.status === 200) {
+      return response.data;
+    }
+
+    return null;
+  } catch (error: unknown) {
+    if (error instanceof AxiosError) {
+      console.error("API Error in verifyEmailOtp:", error.message);
+    } else {
+      console.error("Unexpected Error in verifyEmailOtp:", error);
+    }
+    return null;
+  }
+};
+
+// 4. User information data post
+export const uploadUserData = 
+async (
+  data: UserDetails
+)  => {
+  try {
+    const response = await apiClient.post(
+      "/api/users",
+      data
+    );
+
+    if (response.status === 200 && typeof response.data.isProvidedBasicData === "boolean") {
+      return response.data;
+    }
+
+    return null;
+  } catch (error: unknown) {
+    if (error instanceof AxiosError) {
+      console.error("API Error in verifyEmailOtp:", error.message);
+    } else {
+      console.error("Unexpected Error in verifyEmailOtp:", error);
+    }
+    return null;
+  }
+};
+
+

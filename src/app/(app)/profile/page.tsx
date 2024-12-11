@@ -4,8 +4,11 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
 import Title from "@/components/ui/title";
+import { Text } from "@/components/ui/text";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import UploadImageDialog from "@/components/common/UploadImageDialog";
+import { ImageUp } from "lucide-react";
 import { UserData } from "@/lib/types";
 
 // Mock API Calls
@@ -32,6 +35,34 @@ const ProfilePage = () => {
   const [user, setUser] = useState<UserData | null>(null);
   const [editMode, setEditMode] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  const handleSaveImage = (file: File | null) => {
+    if (file) {
+      setUser((prevUser) => {
+        if (!prevUser) return null;
+        return {
+          ...prevUser,
+          profileImg: URL.createObjectURL(file), // Generate a preview URL for the image
+        };
+      });
+    }
+    setIsDialogOpen(false);
+  };
+
+  const handleToggle = async () => {
+    if (editMode) {
+      const confirmSave = window.confirm(
+        "Save changes before exiting edit mode?"
+      );
+      if (confirmSave) {
+        setLoading(true);
+        await saveUserData(user!);
+        setLoading(false);
+      }
+    }
+    setEditMode(!editMode);
+  };
 
   React.useEffect(() => {
     // Fetch user data when the component mounts
@@ -41,20 +72,6 @@ const ProfilePage = () => {
     };
     loadUserData();
   }, []);
-
-  const handleToggle = async () => {
-    if (editMode) {
-      // Save data when switching off edit mode
-      setLoading(true);
-      await saveUserData(user!);
-      setLoading(false);
-    }
-    setEditMode(!editMode);
-  };
-
-  const handleSaveChanges = () => {
-    console.log("anny 11  ");
-  };
 
   const handleInputChange = (
     field: keyof UserData,
@@ -74,24 +91,35 @@ const ProfilePage = () => {
       <div className="relative h-80 w-full overflow-hidden rounded-lg bg-gray-200 dark:bg-gray-800">
         <div className="h-full w-full bg-lime-400 object-cover" />
         <div className="absolute inset-0 flex flex-col items-center justify-center space-y-4 bg-black/30">
-          <Avatar className="h-52 w-52">
-            <AvatarImage
-              src={user.profileImg || "https://github.com/shadcn.png"}
-              alt="User Avatar"
-              height={400}
-              width={400}
-              className="rounded-full border-8 border-white"
-            />
-            <AvatarFallback className="flex h-64 w-64 items-center justify-center rounded-full border-8 border-white bg-gray-100 text-2xl text-gray-700">
-              {user.name ? user.name[0] : "P"}
-            </AvatarFallback>
-          </Avatar>
-          <Title size="medium">{user.name}</Title>
+          <div className="group relative">
+            <Avatar className="h-52 w-52">
+              <AvatarImage
+                src={user.profileImg || "https://github.com/shadcn.png"}
+                alt="User Avatar"
+                className="rounded-full border-8 border-white dark:border-black"
+              />
+              <AvatarFallback className="flex h-64 w-64 items-center justify-center rounded-full border-8 border-white bg-gray-100 text-2xl text-gray-700">
+                {user.name ? user.name[0] : "P"}
+              </AvatarFallback>
+            </Avatar>
+            {editMode && (
+              <div
+                className="absolute -bottom-5 right-1/2 z-50 flex h-12 w-12 translate-x-1/2 items-center justify-center rounded-full bg-white dark:bg-black"
+                onClick={() => setIsDialogOpen(true)}
+              >
+                <ImageUp className="text-black dark:text-white"/>
+              </div>
+            )}
+          </div>
+          <Title size="medium" className="text-black">{user.name}</Title>
         </div>
         <div className="absolute inset-2 flex items-end justify-end space-x-2">
-          <span className="text-sm text-gray-700 dark:text-gray-400">
+          <Text
+            variant="large"
+            className="text-sm text-black"
+          >
             Edit Mode
-          </span>
+          </Text>
           <Switch
             checked={editMode}
             onCheckedChange={handleToggle}
@@ -102,17 +130,19 @@ const ProfilePage = () => {
 
       {/* Edit Mode Toggle */}
       <div className="mt-6 flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+        <Title
+          size="medium"
+          className="text-2xl font-bold text-gray-900 dark:text-white"
+        >
           Profile Details
-        </h1>
+        </Title>
       </div>
 
-      {/* Profile Information */}
       <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2">
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+          <Text variant="large" className="text-gray-700 dark:text-gray-300">
             Full Name
-          </label>
+          </Text>
           {editMode ? (
             <Input
               value={user.name}
@@ -120,13 +150,15 @@ const ProfilePage = () => {
               placeholder="Full Name"
             />
           ) : (
-            <p className="text-gray-700 dark:text-gray-400">{user.name}</p>
+            <Text variant="small" className="text-gray-700 dark:text-gray-400">
+              {user.name}
+            </Text>
           )}
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+          <Text variant="large" className="text-gray-700 dark:text-gray-300">
             Position
-          </label>
+          </Text>
           {editMode ? (
             <Input
               value={user.position}
@@ -134,13 +166,15 @@ const ProfilePage = () => {
               placeholder="Position"
             />
           ) : (
-            <p className="text-gray-700 dark:text-gray-400">{user.position}</p>
+            <Text variant="small" className="text-gray-700 dark:text-gray-400">
+              {user.position}
+            </Text>
           )}
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+          <Text variant="large" className="text-gray-700 dark:text-gray-300">
             Batch
-          </label>
+          </Text>
           {editMode ? (
             <Input
               type="number"
@@ -150,13 +184,15 @@ const ProfilePage = () => {
               }
             />
           ) : (
-            <p className="text-gray-700 dark:text-gray-400">{user.batch}</p>
+            <Text variant="small" className="text-gray-700 dark:text-gray-400">
+              {user.batch}
+            </Text>
           )}
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+          <Text variant="large" className="text-gray-700 dark:text-gray-300">
             Phone Number
-          </label>
+          </Text>
           {editMode ? (
             <Input
               type="number"
@@ -167,15 +203,15 @@ const ProfilePage = () => {
               placeholder="Phone Number"
             />
           ) : (
-            <p className="text-gray-700 dark:text-gray-400">
+            <Text variant="small" className="text-gray-700 dark:text-gray-400">
               {user.phoneNumber || "N/A"}
-            </p>
+            </Text>
           )}
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+          <Text variant="large" className="text-gray-700 dark:text-gray-300">
             LinkedIn Profile
-          </label>
+          </Text>
           {editMode ? (
             <Input
               type="url"
@@ -184,61 +220,56 @@ const ProfilePage = () => {
               placeholder="LinkedIn URL"
             />
           ) : (
-            <a
-              href={user.linkedInUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-600 underline dark:text-blue-400"
-            >
-              {user.linkedInUrl}
-            </a>
-          )}
-        </div>
-        <div>
-          {editMode && (
-            <>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                Change Profile Image
-              </label>
-              <Input
-                type="text"
-                onChange={(e) => handleInputChange("name", e.target.value)}
-              />
-            </>
+            <Text variant="small">
+              <a
+                href={user.linkedInUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-600 underline dark:text-blue-400"
+              >
+                {user.linkedInUrl}
+              </a>
+            </Text>
           )}
         </div>
       </div>
 
       {/* About Section */}
       <div className="mt-8">
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+        <Text variant="large" className="text-gray-700 dark:text-gray-300">
           About
-        </label>
+        </Text>
         {editMode ? (
           <Textarea
+            rows={5}
             value={user.about}
             onChange={(e) => handleInputChange("about", e.target.value)}
             placeholder="Write about yourself..."
           />
         ) : (
-          <p className="text-gray-700 dark:text-gray-400">{user.about}</p>
+          <Text className="text-gray-700 dark:text-gray-400">{user.about}</Text>
         )}
       </div>
 
       {/* Save Button */}
       {editMode && (
         <div className="mt-6 flex justify-end">
-          <Button onClick={handleSaveChanges} disabled={loading}>
+          <Button
+            // onClick={handleSaveChanges}
+            disabled={loading}
+          >
             Save Changes
           </Button>
         </div>
       )}
 
-      {loading && (
-        <div className="mt-4 flex justify-center">
-          <div className="h-6 w-6 animate-spin rounded-full border-b-2 border-t-2 border-gray-500"></div>
-        </div>
-      )}
+      {/* Upload Image Dialog */}
+      <UploadImageDialog
+        isOpen={isDialogOpen}
+        currentImage={user.profileImg}
+        onSave={handleSaveImage}
+        onClose={() => setIsDialogOpen(false)}
+      />
     </div>
   );
 };
