@@ -8,7 +8,7 @@ export const GET = async () => {
 
     if (error || !result) {
       return NextResponse.json(
-        { error: "Error while fetching contributors" },
+        { error: "Unexpected Error while fetching contributors" },
         { status: 500 }
       );
     }

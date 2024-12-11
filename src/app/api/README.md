@@ -44,17 +44,22 @@
 
   ```json
   {
-    "isRegistered": true
+    "isRegistered": true,
+    "message": "User checked successfully"
   }
   ```
 
 - **_Status_**: `400 Bad Request` (if email is missing or invalid)
   ```json
-  null
+  {
+    "error": "Email is required"
+  }
   ```
 - **_Status_**: `500 Internal Server Error` (if there is a server-side error)
   ```json
-  null
+  {
+    "error": "An unexpected error occurred. Please try again later."
+  }
   ```
 
 ---
@@ -82,25 +87,33 @@
 - **_Status_**: `200 OK` (OTP sent successfully)
 
   ```json
-  null
+  {
+    "message": "OTP sent successfully"
+  }
   ```
 
 - **_Status_**: `400 Bad Request`(if email is missing or invalid)
 
   ```json
-  null
+  {
+    "error": "Email is required"
+  }
   ```
 
 - **_Status_**: `422 Unprocessable Entity` (if OTP could not be sent)
 
   ```json
-  null
+  {
+    "error": "Failed to send OTP"
+  }
   ```
 
 - **_Status_**: `500 Internal Server Error` (if there is a server-side error)
 
   ```json
-  null
+  {
+    "error": "An unexpected error occurred. Please try again later."
+  }
   ```
 
 ---
@@ -128,27 +141,48 @@
 
   ```json
   {
-    "isProvidedBasicData": true
+    "isProvidedBasicData": true,
+    "message": "Login successful"
   }
   ```
 
-- **_Status_**: `400 Bad Request` (if email or otp is missing or invalid, or OTP length is incorrect)
+- **_Status_**: `400 Bad Request` (if email or otp is missing or invalid)
+
   ```json
-  null
+  {
+    "error": "Email and OTP are required."
+  }
   ```
-- **_Status_**: `403 Forbidden` (if OTP verification failed)
+
+- **_Status_**: `400 Bad Request` (if OTP length is incorrect)
   ```json
-  null
+  {
+    "error": "OTP must be 6 digits."
+  }
+  ```
+- **_Status_**: `400 Bad Request` (invalid email & OTP)
+  ```json
+  {
+    "error": "Invalid email or OTP."
+  }
+  ```
+- **_Status_**: `500 Internal Server Error` (failed to generate token)
+  ```json
+  {
+    "error": "Failed to generate token."
+  }
   ```
 - **_Status_**: `500 Internal Server Error` (if there is a server-side error)
 
   ```json
-  null
+  {
+    "error": "An unexpected error occurred. Please try again later."
+  }
   ```
 
 **Cookies**:
 
-A `token` cookie will be set on successful verification with the value of `Bearer <token>`, and it's marked as `httpOnly`.
+A `x-auth-token` cookie will be set on successful verification with the value of `Bearer <token>`, and it's marked as `httpOnly`.
 
 ---
 
@@ -156,13 +190,17 @@ A `token` cookie will be set on successful verification with the value of `Beare
 
 **Method**: `GET`
 
-**URL**: `/api/alumni`
+**URL**: `/api/alumni?batch=2023`
 
 **Request Headers**:
 
 - **_Authentication_**:
-  -A valid `token` cookie must be present for authenticated access. The cookie should follow the format `Bearer <token>` and be marked as `httpOnly`.
+  -A valid `x-auth-token` cookie must be present for authenticated access. The cookie should follow the format `Bearer <token>` and be marked as `httpOnly`.
 - Don't worry, while verifying OTP and email, this cookie will be added automatically.
+
+**Request Query Parameters**:
+
+- **_batch_** (optional): Filter users by batch.
 
 **Response**:
 
@@ -171,51 +209,23 @@ A `token` cookie will be set on successful verification with the value of `Beare
   **_Body_**:
 
   ```json
-  [
-    {
-      "id": "Es2a5CmUYh3wkxBmpYCP",
-      "name": "Demo User 19",
-      "position": "PV",
-      "domain": "",
-      "about": "",
-      "batch": 2023,
-      "linkedInUrl": "https://www.linkedin.com/in/profile/",
-      "profileImg": "https://example.vercel.app/photo.jpg",
-      "isContributor": false
-    },
-    {
-      "id": "NYv9A2tGXwPfCmaVs7OE",
-      "name": "Demo User",
-      "position": "PC",
-      "domain": "Web Developer",
-      "about": "string",
-      "batch": 2023,
-      "linkedInUrl": "https://www.linkedin.com/in/profile/",
-      "profileImg": "https://example.vercel.app/photo.jpg",
-      "isContributor": true
-    }
-  ]
-  ```
-
-- **_Status_**: `401 Unauthorized` (if the token is missing, invalid, or expired)
-
-  **_Body_**:
-
-  ```json
   {
-    "error": "Unauthorized: No token provided",
-    "success": false
-  }
-  ```
-
-- **_Status_**: `403 Forbidden` (if the token does not contain a valid user ID)
-
-  **_Body_**:
-
-  ```json
-  {
-    "error": "Unauthorized: Token does not contain a valid user ID",
-    "success": false
+    "alumnus": [
+      {
+        "id": "0IFs6hkI83SV80PEDQHb",
+        "linkedInUrl": "https://www.linkedin.com/in/my-profile/",
+        "profileImg": "https://example.com/image.png",
+        "position": "PV",
+        "isContributor": false,
+        "batch": 2023,
+        "role": "alumni",
+        "name": "Demo User 13",
+        "domain": "Web Developer",
+        "about": "string"
+      },
+      ...
+    ],
+    "message": "Alumnus fetched successfully"
   }
   ```
 
@@ -224,7 +234,9 @@ A `token` cookie will be set on successful verification with the value of `Beare
   **_Body_**:
 
   ```json
-  null
+  {
+    "error": "An unexpected error occurred. Please try again later."
+  }
   ```
 
 ---
@@ -242,30 +254,23 @@ A `token` cookie will be set on successful verification with the value of `Beare
   **_Body_**:
 
   ```json
-  [
-    {
-      "id": "NYv9A2tGXwPfCmaVs7OE",
-      "name": "Demo User",
-      "position": "PC",
-      "domain": "Web Developer",
-      "about": "string",
-      "batch": 2023,
-      "linkedInUrl": "https://www.linkedin.com/in/profile/",
-      "profileImg": "https://example.vercel.app/photo.jpg",
-      "isContributor": true
-    },
-    {
-      "id": "NYv9A2tGXwPfCmaVs7OE",
-      "name": "Demo User 2",
-      "position": "CR",
-      "domain": "Web Developer",
-      "about": "string",
-      "batch": 2024,
-      "linkedInUrl": "https://www.linkedin.com/in/profile/",
-      "profileImg": "https://example.vercel.app/photo.jpg",
-      "isContributor": true
-    }
-  ]
+  {
+    "contributors": [
+      {
+        "id": "NYv9A2tGXwPfCmaVs7OE",
+        "about": "string",
+        "batch": 2023,
+        "profileImg": "https://example.com/image.png",
+        "isContributor": true,
+        "linkedInUrl": "https://www.linkedin.com/in/my-profile/",
+        "position": "PC",
+        "domain": "Web Developer",
+        "name": "Demo User"
+      },
+      ...
+    ],
+    "message": "Contributors fetched successfully"
+  }
   ```
 
 - **_Status_**: `500 Internal Server Error` (if there is a server-side error)
@@ -273,7 +278,9 @@ A `token` cookie will be set on successful verification with the value of `Beare
   **_Body_**:
 
   ```json
-  null
+  {
+    "error": "Unexpected Error while fetching contributors."
+  }
   ```
 
 ---
@@ -282,16 +289,17 @@ A `token` cookie will be set on successful verification with the value of `Beare
 
 **Method**: `GET`
 
-**URL**: `/api/users`
+**URL**: `/api/users?role=admin&batch=2028&page=1`
 
 **Request Headers**:
 
-- **_Authentication_**: A valid `token` cookie must be present for authenticated access. The cookie should follow the format `Bearer <token>` and be marked as `httpOnly`.
+- **_Authentication_**: A valid `x-auth-token` cookie must be present for authenticated access. The cookie should follow the format `Bearer <token>` and be marked as `httpOnly`.
 
 **Request Query Parameters**:
 
 - **_role_** (optional): Filter users by role.
 - **_batch_** (optional): Filter users by batch.
+- **_page_** (optional): Page number for pagination.
 
 **Response**:
 
@@ -300,57 +308,30 @@ A `token` cookie will be set on successful verification with the value of `Beare
   **_Body_**:
 
   ```json
-  [
-    {
-      "id": "RmfbrU5gkwt57rQApBfl",
-      "about": "",
-      "isContributor": true,
-      "position": "CR",
-      "domain": "Web Developer",
-      "role": "admin",
-      "email": "demo@gmail.com",
-      "linkedInUrl": "https://www.linkedin.com/in/profile/",
-      "profileImg": "https://example.vercel.app/photo.jpg",
-      "name": "Demo user",
-      "phoneNumber": "0123456788",
-      "batch": 2025
+  {
+    "users": {
+      "total_page": 2,
+      "current_page": 1,
+      "previous": null,
+      "next": "http://localhost:3000/api/users?page=2",
+      "results": [
+        {
+          "id": "NYv9A2tGXwPfCmaVs7OE",
+          "isContributor": true,
+          "linkedInUrl": "https://www.linkedin.com/in/my-profile/",
+          "profileImg": "https://example.com/image.png",
+          "role": "alumni",
+          "name": "Demo User",
+          "position": "PC",
+          "batch": 2023,
+          "phoneNumber": "0123456788",
+          "about": "string",
+          "domain": "Web Developer"
+        },
+        ...
+      ]
     },
-    {
-      "id": "RmfbrUafde57rQApBfl",
-      "about": "",
-      "isContributor": true,
-      "position": "CR",
-      "domain": "Web Developer",
-      "role": "guest",
-      "email": "demo@gmail.com",
-      "linkedInUrl": "https://www.linkedin.com/in/profile/",
-      "profileImg": "https://example.vercel.app/photo.jpg",
-      "name": "Demo user 2",
-      "phoneNumber": "0123456788",
-      "batch": 2028
-    }
-  ]
-  ```
-
-- **_Status_**: `401 Unauthorized` (if the token is missing, invalid, or expired)
-
-  **_Body_**:
-
-  ```json
-  {
-    "error": "Unauthorized: No token provided",
-    "success": false
-  }
-  ```
-
-- **_Status_**: `403 Forbidden` (if the token does not contain a valid user ID or the user is not an admin)
-
-  **_Body_**:
-
-  ```json
-  {
-    "error": "Forbidden: Admins only",
-    "success": false
+    "message": "Users fetched successfully."
   }
   ```
 
@@ -359,7 +340,9 @@ A `token` cookie will be set on successful verification with the value of `Beare
   **_Body_**:
 
   ```json
-  null
+  {
+    "error": "An unexpected error occurred. Please try again later."
+  }
   ```
 
 ---
@@ -375,7 +358,7 @@ A `token` cookie will be set on successful verification with the value of `Beare
 
 **Request Headers**:
 
-- **_Authentication_**: A valid `token` cookie must be present for authenticated access. The cookie should follow the format `Bearer <token>` and be marked as `httpOnly`.
+- **_Authentication_**: A valid `x-auth-token` cookie must be present for authenticated access. The cookie should follow the format `Bearer <token>` and be marked as `httpOnly`.
 
 **Request Body:**
 
@@ -403,7 +386,9 @@ A `token` cookie will be set on successful verification with the value of `Beare
   **_Body_**:
 
   ```json
-  null
+  {
+    "message": "User data updated successfully"
+  }
   ```
 
 - **_Status_**: `400 Bad Request` (if required fields like name, batch, LinkedIn URL, or Profile Image are missing)
@@ -421,7 +406,9 @@ A `token` cookie will be set on successful verification with the value of `Beare
   **_Body_**:
 
   ```json
-  null
+  {
+    "error": "An unexpected error occurred. Please try again later."
+  }
   ```
 
 ---
@@ -432,7 +419,7 @@ A `token` cookie will be set on successful verification with the value of `Beare
 
 **URL**: `/api/users/:id`
 
-- **_Authentication_**: A valid `token` cookie must be present for authenticated access. The cookie should follow the format `Bearer <token>` and be marked as `httpOnly`.
+- **_Authentication_**: A valid `x-auth-token` cookie must be present for authenticated access. The cookie should follow the format `Bearer <token>` and be marked as `httpOnly`.
 
 **Request Parameters**:
 
@@ -446,29 +433,31 @@ A `token` cookie will be set on successful verification with the value of `Beare
 
   ```json
   {
-    "result": {
-      "role": "admin",
-      "email": "pkmanas22@gmail.com",
-      "name": "Manas Kumar Pradhan",
-      "position": "",
-      "phoneNumber": "0123456788",
+    "user": {
+      "profileImg": "https://example.com/image.png",
+      "email": "admin@gmail.com",
+      "name": "CR Admin",
       "batch": 2028,
-      "linkedInUrl": "https://www.linkedin.com/in/profile/",
-      "profileImg": "https://example.vercel.app/photo.jpg",
       "about": "",
       "domain": "Web Developer",
-      "isContributor": true
+      "isContributor": true,
+      "linkedInUrl": "https://www.linkedin.com/in/my-profile/",
+      "role": "admin",
+      "phoneNumber": "0123456788",
+      "position": "CR"
     },
-    "error": null
+    "message": "User details fetched successfully."
   }
   ```
 
-- **_Status_**: `404 Not Found` (User not found or invalid ID)
+- **_Status_**: `404 Not Found` (User not found or invalid ID or entering another id)
 
   **_Body_**:
 
   ```json
-  null
+  {
+    "error": "You are not authorized to view this user's details."
+  }
   ```
 
 - **_Status_**: `500 Internal Server Error` (if there is a server-side error)
@@ -476,7 +465,9 @@ A `token` cookie will be set on successful verification with the value of `Beare
   **_Body_**:
 
   ```json
-  null
+  {
+    "error": "An error occurred while fetching user details."
+  }
   ```
 
 ---
@@ -491,7 +482,7 @@ A `token` cookie will be set on successful verification with the value of `Beare
 
 **Request Headers**:
 
-- **_Authentication_**: A valid `token` cookie must be present for authenticated access. The cookie should follow the format `Bearer <token>` and be marked as `httpOnly`.
+- **_Authentication_**: A valid `x-auth-token` cookie must be present for authenticated access. The cookie should follow the format `Bearer <token>` and be marked as `httpOnly`.
 
 **Request Parameters**:
 
@@ -523,16 +514,8 @@ A `token` cookie will be set on successful verification with the value of `Beare
   **_Body_**:
 
   ```json
-  null
-  ```
-
-- **_Status_**: `400 Bad Request` (if required fields like name, batch, LinkedIn URL, or Profile Image are missing)
-
-  **_Body_**:
-
-  ```json
   {
-    "error": "Name, Batch, LinkedIn URL and Profile Image are required."
+    "message": "User details updated successfully."
   }
   ```
 
@@ -541,7 +524,9 @@ A `token` cookie will be set on successful verification with the value of `Beare
   **_Body_**:
 
   ```json
-  null
+  {
+    "error": "Unexpected error in updating user details."
+  }
   ```
 
 ---
@@ -556,7 +541,7 @@ A `token` cookie will be set on successful verification with the value of `Beare
 
 **Request Headers**:
 
-- **_Authentication_**: A valid `token` cookie must be present for authenticated access. The cookie should follow the format `Bearer <token>` and be marked as `httpOnly`.
+- **_Authentication_**: A valid `x-auth-token` cookie must be present for authenticated access. The cookie should follow the format `Bearer <token>` and be marked as `httpOnly`.
 
 **Request Parameters**:
 
@@ -569,15 +554,9 @@ A `token` cookie will be set on successful verification with the value of `Beare
   **_Body_**:
 
   ```json
-  null
-  ```
-
-- **_Status_**: `404 Not Found` (User not found or invalid ID)
-
-  **_Body_**:
-
-  ```json
-  null
+  {
+    "message": "User deleted successfully."
+  }
   ```
 
 - **_Status_**: `500 Internal Server Error` (if there is a server-side error)
@@ -585,7 +564,7 @@ A `token` cookie will be set on successful verification with the value of `Beare
   **_Body_**:
 
   ```json
-  null
+  {
+    "error": "Unexpected error in deleting user."
+  }
   ```
-
----
