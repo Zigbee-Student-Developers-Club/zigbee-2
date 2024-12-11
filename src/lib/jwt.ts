@@ -1,48 +1,38 @@
-import jwt, { JwtPayload } from "jsonwebtoken";
+import { JWTPayload, jwtVerify, SignJWT } from "jose";
 
-interface CustomJwtPayload extends JwtPayload {
+export interface CustomJwtPayload extends JWTPayload {
   id: string;
 }
 
-export const generateToken = (id: string): string | null => {
-  const secret: string | undefined = process.env.JWT_SECRET;
+const secret: string | undefined = process.env.JWT_SECRET;
 
-  try {
-    if (!secret) {
-      throw new Error(
-        "JWT_SECRET is not defined in the environment variables."
-      );
-    }
+if (!secret) {
+  throw new Error("JWT_SECRET environment variable is not defined");
+}
 
-    return jwt.sign({ id }, secret, {
-      expiresIn: "30d",
-    });
-  } catch (error) {
-    console.error("Error generating token:", error);
-    return null;
-  }
+const encodedKey = new TextEncoder().encode(secret);
+
+export const generateToken = (id: string): Promise<string> => {
+  return new SignJWT({ id })
+    .setProtectedHeader({ alg: "HS256" })
+    .setIssuedAt()
+    .setExpirationTime("30d")
+    .sign(encodedKey);
 };
 
-export const verifyToken = (token: string): CustomJwtPayload | null => {
-  const secret: string | undefined = process.env.JWT_SECRET;
-
+export const verifyToken = async (token: string): Promise<CustomJwtPayload> => {
   try {
-    if (!secret) {
-      throw new Error(
-        "JWT_SECRET is not defined in the environment variables."
-      );
+    const { payload } = await jwtVerify(token, encodedKey, {
+      algorithms: ["HS256"],
+    });
+
+    if (typeof payload.id !== "string") {
+      throw new Error("Invalid token payload");
     }
 
-    const payload = jwt.verify(token, secret) as CustomJwtPayload;
-    return payload;
+    return payload as CustomJwtPayload;
   } catch (error) {
-    console.error("Error verifying token:", error);
-
-    if (error instanceof jwt.TokenExpiredError) {
-      console.log("Token expired");
-    } else if (error instanceof jwt.JsonWebTokenError) {
-      console.log("Invalid token");
-    }
-    return null;
+    console.error("verifyToken error", error);
+    throw new Error("Failed to verify token");
   }
 };
