@@ -6,45 +6,73 @@ export const POST = async (req: NextRequest) => {
     const { email, otp } = await req.json();
 
     if (!email || !otp) {
-      return NextResponse.json(null, { status: 400 });
+      return NextResponse.json(
+        {
+          error: "Email and OTP are required.",
+        },
+        { status: 400 }
+      );
     }
 
     if (otp.toString().length !== 6) {
-      return NextResponse.json(null, { status: 400 });
+      return NextResponse.json(
+        {
+          error: "OTP must be 6 digits.",
+        },
+        { status: 400 }
+      );
     }
 
     const { result, error } = await verifyOtp(email, otp);
 
     if (error) {
-      console.error("Error during OTP verification:", error);
-      return NextResponse.json(null, { status: 500 });
+      return NextResponse.json({ error }, { status: 500 });
     }
 
-    if (result) {
-      const { isProvidedBasicData, token } = result;
-
-      if (!token) {
-        return NextResponse.json(null, { status: 500 });
-      }
-
-      const response = NextResponse.json(
-        { isProvidedBasicData },
-        { status: 200 }
+    if (!result) {
+      return NextResponse.json(
+        {
+          error: "Invalid email or OTP.",
+        },
+        { status: 400 }
       );
-
-      response.cookies.set("token", `Bearer ${token}`, {
-        httpOnly: true,
-        // secure: true,         // for https
-        sameSite: "strict",
-        maxAge: 30 * 24 * 60 * 60, // 30 days
-      });
-
-      return response;
-    } else {
-      return NextResponse.json(null, { status: 403 });
     }
+
+    const { isProvidedBasicData, token } = result;
+
+    if (!token) {
+      return NextResponse.json(
+        {
+          error: "Failed to generate token",
+        },
+        { status: 500 }
+      );
+    }
+
+    const response = NextResponse.json(
+      {
+        isProvidedBasicData,
+        message: "Login successful",
+      },
+      { status: 200 }
+    );
+
+    response.cookies.set("x-auth-token", `Bearer ${token}`, {
+      httpOnly: true,
+      // secure: true,         // for https
+      sameSite: "lax",
+      maxAge: 30 * 24 * 60 * 60, // 30 days
+      path: "/",
+    });
+
+    return response;
   } catch (err) {
-    console.error("Unexpected error in OTP verification:", err);
-    return NextResponse.json(null, { status: 500 });
+    console.error("Unexpected error in POST handler:", err);
+    return NextResponse.json(
+      {
+        error: "An unexpected error occurred. Please try again later.",
+      },
+      { status: 500 }
+    );
   }
 };

@@ -6,19 +6,34 @@ export const POST = async (req: NextRequest) => {
     const { email } = await req.json();
 
     if (!email) {
-      return NextResponse.json(null, { status: 400 });
+      return NextResponse.json(
+        {
+          error: "Email is required",
+        },
+        { status: 400 }
+      );
     }
 
     const { result, error } = await checkUserRegistered(email);
 
     if (error) {
-      console.error("Error in checkUserRegistered:", error);
-      return NextResponse.json(null, { status: 500 });
+      return NextResponse.json({ error }, { status: 500 });
     }
 
-    return NextResponse.json({ isRegistered: result }, { status: 200 });
+    return NextResponse.json(
+      {
+        isRegistered: result,
+        message: "User checked successfully",
+      },
+      { status: 200 }
+    );
   } catch (err) {
-    console.error("Unexpected error in POST handler:", err);
-    return NextResponse.json(null, { status: 500 });
+    console.error("Unexpected error in check-user POST handler:", err);
+    return NextResponse.json(
+      {
+        error: "An unexpected error occurred. Please try again later.",
+      },
+      { status: 500 }
+    );
   }
 };
