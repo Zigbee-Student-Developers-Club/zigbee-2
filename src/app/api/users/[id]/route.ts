@@ -104,7 +104,7 @@ export const PUT = async (
     if (error || !result) {
       return NextResponse.json(
         {
-          error: "Error in updating user details.",
+          error: "Unexpected error in updating user details.",
         },
         { status: 500 }
       );
@@ -146,7 +146,7 @@ export const DELETE = async (
     if (error || !result) {
       return NextResponse.json(
         {
-          error: "Error in deleting user.",
+          error: "Unexpected error in deleting user.",
         },
         { status: 500 }
       );
