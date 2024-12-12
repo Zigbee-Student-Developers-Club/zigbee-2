@@ -16,29 +16,59 @@ export const GET = async (req: NextRequest) => {
     const { searchParams } = new URL(req.url);
 
     const role = searchParams.get("role") || "";
-    const batch = searchParams.get("batch") || "";
+    const batch = parseInt(searchParams.get("batch") || "", 10);
+    const page = parseInt(searchParams.get("page") || "1", 10);
+    const limit = 20;
 
-    const { result, error } = await fetchUser(role, batch);
+    const { result, totalUsers, error } = await fetchUser(
+      role,
+      batch,
+      page,
+      limit
+    );
 
     if (error) {
       console.error("Error in fetchUser:", error);
-      return NextResponse.json(null, { status: 500 });
+      return NextResponse.json({ error }, { status: 500 });
     }
 
-    return NextResponse.json(result, { status: 200 });
+    const totalPage = Math.ceil(totalUsers / limit);
+
+    const users = {
+      total_page: totalPage,
+      current_page: page,
+      previous:
+        page > 1
+          ? `${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/users?page=${page - 1}`
+          : null,
+      next:
+        page < totalPage
+          ? `${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/users?page=${page + 1}`
+          : null,
+      results: result,
+    };
+
+    return NextResponse.json(
+      {
+        users,
+        message: "Users fetched successfully.",
+      },
+      { status: 200 }
+    );
   } catch (error) {
-    console.error("Error while fetching all users:", error);
-    return NextResponse.json(null, { status: 500 });
+    console.error("Unexpected error in GET handler:", error);
+    return NextResponse.json(
+      {
+        error: "An unexpected error occurred. Please try again later.",
+      },
+      { status: 500 }
+    );
   }
 };
 
 // Create or update a user
 export const POST = async (req: NextRequest) => {
   try {
-    // Middleware
-    const authResponse = await authenticate(req);
-    if (authResponse.status !== 200) return authResponse;
-
     const {
       name,
       batch,
@@ -51,6 +81,9 @@ export const POST = async (req: NextRequest) => {
       role,
       isContributor,
     } = await req.json();
+
+    const authResponse = await authenticate(req);
+    if (authResponse.status !== 200) return authResponse;
 
     // Validate required fields
     if (!name || !batch || !linkedInUrl || !profileImg) {
@@ -88,13 +121,27 @@ export const POST = async (req: NextRequest) => {
     );
 
     if (error || !result) {
-      console.error("Error updating user data:", error);
-      return NextResponse.json(null, { status: 500 });
+      return NextResponse.json(
+        {
+          error: "Failed to update user data.",
+        },
+        { status: 500 }
+      );
     }
 
-    return NextResponse.json(null, { status: 200 });
+    return NextResponse.json(
+      {
+        message: "User data updated successfully",
+      },
+      { status: 200 }
+    );
   } catch (error) {
     console.error("Unexpected error in POST handler:", error);
-    return NextResponse.json(null, { status: 500 });
+    return NextResponse.json(
+      {
+        error: "An unexpected error occurred. Please try again later.",
+      },
+      { status: 500 }
+    );
   }
 };

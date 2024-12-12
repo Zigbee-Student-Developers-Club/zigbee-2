@@ -30,6 +30,7 @@
     "formidable": "^3.5.2",
     "framer-motion": "^11.11.17",
     "input-otp": "^1.4.1",
+    "jose": "^5.9.6",
     "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.456.0",
     "next": "14.2.17",

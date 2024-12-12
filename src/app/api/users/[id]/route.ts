@@ -14,28 +14,43 @@ export const GET = async (
   { params }: { params: { id: string } }
 ) => {
   try {
-    // Middleware
+    const { id } = params;
+
     const authResponse = await authenticate(req);
     if (authResponse.status !== 200) return authResponse;
-
-    const { id } = params;
 
     const userData = req.user;
 
     if (id !== userData.id) {
-      return NextResponse.json(null, { status: 404 });
+      return NextResponse.json(
+        {
+          error: "You are not authorized to view this user's details.",
+        },
+        { status: 404 }
+      );
     }
 
-    const user = await getUserById(id);
+    const { result, error } = await getUserById(id);
 
-    if (!user) {
-      return NextResponse.json(null, { status: 404 });
+    if (error) {
+      return NextResponse.json({ error }, { status: 500 });
     }
 
-    return NextResponse.json(user, { status: 200 });
+    return NextResponse.json(
+      {
+        user: result,
+        message: "User details fetched successfully.",
+      },
+      { status: 200 }
+    );
   } catch (error) {
     console.error("Unexpected error in GET handler:", error);
-    return NextResponse.json(null, { status: 500 });
+    return NextResponse.json(
+      {
+        error: "An error occurred while fetching user details.",
+      },
+      { status: 500 }
+    );
   }
 };
 
@@ -45,7 +60,6 @@ export const PUT = async (
   { params }: { params: { id: string } }
 ) => {
   try {
-    // Middleware
     const authResponse = await authenticate(req);
     if (authResponse.status !== 200) return authResponse;
 
@@ -88,14 +102,28 @@ export const PUT = async (
     );
 
     if (error || !result) {
-      console.error("Error updating user data:", error);
-      return NextResponse.json(null, { status: 500 });
+      return NextResponse.json(
+        {
+          error: "Unexpected error in updating user details.",
+        },
+        { status: 500 }
+      );
     }
 
-    return NextResponse.json(null, { status: 200 });
+    return NextResponse.json(
+      {
+        message: "User details updated successfully.",
+      },
+      { status: 200 }
+    );
   } catch (error) {
     console.error("Unexpected error in PUT handler:", error);
-    return NextResponse.json(null, { status: 500 });
+    return NextResponse.json(
+      {
+        error: "Unexpected error in updating user details.",
+      },
+      { status: 500 }
+    );
   }
 };
 
@@ -105,7 +133,6 @@ export const DELETE = async (
   { params }: { params: { id: string } }
 ) => {
   try {
-    // Middleware
     const authResponse = await authenticate(req);
     if (authResponse.status !== 200) return authResponse;
 
@@ -114,22 +141,30 @@ export const DELETE = async (
 
     const { id } = params;
 
-    const user = await getUserById(id);
-
-    if (!user.result) {
-      return NextResponse.json(null, { status: 404 });
-    }
-
     const { result, error } = await deleteUserById(id);
 
     if (error || !result) {
-      console.error("Error in deleting user:", error);
-      return NextResponse.json(null, { status: 500 });
+      return NextResponse.json(
+        {
+          error: "Unexpected error in deleting user.",
+        },
+        { status: 500 }
+      );
     }
 
-    return NextResponse.json(null, { status: 200 });
+    return NextResponse.json(
+      {
+        message: "User deleted successfully.",
+      },
+      { status: 200 }
+    );
   } catch (error) {
     console.error("Unexpected error in DELETE handler:", error);
-    return NextResponse.json(null, { status: 500 });
+    return NextResponse.json(
+      {
+        error: "Unexpected error in deleting user.",
+      },
+      { status: 500 }
+    );
   }
 };
