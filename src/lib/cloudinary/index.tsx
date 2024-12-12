@@ -21,7 +21,7 @@ export const uploadProfileToCloudinary = async (
         if (error) {
           return reject(error);
         }
-        resolve(result);
+        resolve(result?.secure_url);
       }
     );
 
