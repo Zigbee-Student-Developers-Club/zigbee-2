@@ -22,13 +22,13 @@ interface verifyEmailOtpResponse {
 interface UserDetails{
 
   name : string;
-  batch : string;
+  batch : number;
   linkedInUrl : string ; 
   profileImg : string ;
   domain : string;
-  phoneNumber : string ;
-  aboutUser: string;
-  aboutZigbee: string ; 
+  phoneNumber ?: string ;
+  // aboutUser: string;
+  // aboutZigbee: string ; 
 }
 
 // 1. Check User Existence
@@ -103,16 +103,10 @@ export const verifyEmailOtp = async (
   }
 };
 
-// 4. User information data post
-export const uploadUserData = 
-async (
-  data: UserDetails
-)  => {
+// 4. User Information Data Post (POST Method)
+export const uploadUserData = async (data: UserDetails) => {
   try {
-    const response = await apiClient.post(
-      "/api/users",
-      data
-    );
+    const response = await apiClient.post("/api/users", data , {withCredentials: true, });
 
     if (response.status === 200 && typeof response.data.isProvidedBasicData === "boolean") {
       return response.data;
@@ -121,12 +115,49 @@ async (
     return null;
   } catch (error: unknown) {
     if (error instanceof AxiosError) {
-      console.error("API Error in verifyEmailOtp:", error.message);
+      console.error("API Error in uploadUserData:", error.message);
     } else {
-      console.error("Unexpected Error in verifyEmailOtp:", error);
+      console.error("Unexpected Error in uploadUserData:", error);
     }
     return null;
   }
 };
 
+// 5. Upload user profile image
+export const uploadProfileImage = async (file: File): Promise<string> => {
+  try {
+    const formData = new FormData();
+    formData.append("file", file);
 
+    const response = await apiClient.post("/api/update-profile-image", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+      withCredentials: true, 
+    });
+
+    if (response.status === 200) {
+      return response.data; 
+    } else {
+      throw new Error("Failed to upload image");
+    }
+  } catch (error) {
+    console.error("Error uploading image:", error);
+    throw error;
+  }
+};
+
+// 6. get contributors lists
+export const fetchContributors = async () => {
+  try {
+    const response = await apiClient.get("/api/team", { withCredentials: true });
+    if (response.status === 200) {
+      return response.data.contributors;
+    } else {
+      throw new Error("Failed to fetch contributors");
+    }
+  } catch (error) {
+    console.error("Error fetching contributors:", error);
+    throw error;
+  }
+};

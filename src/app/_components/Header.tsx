@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useTheme } from "next-themes";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -33,10 +33,6 @@ const Header = () => {
   const [themeMenuOpen, setThemeMenuOpen] = useState(false);
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
 
-  useEffect(() => {
-    // Mock authentication token
-    setToken("hgygygg");
-  }, []);
 
   const handleNavigation = (navigate: string) => {
     switch (navigate) {

@@ -20,14 +20,14 @@ export default function ContributorCard({
     <motion.div
       whileHover={{ scale: 1.05, boxShadow: "0px 8px 20px rgba(0, 0, 0, 0.2)" }}
       whileTap={{ scale: 0.95 }}
-      className="cursor-pointer rounded-lg  px-2 py-4 text-center shadow-md hover:shadow-xl">
-      <Card className="flex flex-col items-center bg-white ">
-        <a
-          href={linkedinURL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="block"
-        >
+      className="cursor-pointer rounded-lg text-center shadow-md hover:shadow-xl"
+    >
+      <a
+        href={linkedinURL}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <Card className="flex flex-col items-center bg-white py-4 px-2">
           <Avatar className="mb-4 mt-8 rounded-full">
             <AvatarImage
               src={profileImage}
@@ -42,8 +42,8 @@ export default function ContributorCard({
           </Avatar>
           <h3 className="mt-4 text-xl font-semibold">{name.split(" ")[0]}</h3>
           <p className="mt-2 text-sm text-gray-600">Batch : {batch}</p>
-        </a>
-      </Card>
+        </Card>
+      </a>
     </motion.div>
   );
 }

@@ -1,18 +1,22 @@
+"use client";
+
 import React, { useState } from "react";
 import Image from "next/image";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
+import { uploadProfileImage } from "@/lib/axios/allApiCall";
 
 interface UploadDialogProps {
   isOpen: boolean;
   onClose: () => void;
-  onSave: (file: File) => void;
+  onSave: (imageUrl: string) => void;
   currentImage: string;
 }
 
 const UploadImageDialog: React.FC<UploadDialogProps> = ({ isOpen, onClose, onSave, currentImage }) => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files?.[0]) {
@@ -20,17 +24,21 @@ const UploadImageDialog: React.FC<UploadDialogProps> = ({ isOpen, onClose, onSav
     }
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (selectedFile) {
-
-    // call the cloudnairy api to save the image 
-
-
-
-      onSave(selectedFile);
-      setSelectedFile(null); // Reset after save
+      try {
+        setIsLoading(true);
+        // Call the Cloudinary API
+        const uploadedImageUrl = await uploadProfileImage(selectedFile);
+        onSave(uploadedImageUrl); 
+        setSelectedFile(null);
+      } catch (error:any) {
+        alert(`${error}`);
+      } finally {
+        setIsLoading(false);
+      }
     }
-    onClose(); // Close the dialog
+    onClose();
   };
 
   return (
@@ -86,8 +94,8 @@ const UploadImageDialog: React.FC<UploadDialogProps> = ({ isOpen, onClose, onSav
           <Button variant="secondary" onClick={onClose}>
             Cancel
           </Button>
-          <Button onClick={handleSave} disabled={!selectedFile}>
-            Save
+          <Button onClick={handleSave} disabled={!selectedFile || isLoading}>
+            {isLoading ? "Uploading..." : "Save"}
           </Button>
         </DialogFooter>
       </DialogContent>

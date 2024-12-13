@@ -1,5 +1,6 @@
 "use client";
-import React, { useState } from "react";
+
+import React, { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
@@ -7,27 +8,32 @@ import Title from "@/components/ui/title";
 import { Text } from "@/components/ui/text";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+  DropdownMenuItem,
+} from "@/components/ui/dropdown-menu";
 import UploadImageDialog from "@/components/common/UploadImageDialog";
-import { ImageUp } from "lucide-react";
+import { ImageUp, ChevronDown } from "lucide-react";
 import { UserData } from "@/lib/types";
 
 // Mock API Calls
 const fetchUserData = async (): Promise<UserData> => {
   return {
-    batch: 2022,
-    phoneNumber: "1234567890",
-    name: "John Doe",
-    linkedInUrl: "https://www.linkedin.com/in/johndoe/",
-    position: "Software Engineer",
+    batch: 2025,
+    phoneNumber: "9876543210",
+    name: "Jane Doe",
+    linkedInUrl: "https://www.linkedin.com/in/janedoe/",
+    position: "No Role",
     profileImg: "https://github.com/shadcn.png",
-    domain: "Frontend Development",
-    about: "Passionate developer specializing in React and TypeScript.",
+    domain: "Full Stack Development",
+    about: "Enthusiastic developer with a passion for building scalable applications.",
   };
 };
 
 const saveUserData = async (data: UserData) => {
   console.log("Saving user data:", data);
-  // Replace this with an actual API call
   return true;
 };
 
@@ -37,18 +43,24 @@ const ProfilePage = () => {
   const [loading, setLoading] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-  const handleSaveImage = (file: File | null) => {
-    if (file) {
-      setUser((prevUser) => {
-        if (!prevUser) return null;
-        return {
-          ...prevUser,
-          profileImg: URL.createObjectURL(file), // Generate a preview URL for the image
-        };
-      });
-    }
-    setIsDialogOpen(false);
+  const handleFileUpload = (profileImgUrl: string) => {
+    setUser((prevUser) => {
+      if (!prevUser) return null; // Ensure safety for a null state
+      return {
+        ...prevUser, // Preserve the rest of the user data
+        profileImg: profileImgUrl, // Update the profile image URL
+      };
+    });
   };
+  
+
+  useEffect(() => {
+    return () => {
+      if (user?.profileImg) {
+        URL.revokeObjectURL(user.profileImg);
+      }
+    };
+  }, [user?.profileImg]);
 
   const handleToggle = async () => {
     if (editMode) {
@@ -64,8 +76,7 @@ const ProfilePage = () => {
     setEditMode(!editMode);
   };
 
-  React.useEffect(() => {
-    // Fetch user data when the component mounts
+  useEffect(() => {
     const loadUserData = async () => {
       const data = await fetchUserData();
       setUser(data);
@@ -107,17 +118,16 @@ const ProfilePage = () => {
                 className="absolute -bottom-5 right-1/2 z-50 flex h-12 w-12 translate-x-1/2 items-center justify-center rounded-full bg-white dark:bg-black"
                 onClick={() => setIsDialogOpen(true)}
               >
-                <ImageUp className="text-black dark:text-white"/>
+                <ImageUp className="text-black dark:text-white" />
               </div>
             )}
           </div>
-          <Title size="medium" className="text-black">{user.name}</Title>
+          <Title size="medium" className="text-black">
+            {user.name}
+          </Title>
         </div>
         <div className="absolute inset-2 flex items-end justify-end space-x-2">
-          <Text
-            variant="large"
-            className="text-sm text-black"
-          >
+          <Text variant="large" className="text-sm text-black">
             Edit Mode
           </Text>
           <Switch
@@ -128,7 +138,7 @@ const ProfilePage = () => {
         </div>
       </div>
 
-      {/* Edit Mode Toggle */}
+      {/* Profile Details */}
       <div className="mt-6 flex items-center justify-between">
         <Title
           size="medium"
@@ -160,11 +170,39 @@ const ProfilePage = () => {
             Position
           </Text>
           {editMode ? (
-            <Input
-              value={user.position}
-              onChange={(e) => handleInputChange("position", e.target.value)}
-              placeholder="Position"
-            />
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant="outline"
+                  className="flex w-full items-center justify-between"
+                >
+                  {user.position || "Select Position"}
+                  <ChevronDown className="ml-2 h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuItem
+                  onSelect={() => handleInputChange("position", "CR")}
+                >
+                  CR
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onSelect={() => handleInputChange("position", "GR")}
+                >
+                  GR
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onSelect={() => handleInputChange("position", "PC")}
+                >
+                  PC
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onSelect={() => handleInputChange("position", "No Role")}
+                >
+                  No Role
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           ) : (
             <Text variant="small" className="text-gray-700 dark:text-gray-400">
               {user.position}
@@ -189,6 +227,7 @@ const ProfilePage = () => {
             </Text>
           )}
         </div>
+
         <div>
           <Text variant="large" className="text-gray-700 dark:text-gray-300">
             Phone Number
@@ -267,7 +306,7 @@ const ProfilePage = () => {
       <UploadImageDialog
         isOpen={isDialogOpen}
         currentImage={user.profileImg}
-        onSave={handleSaveImage}
+        onSave={handleFileUpload}
         onClose={() => setIsDialogOpen(false)}
       />
     </div>

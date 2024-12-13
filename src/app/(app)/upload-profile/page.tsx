@@ -1,22 +1,21 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import Title from "@/components/ui/title";
 import { Text } from "@/components/ui/text";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+} from "@/components/ui/dropdown-menu";
 import UploadImageDialog from "@/components/common/UploadImageDialog";
-import { ImageUp } from "lucide-react";
+import { ImageUp, ChevronDown } from "lucide-react";
 import { UserData } from "@/lib/types";
 import InfoSection from "@/components/common/InfoSection";
-
-// Mock API Call to save user data
-const saveUserData = async (data: UserData) => {
-  console.log("Saving user data:", data);
-  // Replace with actual API call to save data
-  return true;
-};
+import { uploadUserData } from "@/lib/axios/allApiCall";
 
 const UploadProfilePage = () => {
   const [user, setUser] = useState<UserData>({
@@ -28,20 +27,27 @@ const UploadProfilePage = () => {
     profileImg: "",
     domain: "",
     about: "",
+    // aboutUser: "",
+    // aboutZigbee: " "
   });
 
   const [loading, setLoading] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-  const handleFileUpload = (file: File) => {
-    setUser((prevUser) => {
-      if (!prevUser) return prevUser;
-      return {
-        ...prevUser,
-        profileImg: URL.createObjectURL(file),
-      };
-    });
+  const handleFileUpload = (profileImgUrl: string) => {
+    setUser((prevUser) => ({
+      ...prevUser,
+      profileImg: profileImgUrl,
+    }));
   };
+
+  useEffect(() => {
+    return () => {
+      if (user.profileImg) {
+        URL.revokeObjectURL(user.profileImg);
+      }
+    };
+  }, [user.profileImg]);
 
   const handleInputChange = (
     field: keyof UserData,
@@ -55,15 +61,19 @@ const UploadProfilePage = () => {
 
   const handleSaveChanges = async () => {
     setLoading(true);
-    await saveUserData(user); // Save user data
-    setLoading(false);
-    alert("Profile saved successfully!");
+    try {
+      await uploadUserData(user);
+      alert("Profile saved successfully!");
+    } catch (error) {
+      alert(`Failed to save profile. Please try again ${error}`);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className="container mx-auto my-16 max-w-[1200px] px-4 sm:px-6">
-
-      {/* {InfoCointainer} */}
+      {/* Info Section */}
       <InfoSection
         imageSrc="/about-us.png"
         heading="We’d Love to Know You Better!"
@@ -121,22 +131,13 @@ const UploadProfilePage = () => {
               placeholder="Full Name"
             />
           </div>
-          <div>
-            <Text variant="large" className="text-gray-700 dark:text-gray-300">
-              Position
-            </Text>
-            <Input
-              value={user.position}
-              onChange={(e) => handleInputChange("position", e.target.value)}
-              placeholder="Position"
-            />
-          </div>
+
           <div>
             <Text variant="large" className="text-gray-700 dark:text-gray-300">
               Batch
             </Text>
             <Input
-              type="number"
+              type="text"
               value={user.batch}
               onChange={(e) =>
                 handleInputChange("batch", Number(e.target.value))
@@ -146,17 +147,60 @@ const UploadProfilePage = () => {
           </div>
           <div>
             <Text variant="large" className="text-gray-700 dark:text-gray-300">
+              Position
+            </Text>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant="outline"
+                  className="flex w-full items-center justify-between"
+                >
+                  {user.position || "Select Position"}
+                  <ChevronDown className="ml-2 h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuItem
+                  onSelect={() => handleInputChange("position", "CR")}
+                >
+                  CR
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onSelect={() => handleInputChange("position", "GR")}
+                >
+                  GR
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onSelect={() => handleInputChange("position", "PC")}
+                >
+                  PC
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onSelect={() => handleInputChange("position", "No Role")}
+                >
+                  No Role
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+          <div>
+            <Text variant="large" className="text-gray-700 dark:text-gray-300">
               Phone Number
             </Text>
             <Input
-              type="number"
+              type="text"
               value={user.phoneNumber}
-              onChange={(e) =>
-                handleInputChange("phoneNumber", e.target.value || null)
-              }
+              onChange={(e) => {
+                const value = e.target.value;
+                // Allow only numeric input
+                if (/^\d*$/.test(value)) {
+                  handleInputChange("phoneNumber", value);
+                }
+              }}
               placeholder="Phone Number"
             />
           </div>
+
           <div>
             <Text variant="large" className="text-gray-700 dark:text-gray-300">
               LinkedIn Profile
@@ -168,20 +212,44 @@ const UploadProfilePage = () => {
               placeholder="LinkedIn URL"
             />
           </div>
+
+          <div>
+            <Text variant="large" className="text-gray-700 dark:text-gray-300">
+              Domain
+            </Text>
+            <Input
+              type="text"
+              value={user.domain}
+              onChange={(e) => handleInputChange("domain", e.target.value)}
+              placeholder="Frontend-developer | Android"
+            />
+          </div>
         </div>
 
         {/* About Section */}
-        <div className="mt-8">
+        {/* <div className="mt-8">
           <Text variant="large" className="text-gray-700 dark:text-gray-300">
-            About
+            About Yourself
           </Text>
           <Textarea
             rows={5}
-            value={user.about}
-            onChange={(e) => handleInputChange("about", e.target.value)}
+            value={user.aboutUser}
+            onChange={(e) => handleInputChange("aboutUser", e.target.value)}
             placeholder="Write about yourself..."
           />
         </div>
+
+        <div className="mt-8">
+          <Text variant="large" className="text-gray-700 dark:text-gray-300">
+            About Our Club
+          </Text>
+          <Textarea
+            rows={5}
+            value={user.aboutZigbee}
+            onChange={(e) => handleInputChange("aboutZigbee", e.target.value)}
+            placeholder="Write about our club..."
+          />
+        </div> */}
 
         {/* Save Button */}
         <div className="mt-6 flex justify-end">
