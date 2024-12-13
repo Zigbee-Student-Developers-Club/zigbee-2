@@ -14,12 +14,19 @@ import {
   where,
 } from "firebase/firestore";
 import firebaseApp from "./config";
-import { FirebaseFetchUserType, UserData } from "../types";
+import {
+  FirebaseFetchUserType,
+  MagazineType,
+  ResourceType,
+  UserData,
+} from "../types";
 import { sendVerificationEmail } from "../resend/utils";
 import { generateToken } from "../jwt";
 
 const db = getFirestore(firebaseApp);
 const userCollection = collection(db, "users");
+const resourceCollection = collection(db, "resources");
+const magazineCollection = collection(db, "magazines");
 
 // handling error
 const handleError = (err: unknown, method: string): string => {
@@ -471,5 +478,103 @@ export const verifyAccessToken = async (token: string) => {
     error = handleError(err, "verifyAccessToken");
   }
 
+  return { result, error };
+};
+
+// add resource
+export const addResource = async (data: ResourceType) => {
+  let result: boolean = false;
+  let error: string | null = null;
+
+  try {
+    const res = await addDoc(resourceCollection, data);
+
+    result = res ? true : false;
+  } catch (err) {
+    error = handleError(err, "addResource");
+  }
+
+  return { result, error };
+};
+
+// fetch all resources
+export const fetchResources = async (domain?: string) => {
+  let result = null;
+  let error: string | null = null;
+
+  try {
+    let q = query(resourceCollection);
+
+    if (domain) {
+      q = query(q, where("domain", "==", domain));
+    }
+
+    const querySnapshot = await getDocs(q);
+
+    if (querySnapshot.empty) {
+      return { result, error };
+    }
+
+    result = querySnapshot.docs.map((doc) => {
+      const data = doc.data();
+
+      const filteredData = {
+        id: doc.id,
+        ...data,
+      };
+
+      return filteredData;
+    });
+
+    return { result, error };
+  } catch (err) {
+    error = handleError(err, "fetchResources");
+  }
+  return { result, error };
+};
+
+// add magazine
+export const addMagazine = async (data: MagazineType) => {
+  let result: boolean = false;
+  let error: string | null = null;
+
+  try {
+    const res = await addDoc(magazineCollection, data);
+
+    result = res ? true : false;
+  } catch (err) {
+    error = handleError(err, "addMagazine");
+  }
+
+  return { result, error };
+};
+
+// fetch all magazines
+export const fetchMagazines = async () => {
+  let result = null;
+  let error: string | null = null;
+
+  try {
+    const querySnapshot = await getDocs(magazineCollection);
+
+    if (querySnapshot.empty) {
+      return { result, error };
+    }
+
+    result = querySnapshot.docs.map((doc) => {
+      const data = doc.data();
+
+      const filteredData = {
+        id: doc.id,
+        ...data,
+      };
+
+      return filteredData;
+    });
+
+    return { result, error };
+  } catch (err) {
+    error = handleError(err, "fetchMagazines");
+  }
   return { result, error };
 };
