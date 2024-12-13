@@ -18,7 +18,7 @@ export const authenticate = async (req: NextRequest) => {
       throw Error("Invalid user data");
     }
 
-    console.log(userData);
+    // console.log(userData);
 
     // if the token is expired
     if (userData.exp && userData.exp < Date.now() / 1000) {
