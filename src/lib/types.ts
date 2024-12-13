@@ -16,5 +16,35 @@ export interface FirebaseFetchUserType {
   [key: string]: unknown; // Additional dynamic fields from Firestore
 }
 
+export interface ResourceType {
+  name: string;
+  url: string;
+  domain: string;
+  author: string;
+  uploadedOn: string;
+}
+
+export interface MagazineType {
+  title: string;
+  url: string;
+  image: string;
+  uploadedOn: string;
+}
+
+export interface Speaker {
+  name: string;
+  role: string;
+  company: string;
+  batch: number;
+}
+
+export interface EventType {
+  topic: string;
+  eventDate: string;
+  location: string;
+  thumbnail: string;
+  speakers: Speaker[];
+}
+
 export const validPositions = ["CR", "GR", "PC", "PV"];
 export const validRoles = ["alumni", "admin", "guest"];
