@@ -31,5 +31,20 @@ export interface MagazineType {
   uploadedOn: string;
 }
 
+export interface Speaker {
+  name: string;
+  role: string;
+  company: string;
+  batch: number;
+}
+
+export interface EventType {
+  topic: string;
+  eventDate: string;
+  location: string;
+  thumbnail: string;
+  speakers: Speaker[];
+}
+
 export const validPositions = ["CR", "GR", "PC", "PV"];
 export const validRoles = ["alumni", "admin", "guest"];

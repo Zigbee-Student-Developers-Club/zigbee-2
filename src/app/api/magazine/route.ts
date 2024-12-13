@@ -14,7 +14,7 @@ export const GET = async () => {
 
     return NextResponse.json(
       {
-        resources: result,
+        magazines: result,
         message: "Magazines fetched successfully",
       },
       { status: 200 }

@@ -15,6 +15,7 @@ import {
 } from "firebase/firestore";
 import firebaseApp from "./config";
 import {
+  EventType,
   FirebaseFetchUserType,
   MagazineType,
   ResourceType,
@@ -27,6 +28,7 @@ const db = getFirestore(firebaseApp);
 const userCollection = collection(db, "users");
 const resourceCollection = collection(db, "resources");
 const magazineCollection = collection(db, "magazines");
+const eventCollection = collection(db, "events");
 
 // handling error
 const handleError = (err: unknown, method: string): string => {
@@ -576,5 +578,52 @@ export const fetchMagazines = async () => {
   } catch (err) {
     error = handleError(err, "fetchMagazines");
   }
+  return { result, error };
+};
+
+// add event
+export const addEvent = async (data: EventType) => {
+  let result: boolean = false;
+  let error: string | null = null;
+
+  try {
+    const res = await addDoc(eventCollection, data);
+
+    result = res ? true : false;
+  } catch (err) {
+    error = handleError(err, "addEvent");
+  }
+
+  return { result, error };
+};
+
+// fetch all events
+export const fetchEvents = async () => {
+  let result = null;
+  let error: string | null = null;
+
+  try {
+    const querySnapshot = await getDocs(eventCollection);
+
+    if (querySnapshot.empty) {
+      return { result, error };
+    }
+
+    result = querySnapshot.docs.map((doc) => {
+      const data = doc.data();
+
+      const filteredData = {
+        id: doc.id,
+        ...data,
+      };
+
+      return filteredData;
+    });
+
+    return { result, error };
+  } catch (err) {
+    error = handleError(err, "fetchEvents");
+  }
+
   return { result, error };
 };
