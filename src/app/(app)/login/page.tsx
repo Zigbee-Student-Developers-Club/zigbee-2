@@ -59,7 +59,6 @@ const LoginPage = () => {
     } catch (error) {
       setMessage("Error sending OTP. Please try again.");
       console.log(error);
-      
     } finally {
       setLoading(false);
       setMessage("");
@@ -71,7 +70,11 @@ const LoginPage = () => {
     try {
       const response = await verifyEmailOtp({ email, otp });
       if (response) {
-        const { isProvidedBasicData } = response;
+        const { isProvidedBasicData, error } = response;
+
+        if (error) {
+          throw new Error(error);
+        }
 
         if (isProvidedBasicData) {
           router.push("/");
@@ -83,10 +86,9 @@ const LoginPage = () => {
         setMessageColor("text-red-500");
       }
     } catch (error) {
-      setMessage("Invalid OTP or server error.");
+      setMessage((error as Error).message || "Invalid OTP or server error.");
       setMessageColor("text-red-500");
       console.log(error);
-      
     } finally {
       setLoading(false);
     }

@@ -16,19 +16,19 @@ interface UserCredential {
 }
 
 interface verifyEmailOtpResponse {
-  isProvidedBasicData: boolean;
+  isProvidedBasicData?: boolean;
+  error?: string;
 }
 
-interface UserDetails{
-
-  name : string;
-  batch : number;
-  linkedInUrl : string ; 
-  profileImg : string ;
-  domain : string;
-  phoneNumber ?: string ;
+interface UserDetails {
+  name: string;
+  batch: number;
+  linkedInUrl: string;
+  profileImg: string;
+  domain: string;
+  phoneNumber?: string;
   // aboutUser: string;
-  // aboutZigbee: string ; 
+  // aboutZigbee: string ;
 }
 
 // 1. Check User Existence
@@ -41,11 +41,16 @@ export const checkUserExist = async (
       data
     );
 
-    if (response.status === 200 && typeof response.data.isRegistered === "boolean") {
+    if (
+      response.status === 200 &&
+      typeof response.data.isRegistered === "boolean"
+    ) {
       return response.data;
     }
 
-    throw new Error(`Unexpected response format: ${JSON.stringify(response.data)}`);
+    throw new Error(
+      `Unexpected response format: ${JSON.stringify(response.data)}`
+    );
   } catch (error: unknown) {
     if (error instanceof AxiosError) {
       console.error("API Error in checkUserExist:", error.message);
@@ -55,7 +60,6 @@ export const checkUserExist = async (
     throw new Error("Failed to check user existence");
   }
 };
-
 
 // 2. Get OTP
 export const getOtp = async (data: EmailPayload): Promise<boolean> => {
@@ -77,16 +81,13 @@ export const getOtp = async (data: EmailPayload): Promise<boolean> => {
   }
 };
 
-
 // 3. Verify Email OTP
 export const verifyEmailOtp = async (
   data: UserCredential
 ): Promise<verifyEmailOtpResponse | null> => {
   try {
-    const response: AxiosResponse<verifyEmailOtpResponse> = await apiClient.post(
-      "/api/verifyotp",
-      data
-    );
+    const response: AxiosResponse<verifyEmailOtpResponse> =
+      await apiClient.post("/api/verifyotp", data);
 
     if (response.status === 200) {
       return response.data;
@@ -95,7 +96,11 @@ export const verifyEmailOtp = async (
     return null;
   } catch (error: unknown) {
     if (error instanceof AxiosError) {
-      console.error("API Error in verifyEmailOtp:", error.message);
+      console.error(
+        "API Error in verifyEmailOtp:",
+        error.response?.data?.error
+      );
+      return error.response?.data;
     } else {
       console.error("Unexpected Error in verifyEmailOtp:", error);
     }
@@ -106,9 +111,14 @@ export const verifyEmailOtp = async (
 // 4. User Information Data Post (POST Method)
 export const uploadUserData = async (data: UserDetails) => {
   try {
-    const response = await apiClient.post("/api/users", data , {withCredentials: true, });
+    const response = await apiClient.post("/api/users", data, {
+      withCredentials: true,
+    });
 
-    if (response.status === 200 && typeof response.data.isProvidedBasicData === "boolean") {
+    if (
+      response.status === 200 &&
+      typeof response.data.isProvidedBasicData === "boolean"
+    ) {
       return response.data;
     }
 
@@ -129,15 +139,19 @@ export const uploadProfileImage = async (file: File): Promise<string> => {
     const formData = new FormData();
     formData.append("file", file);
 
-    const response = await apiClient.post("/api/update-profile-image", formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-      withCredentials: true, 
-    });
+    const response = await apiClient.post(
+      "/api/update-profile-image",
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+        withCredentials: true,
+      }
+    );
 
     if (response.status === 200) {
-      return response.data; 
+      return response.data;
     } else {
       throw new Error("Failed to upload image");
     }
@@ -150,7 +164,9 @@ export const uploadProfileImage = async (file: File): Promise<string> => {
 // 6. get contributors lists
 export const fetchContributors = async () => {
   try {
-    const response = await apiClient.get("/api/team", { withCredentials: true });
+    const response = await apiClient.get("/api/team", {
+      withCredentials: true,
+    });
     if (response.status === 200) {
       return response.data.contributors;
     } else {

@@ -117,7 +117,7 @@ export const verifyOtp = async (email: string, otp: string) => {
     if (querySnapshot.empty) {
       return {
         result: null,
-        error: "Invalid email or OTP provided. Please try again.",
+        error: "Incorrect OTP",
       };
     }
 
