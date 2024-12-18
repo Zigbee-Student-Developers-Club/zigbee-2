@@ -4,29 +4,50 @@ import { motion } from "framer-motion";
 import InfoSection from "@/components/common/InfoSection";
 import { Select2 } from "@/components/ui/select2";
 import { Text } from "@/components/ui/text";
-import { ResourceData } from "@/Data/ResourceData";
-import Link from "next/link";
 import { useState } from "react";
+import Link from "next/link";
 import ResourceCard from "./_components/Resourcecard";
+import { useFetchResources } from "@/lib/SWRhooks/useSWR"; 
+import LoadingSpinner from "@/components/common/LoadingSpinner";
 
 export default function Resources() {
   const [resourceOption, setResourceOption] = useState("all");
+
+  // Fetch resources using the SWR hook
+  const { magazineList, isLoading, error } = useFetchResources();
 
   // Dropdown options
   const domainOptions = [
     { value: "all", label: "All Resources" },
     { value: "androidDev", label: "Android App Development" },
-    { value: "backendDev", label: "Backend Development" },
+    { value: "backend", label: "Backend Development" },
     { value: "designing", label: "Designing" },
-    { value: "frontendDev", label: "Frontend Development" },
+    { value: "frontend", label: "Frontend Development" },
     { value: "networking", label: "Networking" },
   ];
+
+  // Handle loading and error states
+  if (isLoading) {
+    return (
+      <div className="container mx-auto py-16 flex justify-center items-center ">
+        <LoadingSpinner/>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="container mx-auto py-16">
+        <p>Failed to load resources. Please try again later.</p>
+      </div>
+    );
+  }
 
   // Filter resources based on the selected option
   const filteredResources =
     resourceOption === "all"
-      ? ResourceData
-      : ResourceData.filter((item) => resourceOption === item.domain);
+      ? magazineList
+      : magazineList.filter((item) => resourceOption === item.domain);
 
   return (
     <>
@@ -77,7 +98,7 @@ export default function Resources() {
                   <Link href={item.url} target="_blank">
                     <ResourceCard
                       data={{
-                        courseName: item.courseName,
+                        courseName: item.name,
                         author: item.author,
                       }}
                     />

@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/input-otp";
 import { Button } from "@/components/ui/button";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
+import { ChevronLeft} from "lucide-react"
 
 interface OtpInputSectionProps {
   setOtp: React.Dispatch<React.SetStateAction<string>>;
@@ -46,7 +47,7 @@ const OtpInputSection: React.FC<OtpInputSectionProps> = ({
         className="absolute left-5 top-5 cursor-pointer"
         onClick={resetOtpState}
       >
-        Back
+        <ChevronLeft/>
       </div>
       <Title size="medium">Check your email</Title>
       <InputOTP

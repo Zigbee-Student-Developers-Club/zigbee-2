@@ -19,16 +19,15 @@ interface verifyEmailOtpResponse {
   isProvidedBasicData: boolean;
 }
 
-interface UserDetails{
-
-  name : string;
-  batch : number;
-  linkedInUrl : string ; 
-  profileImg : string ;
-  domain : string;
-  phoneNumber ?: string ;
+interface UserDetails {
+  name: string;
+  batch: number;
+  linkedInUrl: string;
+  profileImg: string;
+  domain: string;
+  phoneNumber?: string;
   // aboutUser: string;
-  // aboutZigbee: string ; 
+  // aboutZigbee: string ;
 }
 
 // 1. Check User Existence
@@ -41,11 +40,16 @@ export const checkUserExist = async (
       data
     );
 
-    if (response.status === 200 && typeof response.data.isRegistered === "boolean") {
+    if (
+      response.status === 200 &&
+      typeof response.data.isRegistered === "boolean"
+    ) {
       return response.data;
     }
 
-    throw new Error(`Unexpected response format: ${JSON.stringify(response.data)}`);
+    throw new Error(
+      `Unexpected response format: ${JSON.stringify(response.data)}`
+    );
   } catch (error: unknown) {
     if (error instanceof AxiosError) {
       console.error("API Error in checkUserExist:", error.message);
@@ -55,7 +59,6 @@ export const checkUserExist = async (
     throw new Error("Failed to check user existence");
   }
 };
-
 
 // 2. Get OTP
 export const getOtp = async (data: EmailPayload): Promise<boolean> => {
@@ -77,16 +80,13 @@ export const getOtp = async (data: EmailPayload): Promise<boolean> => {
   }
 };
 
-
 // 3. Verify Email OTP
 export const verifyEmailOtp = async (
   data: UserCredential
 ): Promise<verifyEmailOtpResponse | null> => {
   try {
-    const response: AxiosResponse<verifyEmailOtpResponse> = await apiClient.post(
-      "/api/verifyotp",
-      data
-    );
+    const response: AxiosResponse<verifyEmailOtpResponse> =
+      await apiClient.post("/api/verifyotp", data);
 
     if (response.status === 200) {
       return response.data;
@@ -106,9 +106,14 @@ export const verifyEmailOtp = async (
 // 4. User Information Data Post (POST Method)
 export const uploadUserData = async (data: UserDetails) => {
   try {
-    const response = await apiClient.post("/api/users", data , {withCredentials: true, });
+    const response = await apiClient.post("/api/users", data, {
+      withCredentials: true,
+    });
 
-    if (response.status === 200 && typeof response.data.isProvidedBasicData === "boolean") {
+    if (
+      response.status === 200 &&
+      typeof response.data.isProvidedBasicData === "boolean"
+    ) {
       return response.data;
     }
 
@@ -129,15 +134,19 @@ export const uploadProfileImage = async (file: File): Promise<string> => {
     const formData = new FormData();
     formData.append("file", file);
 
-    const response = await apiClient.post("/api/update-profile-image", formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-      withCredentials: true, 
-    });
+    const response = await apiClient.post(
+      "/api/update-profile-image",
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+        withCredentials: true,
+      }
+    );
 
     if (response.status === 200) {
-      return response.data; 
+      return response.data;
     } else {
       throw new Error("Failed to upload image");
     }
@@ -150,7 +159,9 @@ export const uploadProfileImage = async (file: File): Promise<string> => {
 // 6. get contributors lists
 export const fetchContributors = async () => {
   try {
-    const response = await apiClient.get("/api/team", { withCredentials: true });
+    const response = await apiClient.get("/api/team", {
+      withCredentials: true,
+    });
     if (response.status === 200) {
       return response.data.contributors;
     } else {
@@ -161,3 +172,57 @@ export const fetchContributors = async () => {
     throw error;
   }
 };
+
+// 7. Get Alumni list
+export const fetchAlumni = async (batch: string) => {
+  try {
+    const response = await apiClient.get("/api/alumni", {
+      withCredentials: true,
+      params: batch ? { batch } : {}, // If no batch, don't send the parameter
+    });
+
+    // Check if the response status is not 200
+    if (response.status !== 200) {
+      console.error("Error fetching alumni data:", response.data); // Log the response data
+      throw new Error("Failed to fetch alumni data");
+    }
+
+    return response.data.alumnus;
+  } catch (error) {
+    console.error("Error fetching alumni data:", error);
+    throw error;
+  }
+};
+
+
+
+// 8. get magazine list 
+export const fetchMagazines = async() => {
+  return apiClient
+    .get("/api/magazine", { withCredentials: true })
+    .then(response => {
+      // Return the magazine data from the response
+      // console.log(response.data.magazines);
+      return response.data.magazines;
+    })
+    .catch(error => {
+      console.error("Error fetching magazine list:", error);
+      throw error; // Throw the error to be handled by the caller
+    });
+};
+
+// 9. get resources list
+export const fetchResources = async() => {
+  return apiClient
+    .get("/api/resource", { withCredentials: true })
+    .then(response => {
+      // Return the resources data from the response
+      console.log(response.data.resources);
+      return response.data.resources;
+    })
+    .catch(error => {
+      console.error("Error fetching magazine list:", error);
+      throw error; // Throw the error to be handled by the caller
+    });
+};
+

@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useTheme } from "next-themes";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,6 +15,12 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Moon, Sun, Menu, X } from "lucide-react";
 import Logo from "./Logo";
 
+
+type AuthProps = {
+  isUserAuthenticated: boolean;
+  setIsUserAuthenticated: Dispatch<SetStateAction<boolean>>;
+};
+
 const navItemsData = [
   {name: "Code Wars", route:"/codewars"},
   { name: "Our Team", route: "/team" },
@@ -23,12 +29,10 @@ const navItemsData = [
   { name: "Resources", route: "/resources" },
   { name: "Magazines", route: "/magazines" },
 ];
-
-const Header = () => {
+const Header : React.FC<AuthProps> =  ({ isUserAuthenticated, setIsUserAuthenticated }) =>{
   const { setTheme } = useTheme();
   const router = useRouter();
 
-  const [token, setToken] = useState<string | null>(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [themeMenuOpen, setThemeMenuOpen] = useState(false);
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
@@ -40,8 +44,7 @@ const Header = () => {
         router.push("/profile");
         break;
       case "logout":
-        localStorage.removeItem("auth-token");
-        setToken(null);
+        setIsUserAuthenticated(false);
         router.push("/login");
         break;
       case "login":
@@ -126,14 +129,14 @@ const Header = () => {
             <DropdownMenuTrigger asChild>
               <Avatar className="cursor-pointer">
                 <AvatarImage
-                  src={token ? "https://github.com/shadcn.png" : ""}
+                  src={isUserAuthenticated ? "https://github.com/shadcn.png" : ""}
                   alt="User Avatar"
                 />
-                <AvatarFallback>{token ? "U" : "?"}</AvatarFallback>
+                <AvatarFallback>{isUserAuthenticated ? "U" : "?"}</AvatarFallback>
               </Avatar>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              {token ? (
+              {isUserAuthenticated ? (
                 <>
                   <DropdownMenuItem onClick={() => handleNavigation("profile")}>
                     Profile
