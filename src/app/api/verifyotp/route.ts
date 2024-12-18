@@ -34,7 +34,7 @@ export const POST = async (req: NextRequest) => {
         {
           error: "Invalid email or OTP.",
         },
-        { status: 400 }
+        { status: 401 }
       );
     }
 

@@ -16,7 +16,8 @@ interface UserCredential {
 }
 
 interface verifyEmailOtpResponse {
-  isProvidedBasicData: boolean;
+  isProvidedBasicData?: boolean;
+  error?: string;
 }
 
 interface UserDetails {
@@ -95,7 +96,11 @@ export const verifyEmailOtp = async (
     return null;
   } catch (error: unknown) {
     if (error instanceof AxiosError) {
-      console.error("API Error in verifyEmailOtp:", error.message);
+      console.error(
+        "API Error in verifyEmailOtp:",
+        error.response?.data?.error
+      );
+      return error.response?.data;
     } else {
       console.error("Unexpected Error in verifyEmailOtp:", error);
     }

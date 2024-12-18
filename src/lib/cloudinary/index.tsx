@@ -10,7 +10,7 @@ cloudinary.config({
 export const uploadProfileToCloudinary = async (
   fileBuffer: Buffer,
   fileName: string
-): Promise<any> => {
+): Promise<string | undefined> => {
   return new Promise((resolve, reject) => {
     const uploadStream = cloudinary.uploader.upload_stream(
       {

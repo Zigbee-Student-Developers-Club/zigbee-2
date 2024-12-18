@@ -2,7 +2,13 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
 import { uploadProfileImage } from "@/lib/axios/allApiCall";
@@ -14,7 +20,12 @@ interface UploadDialogProps {
   currentImage: string;
 }
 
-const UploadImageDialog: React.FC<UploadDialogProps> = ({ isOpen, onClose, onSave, currentImage }) => {
+const UploadImageDialog: React.FC<UploadDialogProps> = ({
+  isOpen,
+  onClose,
+  onSave,
+  currentImage,
+}) => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -30,10 +41,10 @@ const UploadImageDialog: React.FC<UploadDialogProps> = ({ isOpen, onClose, onSav
         setIsLoading(true);
         // Call the Cloudinary API
         const uploadedImageUrl = await uploadProfileImage(selectedFile);
-        onSave(uploadedImageUrl); 
+        onSave(uploadedImageUrl);
         setSelectedFile(null);
-      } catch (error:any) {
-        alert(`${error}`);
+      } catch (error) {
+        alert((error as Error).message);
       } finally {
         setIsLoading(false);
       }
@@ -45,7 +56,9 @@ const UploadImageDialog: React.FC<UploadDialogProps> = ({ isOpen, onClose, onSav
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle className="text-center">Upload New Profile Picture</DialogTitle>
+          <DialogTitle className="text-center">
+            Upload New Profile Picture
+          </DialogTitle>
         </DialogHeader>
         <div className="flex flex-col items-center space-y-4">
           <div className="flex flex-col items-center space-y-6">
