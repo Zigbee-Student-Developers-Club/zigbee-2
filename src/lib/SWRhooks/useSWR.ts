@@ -9,18 +9,32 @@ import {
   SwrType,
 } from "../types";
 
+// generic useFetchData hook for reusability
+const useFetchData = <T>(
+  key: string,
+  fetcher: (key: string) => Promise<T>
+): { data: T | undefined } & SwrType => {
+  const { data, error, isValidating } = useSWR(key, fetcher);
+
+  return {
+    data,
+    isLoading: !data && !error,
+    isValidating,
+    error,
+  };
+};
+
 // SWR Hook: Fetch Contributors
 export const useFetchContributors = (): {
   contributors: ContributorType[];
 } & SwrType => {
-  const { data, error, isValidating } = useSWR(
-    "allContributors",
-    api.fetchContributors
-  );
+  const { data, isLoading, isValidating, error } = useFetchData<
+    ContributorType[]
+  >("allContributors", api.fetchContributors);
 
   return {
-    contributors: data,
-    isLoading: !data && !error,
+    contributors: data || [],
+    isLoading,
     isValidating,
     error,
   };
@@ -32,14 +46,14 @@ export const useFetchAlumni = (
 ): {
   alumniData: AlumniType[];
 } & SwrType => {
-  const { data, error, isValidating } = useSWR(
+  const { data, isLoading, isValidating, error } = useFetchData<AlumniType[]>(
     batch ? `alumni_${batch}` : "allAlumni",
     () => api.fetchAlumni(batch)
   );
 
   return {
-    alumniData: data,
-    isLoading: !data && !error,
+    alumniData: data || [],
+    isLoading,
     isValidating,
     error,
   };
@@ -49,14 +63,14 @@ export const useFetchAlumni = (
 export const useFetchMagazines = (): {
   magazineList: MagazineType[];
 } & SwrType => {
-  const { data, error, isValidating } = useSWR(
+  const { data, isLoading, isValidating, error } = useFetchData<MagazineType[]>(
     "magazineList",
     api.fetchMagazines
   );
 
   return {
-    magazineList: data,
-    isLoading: !data && !error,
+    magazineList: data || [],
+    isLoading,
     isValidating,
     error,
   };
@@ -66,14 +80,14 @@ export const useFetchMagazines = (): {
 export const useFetchResources = (): {
   resourceList: ResourceType[];
 } & SwrType => {
-  const { data, error, isValidating } = useSWR(
+  const { data, isLoading, isValidating, error } = useFetchData<ResourceType[]>(
     "resourcesList",
     api.fetchResources
   );
 
   return {
-    resourceList: data,
-    isLoading: !data && !error,
+    resourceList: data || [],
+    isLoading,
     isValidating,
     error,
   };
