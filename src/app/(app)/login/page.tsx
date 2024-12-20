@@ -107,7 +107,7 @@ const LoginPage = () => {
         <div className="flex flex-col items-center justify-center gap-4 px-6 py-4">
           <Image
             alt="login page image"
-            src="/person-with-vr.png"
+            src="/person-with-vr.webp"
             width={300}
             height={700}
             className="rounded-lg"

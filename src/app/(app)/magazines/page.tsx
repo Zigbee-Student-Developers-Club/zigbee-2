@@ -37,7 +37,7 @@ const Magazines = () => {
     >
       <div className="container mx-auto px-4">
         <InfoSection
-          imageSrc="/magazines.png"
+          imageSrc="/magazines.webp"
           heading="Magazines"
           text="Take a quick sneak peek into our Department's Annual Magazine, which embraces a plethora of humbly royal memories and celebrations of the various feats accomplished throughout the recent past"
           background="bg-orange-200"

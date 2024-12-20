@@ -16,7 +16,7 @@ export default function Gallery() {
         <div className="relative py-10">
           {/* Info Section */}
           <InfoSection
-            imageSrc="/gallery.png"
+            imageSrc="/gallery.webp"
             heading="Gallery"
             text="Step into our Alumni Meet Gallery, a visual journey capturing the vibrant moments and cherished memories shared by our university's alumni, as they come together to celebrate their journey and collective achievements."
             background="bg-yellow-100"

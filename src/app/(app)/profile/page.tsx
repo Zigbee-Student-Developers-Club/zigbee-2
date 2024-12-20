@@ -28,7 +28,8 @@ const fetchUserData = async (): Promise<UserData> => {
     position: "No Role",
     profileImg: "https://github.com/shadcn.png",
     domain: "Full Stack Development",
-    about: "Enthusiastic developer with a passion for building scalable applications.",
+    about:
+      "Enthusiastic developer with a passion for building scalable applications.",
   };
 };
 
@@ -52,7 +53,6 @@ const ProfilePage = () => {
       };
     });
   };
-  
 
   useEffect(() => {
     return () => {

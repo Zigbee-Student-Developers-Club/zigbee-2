@@ -59,7 +59,7 @@ export default function Resources() {
         <div className="relative py-10">
           {/* Info Section */}
           <InfoSection
-            imageSrc="/resource.png"
+            imageSrc="/resource.webp"
             heading="Resources"
             text="Android App Development, Frontend, Backend Development,
                 Designing, Networking, Full Stack, anything. Whatever is the

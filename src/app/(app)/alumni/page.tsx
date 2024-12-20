@@ -32,7 +32,7 @@ export default function Alumni() {
         transition={{ duration: 0.8 }}
       >
         <InfoSection
-          imageSrc="/alumni-img.png"
+          imageSrc="/alumni-img.webp"
           heading="Alumni"
           text="They’re exemplary, they’re buoyant, they’re the high fliers, they’re the veterans. Here’s to help you learn more and connect with our respected alumni."
           background="bg-blue-100"

@@ -6,14 +6,14 @@ import { ImageModal } from "./ImageModal";
 
 // Sample image data (replace with your own)
 const images = [
-  { src: "/reflectionHero.png", alt: "Image 1" },
-  { src: "/reflectionHero.png", alt: "Image 2" },
-  { src: "/reflectionHero.png", alt: "Image 3" },
-  { src: "/reflectionHero.png", alt: "Image 4" },
-  { src: "/reflectionHero.png", alt: "Image 5" },
-  { src: "/reflectionHero.png", alt: "Image 6" },
-  { src: "/reflectionHero.png", alt: "Image 7" },
-  { src: "/reflectionHero.png", alt: "Image 8" },
+  { src: "/reflectionHero.webp", alt: "Image 1" },
+  { src: "/reflectionHero.webp", alt: "Image 2" },
+  { src: "/reflectionHero.webp", alt: "Image 3" },
+  { src: "/reflectionHero.webp", alt: "Image 4" },
+  { src: "/reflectionHero.webp", alt: "Image 5" },
+  { src: "/reflectionHero.webp", alt: "Image 6" },
+  { src: "/reflectionHero.webp", alt: "Image 7" },
+  { src: "/reflectionHero.webp", alt: "Image 8" },
 ];
 
 export const ImageGallery = () => {

@@ -56,7 +56,7 @@ export default function ContributorsPage() {
   return (
     <div className="mx-auto max-w-7xl px-4">
       <InfoSection
-        imageSrc="/about-us.png"
+        imageSrc="/about-us.webp"
         heading="Our Team"
         text="We’re designers, developers, strategists, basically coding maniacs. We’re funny, innovative, presumably procrastinators and mostly awkward dancers. Yes, we’re Zigbee OUTR, a dynamic developers and coding community, aimed at raising the bar of the coding culture in and around us. We’re here by the students and we’re here for the students, with our base located in the premises of the Odisha University of Technology and Research, Bhubaneswar."
         background="bg-emerald-100"

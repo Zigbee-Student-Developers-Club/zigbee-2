@@ -75,7 +75,7 @@ const UploadProfilePage = () => {
     <div className="container mx-auto my-16 max-w-[1200px] px-4 sm:px-6">
       {/* Info Section */}
       <InfoSection
-        imageSrc="/about-us.png"
+        imageSrc="/about-us.webp"
         heading="We’d Love to Know You Better!"
         text="Your story matters to us! Share your basic details so we can connect, recognize, and reach out to you effortlessly. By staying connected, you'll be the first to know about all the exciting events and opportunities we have in store just for you!"
         background="bg-emerald-100"

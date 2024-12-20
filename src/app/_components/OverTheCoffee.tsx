@@ -44,7 +44,7 @@ export default function OverTheCoffee() {
             <div className="mt-10 flex flex-1 items-center justify-center md:mt-0">
               <Image
                 alt="zigbee hero"
-                src="/over-the-coffee.png"
+                src="/over-the-coffee.webp"
                 width="400"
                 height="200"
                 className="object-cover"

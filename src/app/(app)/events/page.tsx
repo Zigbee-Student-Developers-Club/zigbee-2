@@ -8,9 +8,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import Image from "next/image";
-import ZairzaAndZigbee from "../../../../public/zairzaandzigbee.png";
-import Game from "../../../../public/game.png";
-import Salesforce from "../../../../public/salesforce.png";
 import InfoSection from "@/components/common/InfoSection";
 
 const eventsData = [
@@ -19,7 +16,7 @@ const eventsData = [
     date: "16th July 2023",
     topic: "Alumini Connect",
     expired: true,
-    thumbnail: ZairzaAndZigbee.src,
+    thumbnail: "/zairzaandzigbee.webp",
     speakers: [
       {
         role: "Software Engineer",
@@ -46,7 +43,7 @@ const eventsData = [
     date: "24th Jan 2023",
     topic: "Game Development with Unity 3D",
     expired: true,
-    thumbnail: Game.src,
+    thumbnail: "/game.webp",
     speakers: [
       {
         role: "Game Developer",
@@ -61,7 +58,7 @@ const eventsData = [
     date: "28th Nov 2022",
     topic: "Cloud Application Development with Salesforce Platform",
     expired: true,
-    thumbnail: Salesforce.src,
+    thumbnail: "/salesforce.webp",
     speakers: [
       {
         role: "Tech Lead",
@@ -76,7 +73,7 @@ const eventsData = [
     date: "24th Jan 2023",
     topic: "Game Development with Unity 3D",
     expired: true,
-    thumbnail: Game.src,
+    thumbnail: "/game.webp",
     speakers: [
       {
         role: "Game Developer",
@@ -94,7 +91,7 @@ export default function AlumniConnect() {
       <div className="animate-slide-in relative py-10">
         <div className="mx-auto max-w-7xl px-4">
           <InfoSection
-            imageSrc="/event-img.png"
+            imageSrc="/event-img.webp"
             heading="Events"
             text=" Yes, we’ve been really busy and happening lately. Or maybe it’s
                 just that we love making it to the headlines time and again.

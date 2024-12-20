@@ -20,19 +20,19 @@ const data = [
             name: "John Doe",
             rank: "1st",
             bgColor: "bg-yellow-500",
-            imageUrl: "/codewars.png",
+            imageUrl: "/codewars.webp",
           },
           {
             name: "Jane Smith",
             rank: "2nd",
             bgColor: "bg-[#C0C0C0]",
-            imageUrl: "/codewars.png",
+            imageUrl: "/codewars.webp",
           },
           {
             name: "Alex Johnson",
             rank: "3rd",
             bgColor: "bg-[#CD7F32]",
-            imageUrl: "/codewars.png",
+            imageUrl: "/codewars.webp",
           },
         ],
       },
@@ -43,13 +43,13 @@ const data = [
             name: "Alice Brown",
             rank: "Winner",
             bgColor: "bg-yellow-500",
-            imageUrl: "/codewars.png",
+            imageUrl: "/codewars.webp",
           },
           {
             name: "Bob White",
             rank: "Runners up",
             bgColor: "bg-[#C0C0C0]",
-            imageUrl: "/codewars.png",
+            imageUrl: "/codewars.webp",
           },
         ],
       },
@@ -65,19 +65,19 @@ const data = [
             name: "Emily Davis",
             rank: "1st",
             bgColor: "bg-yellow-500",
-            imageUrl: "/codewars.png",
+            imageUrl: "/codewars.webp",
           },
           {
             name: "Chris Lee",
             rank: "2nd",
             bgColor: "bg-[#C0C0C0]",
-            imageUrl: "/codewars.png",
+            imageUrl: "/codewars.webp",
           },
           {
             name: "Sam Wilson",
             rank: "3rd",
             bgColor: "bg-[#CD7F32]",
-            imageUrl: "/codewars.png",
+            imageUrl: "/codewars.webp",
           },
         ],
       },
@@ -88,13 +88,13 @@ const data = [
             name: "Sophia Brown",
             rank: "Winner",
             bgColor: "bg-yellow-500",
-            imageUrl: "/codewars.png",
+            imageUrl: "/codewars.webp",
           },
           {
             name: "Ethan Black",
             rank: "Runners up",
             bgColor: "bg-[#C0C0C0]",
-            imageUrl: "/codewars.png",
+            imageUrl: "/codewars.webp",
           },
         ],
       },
@@ -186,7 +186,7 @@ export default function CodeWar() {
         <div className="relative py-10">
           {/* Info Section */}
           <InfoSection
-            imageSrc="/codewars.png"
+            imageSrc="/codewars.webp"
             heading="CodeWars"
             text="Embark on a coding odyssey like never before! CodeWars brings you intense competitive coding, brain-twisting aptitude challenges, and thrilling web development tasks. Don't just code; compete, conquer, and celebrate victory!"
             background="bg-teal-100"
