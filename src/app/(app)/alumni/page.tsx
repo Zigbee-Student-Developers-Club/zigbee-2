@@ -47,7 +47,7 @@ export default function Alumni() {
           background="bg-blue-100"
           darkBackground="dark:bg-teal-400"
           imageHeight={350}
-          imageWidth={500}
+          imageWidth={350}
           placedImage={false}
         />
       </motion.div>
@@ -96,7 +96,8 @@ export default function Alumni() {
               </div>
             ) : (
               <div className="grid grid-cols-2 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
-                {alumni?.sort((a, b) => a.name.localeCompare(b.name)) // Sort by name in alphabetical order
+                {alumni
+                  ?.sort((a, b) => a.name.localeCompare(b.name)) // Sort by name in alphabetical order
                   .map((alum, index) => (
                     <Alum
                       key={index}
@@ -109,8 +110,7 @@ export default function Alumni() {
                     />
                   ))}
               </div>
-            ) 
-          }
+            )}
             {/* Error State */}
             {error && (
               <div className="flex flex-col items-center justify-center p-10 text-center">

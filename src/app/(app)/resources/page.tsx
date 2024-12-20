@@ -7,7 +7,7 @@ import { Text } from "@/components/ui/text";
 import { useState } from "react";
 import Link from "next/link";
 import ResourceCard from "./_components/Resourcecard";
-import { useFetchResources } from "@/lib/SWRhooks/useSWR"; 
+import { useFetchResources } from "@/lib/SWRhooks/useSWR";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 
 export default function Resources() {
@@ -29,8 +29,8 @@ export default function Resources() {
   // Handle loading and error states
   if (isLoading) {
     return (
-      <div className="container mx-auto py-16 flex justify-center items-center ">
-        <LoadingSpinner/>
+      <div className="container mx-auto flex items-center justify-center py-16">
+        <LoadingSpinner />
       </div>
     );
   }
@@ -69,7 +69,7 @@ export default function Resources() {
             background="bg-teal-100"
             darkBackground="dark:bg-teal-400"
             imageHeight={200}
-            imageWidth={350}
+            imageWidth={200}
             placedImage={false}
           />
 

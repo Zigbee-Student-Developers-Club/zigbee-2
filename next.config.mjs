@@ -1,8 +1,29 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    images: {
-        domains: ['github.com', 'zigbeeoutr.in', 'another-domain.com'], // Add the domain here
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
+        pathname: '**',
       },
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+        pathname: '**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'zigbeeoutr.in',
+        pathname: '**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'zigbee-testing.netlify.app',
+        pathname: '**',
+      },
+    ]
+  },
 };
 
 export default nextConfig;

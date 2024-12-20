@@ -34,7 +34,7 @@ const Magazines = () => {
           background="bg-orange-200"
           darkBackground="dark:bg-orange-600"
           imageHeight={500}
-          imageWidth={250}
+          imageWidth={200}
           placedImage={false}
         />
 
@@ -53,7 +53,10 @@ const Magazines = () => {
                   />
                 </div>
                 <CardHeader className="mt-4 text-center">
-                  <Title size="small" className="text-xl font-semibold">{` ${data.title}`}</Title>
+                  <Title
+                    size="small"
+                    className="text-xl font-semibold"
+                  >{` ${data.title}`}</Title>
                 </CardHeader>
               </Card>
             </Link>
