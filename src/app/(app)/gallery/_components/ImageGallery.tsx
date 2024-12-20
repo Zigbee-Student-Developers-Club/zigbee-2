@@ -1,10 +1,7 @@
-"use client";
-
 import { useRef, useEffect, useState } from "react";
 import Image from "next/image";
 import { ImageModal } from "./ImageModal";
 
-// Sample image data (replace with your own)
 const images = [
   { src: "/reflectionHero.webp", alt: "Image 1" },
   { src: "/reflectionHero.webp", alt: "Image 2" },
@@ -101,8 +98,8 @@ export const ImageGallery = () => {
         <ImageModal
           isOpen={!!modalImage}
           onClose={() => setModalImage(null)}
-          src={modalImage.src}
-          alt={modalImage.alt}
+          src={modalImage?.src ?? ""}
+          alt={modalImage?.alt ?? ""}
         />
       )}
     </div>

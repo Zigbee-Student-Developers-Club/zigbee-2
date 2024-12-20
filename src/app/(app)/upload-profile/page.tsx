@@ -43,11 +43,11 @@ const UploadProfilePage = () => {
 
   useEffect(() => {
     return () => {
-      if (user.profileImg) {
-        URL.revokeObjectURL(user.profileImg);
+      if (user?.profileImg) {
+        URL.revokeObjectURL(user?.profileImg);
       }
     };
-  }, [user.profileImg]);
+  }, [user?.profileImg]);
 
   const handleInputChange = (
     field: keyof UserData,
@@ -65,7 +65,9 @@ const UploadProfilePage = () => {
       await uploadUserData(user);
       alert("Profile saved successfully!");
     } catch (error) {
-      alert(`Failed to save profile. Please try again ${error}`);
+      alert(
+        `Failed to save profile. Please try again ${(error as Error)?.message || ""}`
+      );
     } finally {
       setLoading(false);
     }
@@ -90,12 +92,12 @@ const UploadProfilePage = () => {
           <div className="group relative">
             <Avatar className="h-52 w-52">
               <AvatarImage
-                src={user.profileImg}
+                src={user?.profileImg || ""}
                 alt="User Avatar"
                 className="rounded-full border-8 border-white dark:border-black"
               />
               <AvatarFallback className="flex h-64 w-64 items-center justify-center rounded-full border-8 border-white bg-gray-100 text-2xl text-gray-700">
-                {user.name ? user.name[0] : "?"}
+                {user?.name ? user.name[0] : "?"}
               </AvatarFallback>
             </Avatar>
             <div
@@ -126,7 +128,7 @@ const UploadProfilePage = () => {
               Full Name
             </Text>
             <Input
-              value={user.name}
+              value={user?.name || ""}
               onChange={(e) => handleInputChange("name", e.target.value)}
               placeholder="Full Name"
             />
@@ -138,7 +140,7 @@ const UploadProfilePage = () => {
             </Text>
             <Input
               type="text"
-              value={user.batch}
+              value={user?.batch || ""}
               onChange={(e) =>
                 handleInputChange("batch", Number(e.target.value))
               }
@@ -155,7 +157,8 @@ const UploadProfilePage = () => {
                   variant="outline"
                   className="flex w-full items-center justify-between"
                 >
-                  {user.position || "Select Position"}
+                  {user?.position || "Select Position"}{" "}
+                  {/* Fallback for position */}
                   <ChevronDown className="ml-2 h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
@@ -189,7 +192,7 @@ const UploadProfilePage = () => {
             </Text>
             <Input
               type="text"
-              value={user.phoneNumber}
+              value={user?.phoneNumber || ""}
               onChange={(e) => {
                 const value = e.target.value;
                 // Allow only numeric input
@@ -207,7 +210,7 @@ const UploadProfilePage = () => {
             </Text>
             <Input
               type="url"
-              value={user.linkedInUrl}
+              value={user?.linkedInUrl || ""}
               onChange={(e) => handleInputChange("linkedInUrl", e.target.value)}
               placeholder="LinkedIn URL"
             />
@@ -219,7 +222,7 @@ const UploadProfilePage = () => {
             </Text>
             <Input
               type="text"
-              value={user.domain}
+              value={user?.domain || ""}
               onChange={(e) => handleInputChange("domain", e.target.value)}
               placeholder="Frontend-developer | Android"
             />
@@ -262,7 +265,7 @@ const UploadProfilePage = () => {
       {/* Upload Image Dialog */}
       <UploadImageDialog
         isOpen={isDialogOpen}
-        currentImage={user.profileImg}
+        currentImage={user?.profileImg || ""}
         onSave={handleFileUpload}
         onClose={() => setIsDialogOpen(false)}
       />

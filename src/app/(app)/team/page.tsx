@@ -7,33 +7,6 @@ import LoadingSpinner from "@/components/common/LoadingSpinner";
 
 export default function ContributorsPage() {
   const { contributors, isLoading, error } = useFetchContributors();
-  //   const contributors = [
-
-  //   {
-  //     name: "Mia Walker",
-  //     profileImage: "/images/mia.jpg",
-  //     linkedinURL: "https://linkedin.com/in/mia",
-  //     batch: "2025",
-  //   },
-  //   {
-  //     name: "Quinn Walker",
-  //     profileImage: "/images/quinn.jpg",
-  //     linkedinURL: "https://linkedin.com/in/quinn",
-  //     batch: "2024",
-  //   },
-  //   {
-  //     name: "Riley Scott",
-  //     profileImage: "/images/riley.jpg",
-  //     linkedinURL: "https://linkedin.com/in/riley",
-  //     batch: "2023",
-  //   },
-  //   {
-  //     name: "Sophia Clark",
-  //     profileImage: "/images/sophia.jpg",
-  //     linkedinURL: "https://linkedin.com/in/sophia",
-  //     batch: "2025",
-  //   },
-  // ];
 
   // Handle loading state
   if (isLoading) {
@@ -67,13 +40,13 @@ export default function ContributorsPage() {
         Our Contributors
       </Title>
       <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
-        {contributors.map((contributor, index: number) => (
+        {contributors?.map((contributor, index: number) => (
           <ContributorCard
             key={index}
-            name={contributor.name}
-            profileImage={contributor.profileImg || "/default-avatar.jpg"} // Fallback for missing images
-            linkedinURL={contributor.linkedInUrl || "#"} // Fallback for missing LinkedIn URLs
-            batch={contributor.batch.toString() || "N/A"} // Fallback for missing batch
+            name={contributor?.name || "Anonymous"} // Fallback for missing names
+            profileImage={contributor?.profileImg || "/default-avatar.jpg"} // Fallback for missing profile images
+            linkedinURL={contributor?.linkedInUrl || "#"} // Fallback for missing LinkedIn URLs
+            batch={contributor?.batch?.toString() || "N/A"} // Fallback for missing batch
           />
         ))}
       </div>

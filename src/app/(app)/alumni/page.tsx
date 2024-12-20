@@ -86,15 +86,15 @@ export default function Alumni() {
             ) : alumniData?.length > 0 ? (
               <div className="grid grid-cols-2 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
                 {alumniData
-                  ?.sort((a, b) => a.name.localeCompare(b.name)) // Sort by name in alphabetical order
+                  ?.sort((a, b) => a?.name.localeCompare(b?.name)) // Sort by name in alphabetical order
                   .map((alum, index: number) => (
                     <AlumniCard
                       key={index}
                       alumData={{
-                        name: alum.name,
-                        imgURL: alum.profileImg,
-                        linkedinURL: alum.linkedInUrl,
-                        position: alum.position,
+                        name: alum?.name,
+                        imgURL: alum?.profileImg,
+                        linkedinURL: alum?.linkedInUrl,
+                        position: alum?.position,
                       }}
                     />
                   ))}

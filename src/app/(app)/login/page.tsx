@@ -38,7 +38,7 @@ const LoginPage = () => {
           setMessageColor("text-red-500");
         }
       } catch (error) {
-        setMessage((error as Error).message || "Error verifying email.");
+        setMessage((error as Error)?.message || "Error verifying email.");
         setMessageColor("text-red-500");
         //console.log(error);
       }
@@ -58,7 +58,7 @@ const LoginPage = () => {
       }
     } catch (error) {
       setMessage(
-        (error as Error).message || "Error sending OTP. Please try again."
+        (error as Error)?.message || "Error sending OTP. Please try again."
       );
       //console.log(error);
     } finally {
@@ -88,7 +88,7 @@ const LoginPage = () => {
         setMessageColor("text-red-500");
       }
     } catch (error) {
-      setMessage((error as Error).message || "Invalid OTP or server error.");
+      setMessage((error as Error)?.message || "Invalid OTP or server error.");
       setMessageColor("text-red-500");
       //console.log(error);
     } finally {

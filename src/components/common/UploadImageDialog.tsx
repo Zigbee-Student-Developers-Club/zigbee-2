@@ -44,7 +44,9 @@ const UploadImageDialog: React.FC<UploadDialogProps> = ({
         onSave(uploadedImageUrl);
         setSelectedFile(null);
       } catch (error) {
-        alert((error as Error).message);
+        alert(
+          (error as Error)?.message || "An error occurred while uploading."
+        );
       } finally {
         setIsLoading(false);
       }

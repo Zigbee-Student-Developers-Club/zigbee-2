@@ -50,12 +50,12 @@ const Magazines = () => {
         {/* Magazine Cards Section */}
         <div className="container mx-auto my-16 grid max-w-[1200px] grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {magazineList?.map((data, index: number) => (
-            <Link href={data.url} target="_blank" key={index}>
+            <Link href={data?.url} target="_blank" key={index}>
               <Card className="group shadow-md transition-shadow hover:shadow-lg">
                 <div className="relative h-56 w-full overflow-hidden rounded-t-lg">
                   <Image
-                    src={data.image} // Assuming `profileImg` is the image for the magazines
-                    alt={data.title}
+                    src={data?.image}
+                    alt={data?.title || "Magazine Image"}
                     layout="fill"
                     objectFit="cover"
                     className="transition-transform duration-300 group-hover:scale-105"
@@ -65,7 +65,7 @@ const Magazines = () => {
                   <Title
                     size="small"
                     className="text-xl font-semibold"
-                  >{` ${data.title}`}</Title>
+                  >{` ${data?.title || "Untitled"}`}</Title>{" "}
                 </CardHeader>
               </Card>
             </Link>

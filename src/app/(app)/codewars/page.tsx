@@ -158,20 +158,20 @@ export default function CodeWar() {
   const [selectedBatch, setSelectedBatch] = useState(2024);
 
   const batchOptions = data.map((entry) => ({
-    label: `Batch ${entry.batch}`,
-    value: entry.batch.toString(),
+    label: `Batch ${entry?.batch}`,
+    value: entry?.batch?.toString(),
   }));
 
-  const selectedData = data.find((entry) => entry.batch === selectedBatch);
+  const selectedData = data.find((entry) => entry?.batch === selectedBatch);
 
-  const renderBadges = (badges: Badge[]) => {
-    return badges.map((badge, index) => (
+  const renderBadges = (badges: Badge[] | undefined) => {
+    return badges?.map((badge, index) => (
       <Badge
         key={index}
-        name={badge.name}
-        rank={badge.rank}
-        bgColor={badge.bgColor}
-        imageUrl={badge.imageUrl}
+        name={badge?.name}
+        rank={badge?.rank}
+        bgColor={badge?.bgColor}
+        imageUrl={badge?.imageUrl}
       />
     ));
   };
@@ -201,20 +201,20 @@ export default function CodeWar() {
             <Text className="font-medium">Choose the batch:</Text>
             <Select2
               data={batchOptions}
-              value={selectedBatch.toString()}
+              value={selectedBatch?.toString()}
               onChange={(value) => setSelectedBatch(Number(value))}
               placeholder="Select a batch"
             />
           </div>
 
           {/* Render Competitions */}
-          {selectedData?.competitions.map((competition, index) => (
+          {selectedData?.competitions?.map((competition, index) => (
             <div key={index} className="my-16">
               <Title size="small" className="my-8 text-center font-bold">
-                {competition.name}
+                {competition?.name}
               </Title>
               <div className="flex flex-wrap items-center justify-center gap-12">
-                {renderBadges(competition.badges)}
+                {renderBadges(competition?.badges)}
               </div>
             </div>
           ))}

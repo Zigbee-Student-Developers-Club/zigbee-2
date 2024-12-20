@@ -47,7 +47,7 @@ export default function Resources() {
   const filteredResources =
     resourceOption === "all"
       ? resourceList
-      : resourceList.filter((item) => resourceOption === item.domain);
+      : resourceList?.filter((item) => resourceOption === item?.domain);
 
   return (
     <>
@@ -87,7 +87,7 @@ export default function Resources() {
 
             {/* Resource Cards */}
             <div className="mt-8 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-              {filteredResources.map((item, index: number) => (
+              {filteredResources?.map((item, index: number) => (
                 <motion.div
                   key={index}
                   className="w-full"
@@ -95,11 +95,11 @@ export default function Resources() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: index * 0.1 }}
                 >
-                  <Link href={item.url} target="_blank">
+                  <Link href={item?.url || "#"} target="_blank">
                     <ResourceCard
                       data={{
-                        courseName: item.name,
-                        author: item.author,
+                        courseName: item?.name || "Unknown Course",
+                        author: item?.author || "Unknown Author",
                       }}
                     />
                   </Link>
