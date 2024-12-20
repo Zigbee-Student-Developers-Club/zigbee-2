@@ -20,7 +20,7 @@ export const GET = async (req: NextRequest) => {
 
     return NextResponse.json(
       {
-        alumnus: result,
+        alumnus: result ? result : [],
         message: "Alumnus fetched successfully",
       },
       { status: 200 }

@@ -14,7 +14,7 @@ export default function Resources() {
   const [resourceOption, setResourceOption] = useState("all");
 
   // Fetch resources using the SWR hook
-  const { magazineList, isLoading, error } = useFetchResources();
+  const { resourceList, isLoading, error } = useFetchResources();
 
   // Dropdown options
   const domainOptions = [
@@ -46,8 +46,8 @@ export default function Resources() {
   // Filter resources based on the selected option
   const filteredResources =
     resourceOption === "all"
-      ? magazineList
-      : magazineList.filter((item) => resourceOption === item.domain);
+      ? resourceList
+      : resourceList.filter((item) => resourceOption === item.domain);
 
   return (
     <>
@@ -87,7 +87,7 @@ export default function Resources() {
 
             {/* Resource Cards */}
             <div className="mt-8 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-              {filteredResources.map((item, index) => (
+              {filteredResources.map((item, index: number) => (
                 <motion.div
                   key={index}
                   className="w-full"

@@ -7,17 +7,26 @@ import { motion } from "framer-motion";
 import { useFetchMagazines } from "@/lib/SWRhooks/useSWR"; // Import the custom hook for fetching magazines
 import InfoSection from "@/components/common/InfoSection";
 import Title from "@/components/ui/title";
+import LoadingSpinner from "@/components/common/LoadingSpinner";
 
 const Magazines = () => {
   // Fetching the magazine data using SWR
   const { magazineList, isLoading, error } = useFetchMagazines();
 
   if (isLoading) {
-    return <div>Loading magazines...</div>; // Loading state
+    return (
+      <div className="container mx-auto flex items-center justify-center py-16">
+        <LoadingSpinner />
+      </div>
+    );
   }
 
   if (error) {
-    return <div>Error fetching magazines: {error.message}</div>; // Error state
+    return (
+      <div className="container mx-auto py-16">
+        <p>Failed to load magazines. Please try again later.</p>
+      </div>
+    );
   }
 
   return (
@@ -46,13 +55,13 @@ const Magazines = () => {
                 <div className="relative h-56 w-full overflow-hidden rounded-t-lg">
                   <Image
                     src={data.image} // Assuming `profileImg` is the image for the magazines
-                    alt={`Magazine ${data.year}`}
+                    alt={data.title}
                     layout="fill"
                     objectFit="cover"
                     className="transition-transform duration-300 group-hover:scale-105"
                   />
                 </div>
-                <CardHeader className="mt-4 text-center">
+                <CardHeader className="mt-2 text-center">
                   <Title
                     size="small"
                     className="text-xl font-semibold"

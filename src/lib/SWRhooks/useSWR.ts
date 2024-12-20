@@ -1,12 +1,20 @@
 "use client";
-import useSWR from 'swr';
+import useSWR from "swr";
 import * as api from "@/lib/axios/allApiCall";
-
+import {
+  AlumniType,
+  ContributorType,
+  MagazineType,
+  ResourceType,
+  SwrType,
+} from "../types";
 
 // SWR Hook: Fetch Contributors
-export const useFetchContributors = () => {
+export const useFetchContributors = (): {
+  contributors: ContributorType[];
+} & SwrType => {
   const { data, error, isValidating } = useSWR(
-    "allContributors", 
+    "allContributors",
     api.fetchContributors
   );
 
@@ -19,7 +27,11 @@ export const useFetchContributors = () => {
 };
 
 // SWR Hook: Fetch Alumni
-export const useFetchAlumni = (batch: string) => {
+export const useFetchAlumni = (
+  batch: string
+): {
+  alumni: AlumniType[];
+} & SwrType => {
   const { data, error, isValidating } = useSWR(
     batch ? `alumni_${batch}` : "allAlumni",
     () => api.fetchAlumni(batch)
@@ -34,8 +46,13 @@ export const useFetchAlumni = (batch: string) => {
 };
 
 // SWR Hook : Fetch Magazines
-export const useFetchMagazines = () => {
-  const { data, error, isValidating } = useSWR("magazineList", api.fetchMagazines);
+export const useFetchMagazines = (): {
+  magazineList: MagazineType[];
+} & SwrType => {
+  const { data, error, isValidating } = useSWR(
+    "magazineList",
+    api.fetchMagazines
+  );
 
   return {
     magazineList: data,
@@ -46,11 +63,16 @@ export const useFetchMagazines = () => {
 };
 
 // SWR Hook : Fetch Resources
-export const useFetchResources = () => {
-  const { data, error, isValidating } = useSWR("resourcesList", api.fetchResources);
+export const useFetchResources = (): {
+  resourceList: ResourceType[];
+} & SwrType => {
+  const { data, error, isValidating } = useSWR(
+    "resourcesList",
+    api.fetchResources
+  );
 
   return {
-    magazineList: data,
+    resourceList: data,
     isLoading: !data && !error,
     isValidating,
     error,

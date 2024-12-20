@@ -33,8 +33,8 @@ export default function Footer() {
 
         {/* Navigation Links - Column 2 */}
         <div className="mt-6 flex flex-col space-y-3 md:mt-0">
-          <Link href="/department" className="hover:text-teal-500">
-            Department
+          <Link href="/team" className="hover:text-teal-500">
+            Our Team
           </Link>
           <Link href="/alumni" className="hover:text-teal-500">
             Alumni
@@ -45,8 +45,8 @@ export default function Footer() {
           <Link href="/resources" className="hover:text-teal-500">
             Resources
           </Link>
-          <Link href="/drafts" className="hover:text-teal-500">
-            Drafts
+          <Link href="/magazines" className="hover:text-teal-500">
+            Magazines
           </Link>
         </div>
 
@@ -102,7 +102,7 @@ export default function Footer() {
 
       {/* Footer Text */}
       <p className="mt-6 text-center">
-        © 2022 Zigbee Student Developers&apos; Club. All rights reserved
+        © 2024 Zigbee Student Developers&apos; Club. All rights reserved
       </p>
     </div>
   );

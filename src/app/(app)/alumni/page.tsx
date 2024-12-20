@@ -10,16 +10,6 @@ import Alum from "./_components/Alum";
 import Title from "@/components/ui/title";
 import { useFetchAlumni } from "@/lib/SWRhooks/useSWR"; // Import the SWR hook
 
-type Alum = {
-  name: string;
-  company?: string;
-  batch: string;
-  text: string;
-  imgURL?: string;
-  linkedinURL?: string;
-  position?: string;
-};
-
 export default function Alumni() {
   const [selectedYear, setSelectedYear] = useState<string>("2025");
 
@@ -31,7 +21,8 @@ export default function Alumni() {
     const year = currYear - i; // Start from 2025 and decrement
     return { value: year.toString(), label: `Batch ${year}` };
   });
-
+  console.log("alumni", alumni);
+  console.log("isLoading", isLoading);
   return (
     <>
       {/* Header Section */}
@@ -94,21 +85,25 @@ export default function Alumni() {
                   </div>
                 ))}
               </div>
-            ) : (
+            ) : alumni?.length > 0 ? (
               <div className="grid grid-cols-2 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
                 {alumni
                   ?.sort((a, b) => a.name.localeCompare(b.name)) // Sort by name in alphabetical order
-                  .map((alum, index) => (
+                  .map((alum, index: number) => (
                     <Alum
                       key={index}
                       alumData={{
                         name: alum.name,
-                        imgURL: alum.imgURL,
-                        linkedinURL: alum.linkedinURL,
+                        imgURL: alum.profileImg,
+                        linkedinURL: alum.linkedInUrl,
                         position: alum.position,
                       }}
                     />
                   ))}
+              </div>
+            ) : (
+              <div className="p-10 text-center">
+                No alumni data found for the batch {selectedYear}
               </div>
             )}
             {/* Error State */}
