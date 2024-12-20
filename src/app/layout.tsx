@@ -1,5 +1,5 @@
 "use client";
-import { ThemeProvider } from "@/components/theme-provider";
+import { ThemeProvider } from "@/components/provider/theme-provider";
 // import type { Metadata } from "next";
 import { Nunito } from "next/font/google";
 import "./globals.css";
@@ -22,9 +22,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
- 
-    const [isUserAuthenticated , setIsUserAuthenticated] = useState(true);
-
+  const [isUserAuthenticated, setIsUserAuthenticated] = useState(true);
 
   return (
     <html lang="en">
@@ -35,7 +33,10 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Header isUserAuthenticated={isUserAuthenticated} setIsUserAuthenticated={setIsUserAuthenticated}/>
+          <Header
+            isUserAuthenticated={isUserAuthenticated}
+            setIsUserAuthenticated={setIsUserAuthenticated}
+          />
           {children}
           <Footer />
         </ThemeProvider>

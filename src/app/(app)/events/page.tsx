@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/card";
 import Image from "next/image";
 import InfoSection from "@/components/common/InfoSection";
+import MotionDivProvider from "@/components/provider/MotionDivProvider";
 
 const eventsData = [
   {
@@ -87,62 +88,57 @@ const eventsData = [
 
 export default function AlumniConnect() {
   return (
-    <>
-      <div className="animate-slide-in relative py-10">
-        <div className="mx-auto max-w-7xl px-4">
-          <InfoSection
-            imageSrc="/event-img.webp"
-            heading="Events"
-            text=" Yes, we’ve been really busy and happening lately. Or maybe it’s
+    <MotionDivProvider>
+      <div className="mx-auto max-w-7xl px-4">
+        <InfoSection
+          imageSrc="/event-img.webp"
+          heading="Events"
+          text=" Yes, we’ve been really busy and happening lately. Or maybe it’s
                 just that we love making it to the headlines time and again.
                 Nevertheless, here’s to take you on a quick tour on all our
                 ventures in the recent past."
-            background="bg-purple-100"
-            darkBackground="dark:bg-violet-600"
-            imageHeight={500}
-            imageWidth={250}
-            placedImage={false}
-          />
+          background="bg-purple-100"
+          darkBackground="dark:bg-violet-600"
+          imageHeight={500}
+          imageWidth={250}
+          placedImage={false}
+        />
 
-          <div className="container mx-auto my-16 mt-10 grid max-w-[1200px] gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-            {eventsData?.map((data, index) => (
-              <Card
-                key={index}
-                className="flex h-auto flex-col hover:shadow-lg"
-              >
-                <CardHeader>
-                  <Image
-                    className="rounded-t-lg"
-                    src={data?.thumbnail}
-                    alt={data?.topic || "Event Thumbnail"}
-                    width={400}
-                    height={200}
-                  />
-                </CardHeader>
-                <CardContent className="flex-grow text-gray-500 dark:text-gray-200">
-                  <CardTitle className="my-4 text-xl font-bold">
-                    {data?.topic}
-                  </CardTitle>
-                  <p className="text-sm">{data?.date}</p>
-                  <ul className="mt-4 space-y-2 text-sm">
-                    {data?.speakers?.map((speaker, idx) => (
-                      <li key={idx}>
-                        <span className="font-medium">{speaker?.name}</span> (
-                        {speaker?.batch}) - {speaker?.role}, {speaker?.company}
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-                <CardFooter className="mt-auto">
-                  <Button variant="outline" className="w-full">
-                    {data?.expired ? "Event Expired" : "View Details"}
-                  </Button>
-                </CardFooter>
-              </Card>
-            ))}
-          </div>
+        <div className="container mx-auto my-16 mt-10 grid max-w-[1200px] gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+          {eventsData?.map((data, index) => (
+            <Card key={index} className="flex h-auto flex-col hover:shadow-lg">
+              <CardHeader>
+                <Image
+                  className="rounded-t-lg"
+                  src={data?.thumbnail}
+                  alt={data?.topic || "Event Thumbnail"}
+                  width={400}
+                  height={200}
+                />
+              </CardHeader>
+              <CardContent className="flex-grow text-gray-500 dark:text-gray-200">
+                <CardTitle className="my-4 text-xl font-bold">
+                  {data?.topic}
+                </CardTitle>
+                <p className="text-sm">{data?.date}</p>
+                <ul className="mt-4 space-y-2 text-sm">
+                  {data?.speakers?.map((speaker, idx) => (
+                    <li key={idx}>
+                      <span className="font-medium">{speaker?.name}</span> (
+                      {speaker?.batch}) - {speaker?.role}, {speaker?.company}
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+              <CardFooter className="mt-auto">
+                <Button variant="outline" className="w-full">
+                  {data?.expired ? "Event Expired" : "View Details"}
+                </Button>
+              </CardFooter>
+            </Card>
+          ))}
         </div>
       </div>
-    </>
+    </MotionDivProvider>
   );
 }

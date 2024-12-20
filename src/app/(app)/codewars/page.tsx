@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import Title from "@/components/ui/title";
 import { Text } from "@/components/ui/text";
 import InfoSection from "@/components/common/InfoSection";
@@ -8,6 +7,7 @@ import { Badge } from "./_components/Badge";
 import { Select2 } from "@/components/ui/select2";
 import { useState } from "react";
 import { LayoutGrid } from "@/components/ui/layout-grid";
+import MotionDivProvider from "@/components/provider/MotionDivProvider";
 
 const data = [
   {
@@ -177,60 +177,54 @@ export default function CodeWar() {
   };
 
   return (
-    <>
-      <motion.div
-        initial={{ y: 100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.8 }}
-      >
-        <div className="relative py-10">
-          {/* Info Section */}
-          <InfoSection
-            imageSrc="/codewars.webp"
-            heading="CodeWars"
-            text="Embark on a coding odyssey like never before! CodeWars brings you intense competitive coding, brain-twisting aptitude challenges, and thrilling web development tasks. Don't just code; compete, conquer, and celebrate victory!"
-            background="bg-teal-100"
-            darkBackground="dark:bg-teal-400"
-            imageHeight={200}
-            imageWidth={200}
-            placedImage={false}
+    <MotionDivProvider>
+      <div className="relative py-10">
+        {/* Info Section */}
+        <InfoSection
+          imageSrc="/codewars.webp"
+          heading="CodeWars"
+          text="Embark on a coding odyssey like never before! CodeWars brings you intense competitive coding, brain-twisting aptitude challenges, and thrilling web development tasks. Don't just code; compete, conquer, and celebrate victory!"
+          background="bg-teal-100"
+          darkBackground="dark:bg-teal-400"
+          imageHeight={200}
+          imageWidth={200}
+          placedImage={false}
+        />
+
+        {/* Batch Selector */}
+        <div className="flex flex-col items-center justify-end gap-4 px-20 md:flex-row">
+          <Text className="font-medium">Choose the batch:</Text>
+          <Select2
+            data={batchOptions}
+            value={selectedBatch?.toString()}
+            onChange={(value) => setSelectedBatch(Number(value))}
+            placeholder="Select a batch"
           />
+        </div>
 
-          {/* Batch Selector */}
-          <div className="flex flex-col items-center justify-end gap-4 px-20 md:flex-row">
-            <Text className="font-medium">Choose the batch:</Text>
-            <Select2
-              data={batchOptions}
-              value={selectedBatch?.toString()}
-              onChange={(value) => setSelectedBatch(Number(value))}
-              placeholder="Select a batch"
-            />
-          </div>
-
-          {/* Render Competitions */}
-          {selectedData?.competitions?.map((competition, index) => (
-            <div key={index} className="my-16">
-              <Title size="small" className="my-8 text-center font-bold">
-                {competition?.name}
-              </Title>
-              <div className="flex flex-wrap items-center justify-center gap-12">
-                {renderBadges(competition?.badges)}
-              </div>
-            </div>
-          ))}
-
-          {/* Gallery Section */}
-          <div>
-            <Title size="medium" className="text-center">
-              A Glimpse of Codewars {selectedBatch} ✨
+        {/* Render Competitions */}
+        {selectedData?.competitions?.map((competition, index) => (
+          <div key={index} className="my-16">
+            <Title size="small" className="my-8 text-center font-bold">
+              {competition?.name}
             </Title>
-
-            <div className="h-[900px]">
-              <LayoutGrid cards={gallery2024} />
+            <div className="flex flex-wrap items-center justify-center gap-12">
+              {renderBadges(competition?.badges)}
             </div>
+          </div>
+        ))}
+
+        {/* Gallery Section */}
+        <div>
+          <Title size="medium" className="text-center">
+            A Glimpse of Codewars {selectedBatch} ✨
+          </Title>
+
+          <div className="h-[900px]">
+            <LayoutGrid cards={gallery2024} />
           </div>
         </div>
-      </motion.div>
-    </>
+      </div>
+    </MotionDivProvider>
   );
 }

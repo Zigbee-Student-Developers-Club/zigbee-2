@@ -1,10 +1,11 @@
 "use client";
 
 import Image from "next/image";
-import { motion, useInView } from "framer-motion";
+import { useInView } from "framer-motion";
 import { useEffect, useRef } from "react";
 import Title from "../ui/title";
 import { Text } from "../ui/text";
+import MotionDivProvider from "../provider/MotionDivProvider";
 
 interface InfoSectionProps {
   imageSrc: string;
@@ -36,11 +37,7 @@ export default function InfoSection({
 
   return (
     <div ref={ref} className="container mx-auto my-8 max-w-[1200px]">
-      <motion.div
-        initial={{ opacity: 0, y: 100 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, ease: "easeOut" }}
-      >
+      <MotionDivProvider>
         <div
           className={`mx-auto my-8 max-w-7xl rounded-2xl px-8 py-16 ${background} ${darkBackground}`}
         >
@@ -79,7 +76,7 @@ export default function InfoSection({
             </div>
           </div>
         </div>
-      </motion.div>
+      </MotionDivProvider>
     </div>
   );
 }

@@ -1,15 +1,11 @@
 "use client";
 
 import Image from "next/image";
-import { motion } from "framer-motion";
+import MotionDivProvider from "@/components/provider/MotionDivProvider";
 
 const Hero = () => {
   return (
-    <motion.div
-      initial={{ y: 100, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.8 }}
-    >
+    <MotionDivProvider>
       <div className="container mx-auto my-16 max-w-[1200px]">
         <div className="flex flex-col items-center space-y-8 md:flex-row md:space-x-10 md:space-y-0">
           <div className="flex-1 space-y-5 text-center md:space-y-10">
@@ -33,7 +29,7 @@ const Hero = () => {
           </div>
         </div>
       </div>
-    </motion.div>
+    </MotionDivProvider>
   );
 };
 

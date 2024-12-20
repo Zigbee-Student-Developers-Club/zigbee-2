@@ -3,11 +3,11 @@
 import { Card, CardHeader } from "@/components/ui/card";
 import Link from "next/link";
 import Image from "next/image";
-import { motion } from "framer-motion";
 import { useFetchMagazines } from "@/lib/SWRhooks/useSWR"; // Import the custom hook for fetching magazines
 import InfoSection from "@/components/common/InfoSection";
 import Title from "@/components/ui/title";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
+import MotionDivProvider from "@/components/provider/MotionDivProvider";
 
 const Magazines = () => {
   // Fetching the magazine data using SWR
@@ -30,11 +30,7 @@ const Magazines = () => {
   }
 
   return (
-    <motion.div
-      initial={{ y: 100, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.8 }}
-    >
+    <MotionDivProvider>
       <div className="container mx-auto px-4">
         <InfoSection
           imageSrc="/magazines.webp"
@@ -72,7 +68,7 @@ const Magazines = () => {
           ))}
         </div>
       </div>
-    </motion.div>
+    </MotionDivProvider>
   );
 };
 

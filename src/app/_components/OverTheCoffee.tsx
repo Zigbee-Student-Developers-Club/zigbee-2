@@ -1,7 +1,7 @@
 import { useAnimation, useInView } from "framer-motion";
 import Image from "next/image";
 import { useEffect, useRef } from "react";
-import { motion } from "framer-motion";
+import MotionDivProvider from "@/components/provider/MotionDivProvider";
 
 export default function OverTheCoffee() {
   const ref = useRef(null);
@@ -16,15 +16,7 @@ export default function OverTheCoffee() {
 
   return (
     <div ref={ref}>
-      <motion.div
-        variants={{
-          hidden: { opacity: 0, y: 75 },
-          visible: { opacity: 1, y: 0 },
-        }}
-        initial="hidden"
-        animate="visible"
-        transition={{ duration: 1, ease: "easeOut" }}
-      >
+      <MotionDivProvider>
         <div className="mx-auto my-16 max-w-7xl rounded-2xl px-8 py-16">
           <div className="flex flex-col items-center md:flex-row">
             <div className="flex-1 space-y-6 md:gap-16 md:space-y-10">
@@ -52,7 +44,7 @@ export default function OverTheCoffee() {
             </div>
           </div>
         </div>
-      </motion.div>
+      </MotionDivProvider>
     </div>
   );
 }

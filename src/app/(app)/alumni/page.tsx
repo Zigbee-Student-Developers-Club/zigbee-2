@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Text } from "@/components/ui/text";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -9,6 +8,7 @@ import InfoSection from "@/components/common/InfoSection";
 import AlumniCard from "./_components/AlumniCard";
 import Title from "@/components/ui/title";
 import { useFetchAlumni } from "@/lib/SWRhooks/useSWR"; // Import the SWR hook
+import MotionDivProvider from "@/components/provider/MotionDivProvider";
 
 export default function Alumni() {
   const [selectedYear, setSelectedYear] = useState<string>("2025");
@@ -22,24 +22,19 @@ export default function Alumni() {
     return { value: year.toString(), label: `Batch ${year}` };
   });
   return (
-    <>
+    <MotionDivProvider>
       {/* Header Section */}
-      <motion.div
-        initial={{ y: 100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.8 }}
-      >
-        <InfoSection
-          imageSrc="/alumni-img.webp"
-          heading="Alumni"
-          text="They’re exemplary, they’re buoyant, they’re the high fliers, they’re the veterans. Here’s to help you learn more and connect with our respected alumni."
-          background="bg-blue-100"
-          darkBackground="dark:bg-teal-400"
-          imageHeight={350}
-          imageWidth={350}
-          placedImage={false}
-        />
-      </motion.div>
+      <InfoSection
+        imageSrc="/alumni-img.webp"
+        heading="Alumni"
+        text="They’re exemplary, they’re buoyant, they’re the high fliers, they’re the veterans. Here’s to help you learn more and connect with our respected alumni."
+        background="bg-blue-100"
+        darkBackground="dark:bg-teal-400"
+        imageHeight={350}
+        imageWidth={350}
+        placedImage={false}
+      />
+
       <Title size="medium" className="mx-auto max-w-[1200px]">
         Batch :{" "}
       </Title>
@@ -118,6 +113,6 @@ export default function Alumni() {
           </TabsContent>
         </div>
       </Tabs>
-    </>
+    </MotionDivProvider>
   );
 }

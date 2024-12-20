@@ -7,6 +7,7 @@ import { checkUserExist, getOtp, verifyEmailOtp } from "@/lib/axios/allApiCall";
 import { useRouter } from "next/navigation";
 import OtpInputSection from "@/app/(app)/login/_componets/OtpInputSection";
 import EmailInputSection from "@/app/(app)/login/_componets/EmailInputSection";
+import MotionDivProvider from "@/components/provider/MotionDivProvider";
 
 const LoginPage = () => {
   // States
@@ -104,44 +105,47 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="flex h-auto w-full flex-col items-center justify-center md:h-[80dvh]">
-      <div className="grid h-auto min-w-[50vw] grid-cols-1 rounded-xl bg-cyan-200 dark:bg-indigo-500 md:h-[25rem] md:grid-cols-2">
-        <div className="flex flex-col items-center justify-center gap-4 px-6 py-4">
-          <Image
-            alt="login page image"
-            src="/person-with-vr.webp"
-            width={300}
-            height={700}
-            className="rounded-lg"
-          />
-          <Text variant="large" className="text-center">
-            To keep connected with us, <br /> please login with your Email info.
-          </Text>
-        </div>
+    <MotionDivProvider>
+      <div className="flex h-auto w-full flex-col items-center justify-center md:h-[80dvh]">
+        <div className="grid h-auto min-w-[50vw] grid-cols-1 rounded-xl bg-cyan-200 dark:bg-indigo-500 md:h-[25rem] md:grid-cols-2">
+          <div className="flex flex-col items-center justify-center gap-4 px-6 py-4">
+            <Image
+              alt="login page image"
+              src="/person-with-vr.webp"
+              width={300}
+              height={700}
+              className="rounded-lg"
+            />
+            <Text variant="large" className="text-center">
+              To keep connected with us, <br /> please login with your Email
+              info.
+            </Text>
+          </div>
 
-        {showOtpInput ? (
-          <OtpInputSection
-            setOtp={setOtp}
-            isOtpFilled={isOtpFilled}
-            setISOtpFilled={setISOtpFilled}
-            loading={loading}
-            handleOtpSubmit={handleOtpSubmit}
-            resetOtpState={resetOtpState}
-            message={message}
-            messageColor={messageColor}
-          />
-        ) : (
-          <EmailInputSection
-            email={email}
-            setEmail={setEmail}
-            message={message}
-            messageColor={messageColor}
-            loading={loading}
-            handleEmailSubmit={handleEmailSubmit}
-          />
-        )}
+          {showOtpInput ? (
+            <OtpInputSection
+              setOtp={setOtp}
+              isOtpFilled={isOtpFilled}
+              setISOtpFilled={setISOtpFilled}
+              loading={loading}
+              handleOtpSubmit={handleOtpSubmit}
+              resetOtpState={resetOtpState}
+              message={message}
+              messageColor={messageColor}
+            />
+          ) : (
+            <EmailInputSection
+              email={email}
+              setEmail={setEmail}
+              message={message}
+              messageColor={messageColor}
+              loading={loading}
+              handleEmailSubmit={handleEmailSubmit}
+            />
+          )}
+        </div>
       </div>
-    </div>
+    </MotionDivProvider>
   );
 };
 
