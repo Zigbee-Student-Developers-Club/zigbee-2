@@ -6,7 +6,7 @@ import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Text } from "@/components/ui/text";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import InfoSection from "@/components/common/InfoSection";
-import Alum from "./_components/Alum";
+import AlumniCard from "./_components/AlumniCard";
 import Title from "@/components/ui/title";
 import { useFetchAlumni } from "@/lib/SWRhooks/useSWR"; // Import the SWR hook
 
@@ -14,7 +14,7 @@ export default function Alumni() {
   const [selectedYear, setSelectedYear] = useState<string>("2025");
 
   // Fetch alumni using the SWR hook
-  const { alumni, isLoading, error } = useFetchAlumni(selectedYear);
+  const { alumniData, isLoading, error } = useFetchAlumni(selectedYear);
   const currYear = new Date().getFullYear() + 2;
 
   const tabs = Array.from({ length: currYear - 1996 + 1 }, (_, i) => {
@@ -83,12 +83,12 @@ export default function Alumni() {
                   </div>
                 ))}
               </div>
-            ) : alumni?.length > 0 ? (
+            ) : alumniData?.length > 0 ? (
               <div className="grid grid-cols-2 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
-                {alumni
+                {alumniData
                   ?.sort((a, b) => a.name.localeCompare(b.name)) // Sort by name in alphabetical order
                   .map((alum, index: number) => (
-                    <Alum
+                    <AlumniCard
                       key={index}
                       alumData={{
                         name: alum.name,

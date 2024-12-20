@@ -30,7 +30,7 @@ export const useFetchContributors = (): {
 export const useFetchAlumni = (
   batch: string
 ): {
-  alumni: AlumniType[];
+  alumniData: AlumniType[];
 } & SwrType => {
   const { data, error, isValidating } = useSWR(
     batch ? `alumni_${batch}` : "allAlumni",
@@ -38,7 +38,7 @@ export const useFetchAlumni = (
   );
 
   return {
-    alumni: data,
+    alumniData: data,
     isLoading: !data && !error,
     isValidating,
     error,

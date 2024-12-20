@@ -14,12 +14,12 @@ interface AlumDataProp {
   };
 }
 
-const Alum: NextPage<AlumDataProp> = ({ alumData }) => {
+const AlumniCard: NextPage<AlumDataProp> = ({ alumData }) => {
   return (
-    <div className="p-6 bg-cyan-200 rounded-lg h-full capitalize text-center shadow-md">
-      <div className="flex flex-col items-center h-full">
+    <div className="h-full rounded-lg bg-cyan-200 p-6 text-center capitalize shadow-md">
+      <div className="flex h-full flex-col items-center">
         {/* Avatar */}
-        <Avatar className="h-24 w-24 mb-6">
+        <Avatar className="mb-6 h-24 w-24">
           <AvatarImage
             src={alumData?.imgURL || "https://bit.ly/broken-link"}
             alt={alumData.name}
@@ -60,4 +60,4 @@ const Alum: NextPage<AlumDataProp> = ({ alumData }) => {
   );
 };
 
-export default Alum;
+export default AlumniCard;
