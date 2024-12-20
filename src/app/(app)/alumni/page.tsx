@@ -21,8 +21,6 @@ export default function Alumni() {
     const year = currYear - i; // Start from 2025 and decrement
     return { value: year.toString(), label: `Batch ${year}` };
   });
-  console.log("alumni", alumni);
-  console.log("isLoading", isLoading);
   return (
     <>
       {/* Header Section */}
