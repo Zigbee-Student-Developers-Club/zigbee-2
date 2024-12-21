@@ -17,7 +17,10 @@ interface UserCredential {
 
 interface verifyEmailOtpResponse {
   isProvidedBasicData?: boolean;
+  token?: string;
   error?: string;
+  name?: string;
+  profileImg?: string;
 }
 
 interface UserDetails {
@@ -199,35 +202,32 @@ export const fetchAlumni = async (batch: string) => {
   }
 };
 
-
-
-// 8. get magazine list 
-export const fetchMagazines = async() => {
+// 8. get magazine list
+export const fetchMagazines = async () => {
   return apiClient
     .get("/api/magazine", { withCredentials: true })
-    .then(response => {
+    .then((response) => {
       // Return the magazine data from the response
       // console.log(response.data.magazines);
       return response.data.magazines;
     })
-    .catch(error => {
+    .catch((error) => {
       console.error("Error fetching magazine list:", error);
       throw error; // Throw the error to be handled by the caller
     });
 };
 
 // 9. get resources list
-export const fetchResources = async() => {
+export const fetchResources = async () => {
   return apiClient
     .get("/api/resource", { withCredentials: true })
-    .then(response => {
+    .then((response) => {
       // Return the resources data from the response
-      console.log(response.data.resources);
+      // console.log(response.data.resources);
       return response.data.resources;
     })
-    .catch(error => {
+    .catch((error) => {
       console.error("Error fetching magazine list:", error);
       throw error; // Throw the error to be handled by the caller
     });
 };
-

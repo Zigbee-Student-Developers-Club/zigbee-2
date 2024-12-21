@@ -38,7 +38,7 @@ export const POST = async (req: NextRequest) => {
       );
     }
 
-    const { isProvidedBasicData, token } = result;
+    const { isProvidedBasicData, token, name, profileImg } = result;
 
     if (!token) {
       return NextResponse.json(
@@ -49,23 +49,16 @@ export const POST = async (req: NextRequest) => {
       );
     }
 
-    const response = NextResponse.json(
+    return NextResponse.json(
       {
+        name,
+        profileImg,
         isProvidedBasicData,
         message: "Login successful",
+        token, // Return the token for NextAuth to handle
       },
       { status: 200 }
     );
-
-    response.cookies.set("x-auth-token", `Bearer ${token}`, {
-      httpOnly: true,
-      // secure: true,         // for https
-      sameSite: "lax",
-      maxAge: 30 * 24 * 60 * 60, // 30 days
-      path: "/",
-    });
-
-    return response;
   } catch (err) {
     console.error("Unexpected error in POST handler:", err);
     return NextResponse.json(

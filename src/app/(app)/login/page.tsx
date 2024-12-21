@@ -3,11 +3,12 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { Text } from "@/components/ui/text";
-import { checkUserExist, getOtp, verifyEmailOtp } from "@/lib/axios/allApiCall";
+import { checkUserExist, getOtp } from "@/lib/axios/allApiCall";
 import { useRouter } from "next/navigation";
 import OtpInputSection from "@/app/(app)/login/_componets/OtpInputSection";
 import EmailInputSection from "@/app/(app)/login/_componets/EmailInputSection";
 import MotionDivProvider from "@/components/provider/MotionDivProvider";
+import { signIn } from "next-auth/react";
 
 const LoginPage = () => {
   // States
@@ -71,21 +72,24 @@ const LoginPage = () => {
   const handleOtpSubmit = async () => {
     setLoading(true);
     try {
-      const response = await verifyEmailOtp({ email, otp });
-      if (response) {
-        const { isProvidedBasicData, error } = response;
+      const result = await signIn("credentials", {
+        email,
+        otp,
+        redirect: false, // Disable automatic redirection
+      });
 
-        if (error) {
-          throw new Error(error);
-        }
+      if (result?.ok) {
+        // Fetch the session to check isProvidedBasicData
+        const sessionResponse = await fetch("/api/auth/session");
+        const session = await sessionResponse.json();
 
-        if (isProvidedBasicData) {
-          router.push("/");
+        if (session.user.isProvidedBasicData) {
+          router.push("/"); // Navigate to callback or default page
         } else {
-          router.push("/upload-profile");
+          router.push("/upload-profile"); // Navigate to upload profile
         }
       } else {
-        setMessage("Failed to verify OTP. Try again.");
+        setMessage(result?.error || "Failed to verify OTP. Try again.");
         setMessageColor("text-red-500");
       }
     } catch (error) {

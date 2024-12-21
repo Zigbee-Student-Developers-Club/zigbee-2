@@ -102,6 +102,8 @@ export const sendOtp = async (email: string) => {
 // verify OTP
 export const verifyOtp = async (email: string, otp: string) => {
   let result: {
+    name: string | null;
+    profileImg: string | null;
     isProvidedBasicData: boolean;
     token: string | null;
   } | null = null;
@@ -140,8 +142,11 @@ export const verifyOtp = async (email: string, otp: string) => {
       accessToken: token,
     });
 
+    const data = docData.data();
     result = {
-      isProvidedBasicData: !!docData.data().isProvidedBasicData,
+      name: data?.name,
+      profileImg: data?.profileImg,
+      isProvidedBasicData: !!data?.isProvidedBasicData,
       token,
     };
   } catch (err) {

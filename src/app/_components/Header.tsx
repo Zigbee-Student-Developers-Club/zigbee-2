@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useTheme } from "next-themes";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React, { Dispatch, SetStateAction, useState } from 'react';
+import React, { useState } from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,38 +14,29 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Moon, Sun, Menu, X } from "lucide-react";
 import Logo from "./Logo";
-
-
-type AuthProps = {
-  isUserAuthenticated: boolean;
-  setIsUserAuthenticated: Dispatch<SetStateAction<boolean>>;
-};
+import { signOut, useSession } from "next-auth/react";
 
 const navItemsData = [
-  {name: "Code Wars", route:"/codewars"},
+  { name: "Code Wars", route: "/codewars" },
   { name: "Our Team", route: "/team" },
   { name: "Alumni", route: "/alumni" },
   { name: "Events", route: "/events" },
   { name: "Resources", route: "/resources" },
   { name: "Magazines", route: "/magazines" },
 ];
-const Header : React.FC<AuthProps> =  ({ isUserAuthenticated, setIsUserAuthenticated }) =>{
+const Header = () => {
   const { setTheme } = useTheme();
   const router = useRouter();
+  const { data: session, status } = useSession();
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [themeMenuOpen, setThemeMenuOpen] = useState(false);
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
 
-
   const handleNavigation = (navigate: string) => {
     switch (navigate) {
       case "profile":
         router.push("/profile");
-        break;
-      case "logout":
-        setIsUserAuthenticated(false);
-        router.push("/login");
         break;
       case "login":
         router.push("/login");
@@ -122,36 +113,53 @@ const Header : React.FC<AuthProps> =  ({ isUserAuthenticated, setIsUserAuthentic
           </DropdownMenu>
 
           {/* Profile Dropdown */}
-          <DropdownMenu
-            open={profileMenuOpen}
-            onOpenChange={setProfileMenuOpen}
-          >
-            <DropdownMenuTrigger asChild>
-              <Avatar className="cursor-pointer">
-                <AvatarImage
-                  src={isUserAuthenticated ? "https://github.com/shadcn.png" : ""}
-                  alt="User Avatar"
-                />
-                <AvatarFallback>{isUserAuthenticated ? "U" : "?"}</AvatarFallback>
-              </Avatar>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              {isUserAuthenticated ? (
-                <>
-                  <DropdownMenuItem onClick={() => handleNavigation("profile")}>
-                    Profile
+          {status !== "loading" && (
+            <DropdownMenu
+              open={profileMenuOpen}
+              onOpenChange={setProfileMenuOpen}
+            >
+              <DropdownMenuTrigger asChild>
+                <Avatar className="cursor-pointer">
+                  <AvatarImage
+                    src={
+                      status === "authenticated"
+                        ? session?.user?.image ||
+                          "https://github.com/shadcn.png"
+                        : ""
+                    }
+                    alt="User Avatar"
+                  />
+                  <AvatarFallback>
+                    {status === "authenticated"
+                      ? session?.user?.name || "U"
+                      : "?"}
+                  </AvatarFallback>
+                </Avatar>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                {status === "authenticated" ? (
+                  <>
+                    <DropdownMenuItem
+                      onClick={() => handleNavigation("profile")}
+                    >
+                      Profile
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                      onClick={async () => {
+                        await signOut();
+                      }}
+                    >
+                      Logout
+                    </DropdownMenuItem>
+                  </>
+                ) : (
+                  <DropdownMenuItem onClick={() => handleNavigation("login")}>
+                    Login
                   </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => handleNavigation("logout")}>
-                    Logout
-                  </DropdownMenuItem>
-                </>
-              ) : (
-                <DropdownMenuItem onClick={() => handleNavigation("login")}>
-                  Login
-                </DropdownMenuItem>
-              )}
-            </DropdownMenuContent>
-          </DropdownMenu>
+                )}
+              </DropdownMenuContent>
+            </DropdownMenu>
+          )}
         </div>
       </div>
     </header>
