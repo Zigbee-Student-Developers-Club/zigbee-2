@@ -16,6 +16,26 @@ export interface FirebaseFetchUserType {
   [key: string]: unknown; // Additional dynamic fields from Firestore
 }
 
+export interface AlumniType {
+  name: string;
+  batch: number;
+  profileImg: string;
+  linkedInUrl: string;
+  position: string;
+  domain: string;
+  about: string;
+}
+
+export interface ContributorType {
+  name: string;
+  batch: number;
+  profileImg: string;
+  linkedInUrl: string;
+  isContributor: boolean;
+  domain: string;
+  position: string;
+}
+
 export interface ResourceType {
   name: string;
   url: string;
@@ -48,3 +68,9 @@ export interface EventType {
 
 export const validPositions = ["CR", "GR", "PC", "PV"];
 export const validRoles = ["alumni", "admin", "guest"];
+
+export interface SwrType {
+  error: Error | undefined;
+  isValidating: boolean;
+  isLoading: boolean;
+}

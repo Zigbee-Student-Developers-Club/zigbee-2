@@ -1,56 +1,40 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Text } from "@/components/ui/text";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import InfoSection from "@/components/common/InfoSection";
-import Alum from "./_components/Alum";
+import AlumniCard from "./_components/AlumniCard";
 import Title from "@/components/ui/title";
 import { useFetchAlumni } from "@/lib/SWRhooks/useSWR"; // Import the SWR hook
-
-type Alum = {
-  name: string;
-  company?: string;
-  batch: string;
-  text: string;
-  imgURL?: string;
-  linkedinURL?: string;
-  position?: string;
-};
+import MotionDivProvider from "@/components/provider/MotionDivProvider";
 
 export default function Alumni() {
   const [selectedYear, setSelectedYear] = useState<string>("2025");
 
   // Fetch alumni using the SWR hook
-  const { alumni, isLoading, error } = useFetchAlumni(selectedYear);
+  const { alumniData, isLoading, error } = useFetchAlumni(selectedYear);
   const currYear = new Date().getFullYear() + 2;
 
   const tabs = Array.from({ length: currYear - 1996 + 1 }, (_, i) => {
     const year = currYear - i; // Start from 2025 and decrement
     return { value: year.toString(), label: `Batch ${year}` };
   });
-
   return (
-    <>
+    <MotionDivProvider>
       {/* Header Section */}
-      <motion.div
-        initial={{ y: 100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.8 }}
-      >
-        <InfoSection
-          imageSrc="/alumni-img.png"
-          heading="Alumni"
-          text="They’re exemplary, they’re buoyant, they’re the high fliers, they’re the veterans. Here’s to help you learn more and connect with our respected alumni."
-          background="bg-blue-100"
-          darkBackground="dark:bg-teal-400"
-          imageHeight={350}
-          imageWidth={500}
-          placedImage={false}
-        />
-      </motion.div>
+      <InfoSection
+        imageSrc="/alumni-img.webp"
+        heading="Alumni"
+        text="They’re exemplary, they’re buoyant, they’re the high fliers, they’re the veterans. Here’s to help you learn more and connect with our respected alumni."
+        background="bg-blue-100"
+        darkBackground="dark:bg-teal-400"
+        imageHeight={350}
+        imageWidth={350}
+        placedImage={false}
+      />
+
       <Title size="medium" className="mx-auto max-w-[1200px]">
         Batch :{" "}
       </Title>
@@ -94,23 +78,27 @@ export default function Alumni() {
                   </div>
                 ))}
               </div>
-            ) : (
+            ) : alumniData?.length > 0 ? (
               <div className="grid grid-cols-2 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
-                {alumni?.sort((a, b) => a.name.localeCompare(b.name)) // Sort by name in alphabetical order
-                  .map((alum, index) => (
-                    <Alum
+                {alumniData
+                  ?.sort((a, b) => a?.name.localeCompare(b?.name)) // Sort by name in alphabetical order
+                  .map((alumni, index: number) => (
+                    <AlumniCard
                       key={index}
                       alumData={{
-                        name: alum.name,
-                        imgURL: alum.imgURL,
-                        linkedinURL: alum.linkedinURL,
-                        position: alum.position,
+                        name: alumni?.name,
+                        imgURL: alumni?.profileImg,
+                        linkedinURL: alumni?.linkedInUrl,
+                        position: alumni?.position,
                       }}
                     />
                   ))}
               </div>
-            ) 
-          }
+            ) : (
+              <div className="p-10 text-center">
+                No alumni data found for the batch {selectedYear}
+              </div>
+            )}
             {/* Error State */}
             {error && (
               <div className="flex flex-col items-center justify-center p-10 text-center">
@@ -125,6 +113,6 @@ export default function Alumni() {
           </TabsContent>
         </div>
       </Tabs>
-    </>
+    </MotionDivProvider>
   );
 }

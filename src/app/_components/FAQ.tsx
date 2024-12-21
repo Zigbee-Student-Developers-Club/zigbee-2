@@ -1,5 +1,6 @@
 "use client";
 
+import MotionDivProvider from "@/components/provider/MotionDivProvider";
 import {
   Accordion,
   AccordionItem,
@@ -27,39 +28,41 @@ export default function FAQ() {
   };
 
   return (
-    <div className="mx-auto my-16 max-w-3xl py-4">
-      <h2 className="text-center text-3xl font-extrabold sm:text-4xl lg:text-6xl">
-        FAQs
-      </h2>
-      <Accordion type="single" collapsible className="mt-8 space-y-4">
-        {faqs.map((faq, index) => {
-          const value = `item-${index}`;
-          const isOpen = openItem === value;
+    <MotionDivProvider>
+      <div className="mx-auto my-16 max-w-3xl py-4">
+        <h2 className="text-center text-3xl font-extrabold sm:text-4xl lg:text-6xl">
+          FAQs
+        </h2>
+        <Accordion type="single" collapsible className="mt-8 space-y-4">
+          {faqs.map((faq, index) => {
+            const value = `item-${index}`;
+            const isOpen = openItem === value;
 
-          return (
-            <AccordionItem key={value} value={value}>
-              <AccordionTrigger onClick={() => handleToggle(value)}>
-                {faq.title}
-              </AccordionTrigger>
-              <AnimatePresence>
-                {isOpen && (
-                  <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: "auto", opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.3, ease: "easeInOut" }}
-                    className="overflow-hidden"
-                  >
-                    <div className="p-4 text-gray-800 dark:text-gray-300">
-                      {faq.content}
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </AccordionItem>
-          );
-        })}
-      </Accordion>
-    </div>
+            return (
+              <AccordionItem key={value} value={value}>
+                <AccordionTrigger onClick={() => handleToggle(value)}>
+                  {faq.title}
+                </AccordionTrigger>
+                <AnimatePresence>
+                  {isOpen && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.3, ease: "easeInOut" }}
+                      className="overflow-hidden"
+                    >
+                      <div className="p-4 text-gray-800 dark:text-gray-300">
+                        {faq.content}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </AccordionItem>
+            );
+          })}
+        </Accordion>
+      </div>
+    </MotionDivProvider>
   );
 }

@@ -15,6 +15,8 @@ import {
 } from "firebase/firestore";
 import firebaseApp from "./config";
 import {
+  AlumniType,
+  ContributorType,
   EventType,
   FirebaseFetchUserType,
   MagazineType,
@@ -251,7 +253,7 @@ export const fetchAlumni = async (batch?: number) => {
   let error: string | null = null;
 
   try {
-    let q = query(userCollection, where("role", "==", "alumni"));
+    let q = query(userCollection, where("role", "in", ["alumni", "admin"]));
 
     if (batch) {
       q = query(q, where("batch", "==", batch));
@@ -266,17 +268,18 @@ export const fetchAlumni = async (batch?: number) => {
     result = querySnapshot.docs.map((doc) => {
       const data = doc.data();
 
-      const filteredData: FirebaseFetchUserType = {
+      const filteredData: {
+        id: string;
+      } & AlumniType = {
         id: doc.id,
-        ...data,
+        name: data.name,
+        batch: data.batch,
+        profileImg: data.profileImg,
+        linkedInUrl: data.linkedInUrl,
+        position: data.position,
+        domain: data.domain,
+        about: data.about,
       };
-
-      delete filteredData.tempOtp;
-      delete filteredData.accessToken;
-      delete filteredData.isProvidedBasicData;
-      delete filteredData.isVerified;
-      delete filteredData.email;
-      delete filteredData.phoneNumber;
 
       return filteredData;
     });
@@ -305,18 +308,18 @@ export const fetchContributors = async () => {
     result = querySnapshot.docs.map((doc) => {
       const data = doc.data();
 
-      const filteredData: FirebaseFetchUserType = {
+      const filteredData: {
+        id: string;
+      } & ContributorType = {
         id: doc.id,
-        ...data,
+        name: data.name,
+        batch: data.batch,
+        profileImg: data.profileImg,
+        linkedInUrl: data.linkedInUrl,
+        isContributor: data.isContributor,
+        domain: data.domain,
+        position: data.position,
       };
-
-      delete filteredData.tempOtp;
-      delete filteredData.accessToken;
-      delete filteredData.isProvidedBasicData;
-      delete filteredData.isVerified;
-      delete filteredData.role;
-      delete filteredData.email;
-      delete filteredData.phoneNumber;
 
       return filteredData;
     });
@@ -520,9 +523,15 @@ export const fetchResources = async (domain?: string) => {
     result = querySnapshot.docs.map((doc) => {
       const data = doc.data();
 
-      const filteredData = {
+      const filteredData: {
+        id: string;
+      } & ResourceType = {
         id: doc.id,
-        ...data,
+        name: data.name,
+        url: data.url,
+        domain: data.domain,
+        uploadedOn: data.uploadedOn,
+        author: data.author,
       };
 
       return filteredData;
@@ -566,9 +575,14 @@ export const fetchMagazines = async () => {
     result = querySnapshot.docs.map((doc) => {
       const data = doc.data();
 
-      const filteredData = {
+      const filteredData: {
+        id: string;
+      } & MagazineType = {
         id: doc.id,
-        ...data,
+        title: data.title,
+        url: data.url,
+        image: data.image,
+        uploadedOn: data.uploadedOn,
       };
 
       return filteredData;
