@@ -692,7 +692,7 @@ A `x-auth-token` cookie will be set on successful verification with the value of
 
 **Response**:
 
-- **_Status_**: `200 OK` (User details deleted successfully)
+- **_Status_**: `204 No Content` (User details deleted successfully)
 
   **_Body_**:
 

@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     images: {
-        domains: ['github.com', 'zigbeeoutr.in', 'another-domain.com'], // Add the domain here
+        domains: ['github.com', 'zigbeeoutr.in','res.cloudinary.com', 'another-domain.com'], // Add the domain here
       },
 };
 

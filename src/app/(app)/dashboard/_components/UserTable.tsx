@@ -1,4 +1,5 @@
 "use client";
+
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -29,15 +30,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useEffect, useState } from "react";
-import firebaseApp from "@/lib/firebase/config";
-import {
-  collection,
-  getDocs,
-  getFirestore,
-  query,
-  where,
-} from "firebase/firestore";
+import { useState, useEffect, useCallback } from "react";
 import {
   Select,
   SelectContent,
@@ -48,25 +41,34 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { BatchOptions } from "@/lib/options";
+import { useFetchUsers } from "@/lib/SWRhooks/useSWR";
+import { UserData } from "@/lib/types";
+import LoadingSpinner from "@/components/common/LoadingSpinner";
+import DeleteDialogBox from "@/components/common/DeleteDialogBox";
+import { deleteUserById } from "@/lib/axios/allApiCall";
 
-interface UserData {
-  name: string;
-  role: string;
-  batch: number;
-  email: string;
-  linkedInUrl: string;
-  isContributor: boolean;
-  domain: string;
-  phoneNumber?: number;
-  position?: string;
-  profileImg?: string;
-}
+const UserTable = () => {
+  const [sorting, setSorting] = useState<SortingState>([]);
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+  const [rowSelection, setRowSelection] = useState({});
+  const [batch, setBatch] = useState<string | undefined>();
+  const [role, setRole] = useState<string | undefined>();
+  const [page, setPage] = useState<number>(1);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [selectedUser, setSelectedUser] = useState<UserData | null>(null);
 
-export const columns: ColumnDef<UserData>[] = [
-  {
-    accessorKey: "name",
-    header: ({ column }) => {
-      return (
+  const { userList, pagination, isLoading, error, refreshUsers } =
+    useFetchUsers(role, batch, page);
+  const handleDeleteClick = useCallback((user: UserData) => {
+    setSelectedUser(user);
+    setIsDeleteDialogOpen(true);
+  }, []);
+
+  const columns: ColumnDef<UserData>[] = [
+    {
+      accessorKey: "name",
+      header: ({ column }) => (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
@@ -74,19 +76,19 @@ export const columns: ColumnDef<UserData>[] = [
           Name
           <ArrowUpDown />
         </Button>
-      );
+      ),
+      cell: ({ row }) => <div>{row.getValue("name")}</div>,
     },
-    cell: ({ row }) => <div>{row.getValue("name")}</div>,
-  },
-  {
-    accessorKey: "email",
-    header: "Email",
-    cell: ({ row }) => <div className="lowercase">{row.getValue("email")}</div>,
-  },
-  {
-    accessorKey: "batch",
-    header: ({ column }) => {
-      return (
+    {
+      accessorKey: "email",
+      header: "Email",
+      cell: ({ row }) => (
+        <div className="lowercase">{row.getValue("email")}</div>
+      ),
+    },
+    {
+      accessorKey: "batch",
+      header: ({ column }) => (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
@@ -94,20 +96,20 @@ export const columns: ColumnDef<UserData>[] = [
           Batch
           <ArrowUpDown />
         </Button>
-      );
+      ),
+      cell: ({ row }) => <div>{row.getValue("batch")}</div>,
     },
-    cell: ({ row }) => <div>{row.getValue("batch")}</div>,
-  },
-  {
-    accessorKey: "role",
-    header: "Role",
-    cell: ({ row }) => <div className="capitalize">{row.getValue("role")}</div>,
-  },
-  {
-    id: "actions",
-    enableHiding: false,
-    cell: () => {
-      return (
+    {
+      accessorKey: "role",
+      header: "Role",
+      cell: ({ row }) => (
+        <div className="capitalize">{row.getValue("role")}</div>
+      ),
+    },
+    {
+      id: "actions",
+      enableHiding: false,
+      cell: ({ row }) => (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" className="h-8 w-8 p-0">
@@ -118,65 +120,72 @@ export const columns: ColumnDef<UserData>[] = [
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem>Edit</DropdownMenuItem>
-            <DropdownMenuItem>Delete</DropdownMenuItem>
+            <DropdownMenuItem onClick={() => handleDeleteClick(row.original)}>
+              Delete
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-      );
+      ),
     },
-  },
-];
+  ];
 
-const UserTable = () => {
-  const [sorting, setSorting] = useState<SortingState>([]);
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
-  const [rowSelection, setRowSelection] = useState({});
-  const [data, setData] = useState<UserData[]>([]);
-  const [batch, setBatch] = useState<string | undefined>();
-  const [role, setRole] = useState<string | undefined>();
+  const handleDeleteConfirm = useCallback(async () => {
+    if (selectedUser) {
+      try {
+        const response = await deleteUserById(selectedUser.id); // Delete the user by ID
 
-  const db = getFirestore(firebaseApp);
+        if (response.message) {
+          // If deletion is successful, log success and refresh users list
+          console.log(`${selectedUser.name} deleted successfully.`);
+          
+          // Refresh the data using mutate function to update the user list
+          refreshUsers(); // No need for await, just call mutate
+        } else {
+          console.error("Failed to delete user:", response.error);
+        }
+      } catch (error) {
+        console.error("Error deleting user:", error);
+      } finally {
+        setIsDeleteDialogOpen(false); // Close the delete confirmation dialog
+        setSelectedUser(null); // Reset selected user
+      }
+    }
+  }, [selectedUser, refreshUsers]);
+  
+  
 
   useEffect(() => {
-    let q = query(collection(db, "users"));
-
-    if (role) {
-      q = query(q, where("role", "==", role));
-    }
-
-    if (batch) {
-      q = query(q, where("batch", "==", batch));
-    }
-
-    getDocs(q).then((querySnapshot) => {
-      const result: UserData[] = querySnapshot.docs.map(
-        (doc) => ({ ...doc.data() }) as UserData
-      );
-      setData(result);
-    });
+    setPage(1);
   }, [role, batch]);
 
   const table = useReactTable({
-    data,
+    data: userList,
     columns,
-    onSortingChange: setSorting,
-    onColumnFiltersChange: setColumnFilters,
-    getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    onColumnVisibilityChange: setColumnVisibility,
-    onRowSelectionChange: setRowSelection,
     state: {
       sorting,
       columnFilters,
       columnVisibility,
       rowSelection,
+      pagination: {
+        pageIndex: page - 1,
+        pageSize: 20,
+      },
     },
+    onSortingChange: setSorting,
+    onColumnFiltersChange: setColumnFilters,
+    onColumnVisibilityChange: setColumnVisibility,
+    onRowSelectionChange: setRowSelection,
+    getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    manualPagination: true,
+    pageCount: pagination?.totalPages,
   });
 
   return (
     <div className="w-full">
+      {/* Filters */}
       <div className="flex items-center py-4">
         <Select value={role} onValueChange={(value) => setRole(value)}>
           <SelectTrigger className="w-[180px]">
@@ -199,10 +208,7 @@ const UserTable = () => {
             <SelectGroup>
               <SelectLabel>Batches</SelectLabel>
               {BatchOptions.map((option) => (
-                <SelectItem
-                  key={option.value}
-                  value={option.value as unknown as string}
-                >
+                <SelectItem key={option.value} value={option.value as string}>
                   {option.label}
                 </SelectItem>
               ))}
@@ -219,45 +225,59 @@ const UserTable = () => {
             {table
               .getAllColumns()
               .filter((column) => column.getCanHide())
-              .map((column) => {
-                return (
-                  <DropdownMenuCheckboxItem
-                    key={column.id}
-                    className="capitalize"
-                    checked={column.getIsVisible()}
-                    onCheckedChange={(value) =>
-                      column.toggleVisibility(!!value)
-                    }
-                  >
-                    {column.id}
-                  </DropdownMenuCheckboxItem>
-                );
-              })}
+              .map((column) => (
+                <DropdownMenuCheckboxItem
+                  key={column.id}
+                  className="capitalize"
+                  checked={column.getIsVisible()}
+                  onCheckedChange={(value) => column.toggleVisibility(!!value)}
+                >
+                  {column.id}
+                </DropdownMenuCheckboxItem>
+              ))}
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
+
+      {/* Table */}
       <div className="rounded-md border">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
-                  return (
-                    <TableHead key={header.id}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                    </TableHead>
-                  );
-                })}
+                {headerGroup.headers.map((header) => (
+                  <TableHead key={header.id}>
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
+                  </TableHead>
+                ))}
               </TableRow>
             ))}
           </TableHeader>
           <TableBody>
-            {table.getRowModel().rows?.length ? (
+            {isLoading ? (
+              <TableRow>
+                <TableCell
+                  colSpan={columns.length}
+                  className="h-24 text-center"
+                >
+                  <LoadingSpinner />
+                </TableCell>
+              </TableRow>
+            ) : error ? (
+              <TableRow>
+                <TableCell
+                  colSpan={columns.length}
+                  className="h-24 text-center"
+                >
+                  Failed to load data. Try again.
+                </TableCell>
+              </TableRow>
+            ) : userList.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
@@ -286,26 +306,36 @@ const UserTable = () => {
           </TableBody>
         </Table>
       </div>
+
+      {/* Pagination */}
       <div className="flex items-center justify-end space-x-2 py-4">
-        <div className="space-x-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
-          >
-            Previous
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
-          >
-            Next
-          </Button>
-        </div>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => setPage((prevPage) => Math.max(prevPage - 1, 1))}
+          disabled={!pagination?.previousPage}
+        >
+          Previous
+        </Button>
+        <span className="mx-2">
+          Page {pagination?.currentPage} of {pagination?.totalPages}
+        </span>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => setPage((prevPage) => prevPage + 1)}
+          disabled={!pagination?.nextPage}
+        >
+          Next
+        </Button>
       </div>
+
+      {/* Delete Dialog */}
+      <DeleteDialogBox
+        isOpen={isDeleteDialogOpen}
+        onClose={() => setIsDeleteDialogOpen(false)}
+        onContinue={handleDeleteConfirm}
+        message={`Are you sure you want to delete "${selectedUser?.name}"?`}/>
     </div>
   );
 };

@@ -23,7 +23,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
  
-    const [isUserAuthenticated , setIsUserAuthenticated] = useState(true);
+    const [isUserAuthenticated , setIsUserAuthenticated] = useState(false);
 
 
   return (

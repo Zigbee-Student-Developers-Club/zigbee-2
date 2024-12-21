@@ -3,7 +3,9 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils"; // Utility function for conditional classNames
 import { NextPage } from "next";
 import Link from "next/link";
-import { Linkedin } from "lucide-react"; // Using Lucide icons
+import {
+  Linkedin,
+} from "react-bootstrap-icons";
 
 interface AlumDataProp {
   alumData: {
@@ -16,16 +18,19 @@ interface AlumDataProp {
 
 const Alum: NextPage<AlumDataProp> = ({ alumData }) => {
   return (
-    <div className="p-6 bg-cyan-200 rounded-lg h-full capitalize text-center shadow-md">
-      <div className="flex flex-col items-center h-full">
+    <div className="p-6 bg-cyan-200 dark:bg-slate-800 rounded-lg h-full capitalize text-center shadow-md">
+      <div className="flex flex-col items-center h-full ">
         {/* Avatar */}
-        <Avatar className="h-24 w-24 mb-6">
-          <AvatarImage
-            src={alumData?.imgURL || "https://bit.ly/broken-link"}
-            alt={alumData.name}
-          />
-          <AvatarFallback>{alumData.name[0]}</AvatarFallback>
-        </Avatar>
+        <Avatar className="mb-4 mt-8 h-32 w-32 overflow-hidden rounded-full">
+            <AvatarImage
+              src={alumData.imgURL}
+              alt="User Avatar"
+              className="h-full w-full object-cover object-center"
+            />
+            <AvatarFallback className="flex h-full w-full items-center justify-center rounded-full bg-gray-100 text-2xl text-gray-700">
+              {alumData.name ? alumData.name[0] : "P"}
+            </AvatarFallback>
+          </Avatar>
 
         {/* Name and Badge */}
         <h3 className="text-sm font-semibold">
@@ -52,7 +57,7 @@ const Alum: NextPage<AlumDataProp> = ({ alumData }) => {
             rel="noopener noreferrer"
             className="my-4 text-blue-600 hover:text-blue-800"
           >
-            <Linkedin size={24} />
+            <Linkedin size={20} />
           </Link>
         )}
       </div>
