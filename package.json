@@ -32,7 +32,7 @@
     "date-fns": "^4.1.0",
     "firebase": "^11.0.2",
     "formidable": "^3.5.2",
-    "framer-motion": "^11.11.17",
+    "framer-motion": "^11.15.0",
     "input-otp": "^1.4.1",
     "jose": "^5.9.6",
     "jsonwebtoken": "^9.0.2",

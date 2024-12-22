@@ -1,30 +1,28 @@
 import { Card, CardHeader } from "@/components/ui/card";
 import Image from "next/image";
 import React from "react";
-import reflectionHero from "../../../../../public/reflectionHero.png";
-import reflection2 from "../../../../../public/reflection2.png";
 
 const magazineData = [
   {
-    imgSrc: reflectionHero.src, // Update the paths to match your project structure
+    imgSrc: "/reflectionHero.webp", // Update the paths to match your project structure
     year: "2022",
     magazineURL:
       "https://drive.google.com/file/d/1d4atWmN2TvQE-c5aexGquTB3_Nbh_Rzk/view?usp=share_link",
   },
   {
-    imgSrc: reflection2.src,
+    imgSrc: "/reflection2.webp",
     year: "2023",
     magazineURL:
       "https://drive.google.com/file/d/1ZJvMnvlvtFDsmyxR_AEfeuUYDL13vW_0/view?usp=sharing",
   },
   {
-    imgSrc: reflection2.src,
+    imgSrc: "/reflection2.webp",
     year: "2023",
     magazineURL:
       "https://drive.google.com/file/d/1ZJvMnvlvtFDsmyxR_AEfeuUYDL13vW_0/view?usp=sharing",
   },
   {
-    imgSrc: reflection2.src,
+    imgSrc: "/reflection2.webp",
     year: "2023",
     magazineURL:
       "https://drive.google.com/file/d/1ZJvMnvlvtFDsmyxR_AEfeuUYDL13vW_0/view?usp=sharing",

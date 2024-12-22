@@ -7,6 +7,7 @@ import { checkUserExist, getOtp, verifyEmailOtp } from "@/lib/axios/allApiCall";
 import { useRouter } from "next/navigation";
 import OtpInputSection from "@/app/(app)/login/_componets/OtpInputSection";
 import EmailInputSection from "@/app/(app)/login/_componets/EmailInputSection";
+import MotionDivProvider from "@/components/provider/MotionDivProvider";
 
 const LoginPage = () => {
   // States
@@ -40,9 +41,9 @@ const LoginPage = () => {
           setMessageColor("text-red-500");
         }
       } catch (error) {
-        setMessage("Error verifying email.");
+        setMessage((error as Error)?.message || "Error verifying email.");
         setMessageColor("text-red-500");
-        console.log(error);
+        //console.log(error);
       }
     };
 
@@ -59,8 +60,10 @@ const LoginPage = () => {
         setMessage("Failed to send OTP. Try again.");
       }
     } catch (error) {
-      setMessage("Error sending OTP. Please try again.");
-      console.log(error);
+      setMessage(
+        (error as Error)?.message || "Error sending OTP. Please try again."
+      );
+      //console.log(error);
     } finally {
       setLoading(false);
       setMessage("");
@@ -84,9 +87,9 @@ const LoginPage = () => {
         setMessageColor("text-red-500");
       }
     } catch (error) {
-      setMessage((error as Error).message || "Invalid OTP or server error.");
+      setMessage((error as Error)?.message || "Invalid OTP or server error.");
       setMessageColor("text-red-500");
-      console.log(error);
+      //console.log(error);
     } finally {
       setLoading(false);
     }
@@ -100,44 +103,47 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="flex h-auto w-full flex-col items-center justify-center md:h-[80dvh]">
-      <div className="grid h-auto min-w-[50vw] grid-cols-1 rounded-xl bg-cyan-200 dark:bg-indigo-500 md:h-[25rem] md:grid-cols-2">
-        <div className="flex flex-col items-center justify-center gap-4 px-6 py-4">
-          <Image
-            alt="login page image"
-            src="/person-with-vr.png"
-            width={300}
-            height={700}
-            className="rounded-lg"
-          />
-          <Text variant="large" className="text-center">
-            To keep connected with us, <br /> please login with your Email info.
-          </Text>
-        </div>
+    <MotionDivProvider>
+      <div className="flex h-auto w-full flex-col items-center justify-center md:h-[80dvh]">
+        <div className="grid h-auto min-w-[50vw] grid-cols-1 rounded-xl bg-cyan-200 dark:bg-indigo-500 md:h-[25rem] md:grid-cols-2">
+          <div className="flex flex-col items-center justify-center gap-4 px-6 py-4">
+            <Image
+              alt="login page image"
+              src="/person-with-vr.webp"
+              width={300}
+              height={700}
+              className="rounded-lg"
+            />
+            <Text variant="large" className="text-center">
+              To keep connected with us, <br /> please login with your Email
+              info.
+            </Text>
+          </div>
 
-        {showOtpInput ? (
-          <OtpInputSection
-            setOtp={setOtp}
-            isOtpFilled={isOtpFilled}
-            setISOtpFilled={setISOtpFilled}
-            loading={loading}
-            handleOtpSubmit={handleOtpSubmit}
-            resetOtpState={resetOtpState}
-            message={message}
-            messageColor={messageColor}
-          />
-        ) : (
-          <EmailInputSection
-            email={email}
-            setEmail={setEmail}
-            message={message}
-            messageColor={messageColor}
-            loading={loading}
-            handleEmailSubmit={handleEmailSubmit}
-          />
-        )}
+          {showOtpInput ? (
+            <OtpInputSection
+              setOtp={setOtp}
+              isOtpFilled={isOtpFilled}
+              setISOtpFilled={setISOtpFilled}
+              loading={loading}
+              handleOtpSubmit={handleOtpSubmit}
+              resetOtpState={resetOtpState}
+              message={message}
+              messageColor={messageColor}
+            />
+          ) : (
+            <EmailInputSection
+              email={email}
+              setEmail={setEmail}
+              message={message}
+              messageColor={messageColor}
+              loading={loading}
+              handleEmailSubmit={handleEmailSubmit}
+            />
+          )}
+        </div>
       </div>
-    </div>
+    </MotionDivProvider>
   );
 };
 

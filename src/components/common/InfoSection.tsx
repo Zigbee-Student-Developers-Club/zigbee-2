@@ -1,10 +1,11 @@
 "use client";
 
 import Image from "next/image";
-import { motion, useInView } from "framer-motion";
+import { useInView } from "framer-motion";
 import { useEffect, useRef } from "react";
 import Title from "../ui/title";
 import { Text } from "../ui/text";
+import MotionDivProvider from "../provider/MotionDivProvider";
 
 interface InfoSectionProps {
   imageSrc: string;
@@ -24,7 +25,7 @@ export default function InfoSection({
   background,
   darkBackground,
   imageHeight = 200, // Default height
-  imageWidth = 350, // Default width
+  imageWidth = 200, // Default width
   placedImage = false, // Default to false, image on the left
 }: InfoSectionProps) {
   const ref = useRef(null);
@@ -35,14 +36,10 @@ export default function InfoSection({
   }, [isInView]);
 
   return (
-    <div ref={ref} className="container mx-auto my-16 max-w-[1200px]">
-      <motion.div
-        initial={{ opacity: 0, y: 100 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, ease: "easeOut" }}
-      >
+    <div ref={ref} className="container mx-auto my-8 max-w-[1200px]">
+      <MotionDivProvider>
         <div
-          className={`mx-auto my-16 max-w-7xl rounded-2xl px-8 py-16 ${background} ${darkBackground}`}
+          className={`mx-auto my-8 max-w-7xl rounded-2xl px-8 py-16 ${background} ${darkBackground}`}
         >
           <div
             className={`flex ${
@@ -64,16 +61,22 @@ export default function InfoSection({
 
             {/* Text Section */}
             <div className="flex-1">
-              <Title size="large" className=" font-extrabold text-gray-800 dark:text-gray-200 ">
+              <Title
+                size="large"
+                className="font-extrabold text-gray-800 dark:text-gray-200"
+              >
                 {heading}
               </Title>
-              <Text variant="p" className=" mt-8 text-gray-800 dark:text-gray-300">
+              <Text
+                variant="p"
+                className="mt-8 text-gray-800 dark:text-gray-300"
+              >
                 {text}
               </Text>
             </div>
           </div>
         </div>
-      </motion.div>
+      </MotionDivProvider>
     </div>
   );
 }

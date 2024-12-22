@@ -35,22 +35,21 @@ export default function AlumniConnect() {
   }
 
   return (
-    <>
-      <div className="animate-slide-in relative py-10">
-        <div className="mx-auto max-w-7xl px-4">
-          <InfoSection
-            imageSrc="/event-img.png"
-            heading="Events"
-            text=" Yes, we’ve been really busy and happening lately. Or maybe it’s
+    <MotionDivProvider>
+      <div className="mx-auto max-w-7xl px-4">
+        <InfoSection
+          imageSrc="/event-img.webp"
+          heading="Events"
+          text=" Yes, we’ve been really busy and happening lately. Or maybe it’s
                 just that we love making it to the headlines time and again.
                 Nevertheless, here’s to take you on a quick tour on all our
                 ventures in the recent past."
-            background="bg-purple-100"
-            darkBackground="dark:bg-violet-600"
-            imageHeight={500}
-            imageWidth={250}
-            placedImage={false}
-          />
+          background="bg-purple-100"
+          darkBackground="dark:bg-violet-600"
+          imageHeight={500}
+          imageWidth={250}
+          placedImage={false}
+        />
 
           <div className="container mx-auto my-16 mt-10 grid max-w-[1200px] gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
             {eventList.map((event: EventData) => (

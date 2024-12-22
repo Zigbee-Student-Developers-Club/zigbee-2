@@ -32,8 +32,8 @@ export default function ContributorCard({
               alt="User Avatar"
               className="h-full w-full object-cover object-center"
             />
-            <AvatarFallback className="flex h-full w-full items-center justify-center rounded-full bg-gray-100 text-2xl text-gray-700">
-              {name ? name[0] : "P"}
+            <AvatarFallback className="flex h-36 w-36 items-center justify-center rounded-full border-4 border-white bg-gray-100 text-2xl text-gray-700">
+              {name ? name[0].toUpperCase() : "P"}
             </AvatarFallback>
           </Avatar>
           <Title size="small" className="mt-4 text-xl font-semibold capitalize">{name.split(" ")[0]}</Title>

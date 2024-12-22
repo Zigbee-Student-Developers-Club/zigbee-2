@@ -1,71 +1,93 @@
 "use client";
-
-import useSWR, { mutate } from "swr";
+import useSWR from "swr";
 import * as api from "@/lib/axios/allApiCall";
 import {
-  User,
-  UsersResponse,
-  UsersError,
-  EventData,
-  FetchEventsError,
-} from "@/lib/types";
+  AlumniType,
+  ContributorType,
+  MagazineType,
+  ResourceType,
+  SwrType,
+} from "../types";
 
-// Utility Type Guard to check UsersResponse
-const isUsersResponse = (data: unknown): data is UsersResponse => {
-  return (
-    typeof data === "object" &&
-    data !== null &&
-    "users" in data &&
-    typeof (data as UsersResponse).users === "object"
-  );
+// generic useFetchData hook for reusability
+const useFetchData = <T>(
+  key: string,
+  fetcher: (key: string) => Promise<T>
+): { data: T | undefined } & SwrType => {
+  const { data, error, isValidating } = useSWR(key, fetcher);
+
+  return {
+    data,
+    isLoading: !data && !error,
+    isValidating,
+    error,
+  };
 };
 
 // SWR Hook: Fetch Contributors
-export const useFetchContributors = () => {
-  const { data, error, isValidating } = useSWR<User[]>("allContributors", api.fetchContributors);
+export const useFetchContributors = (): {
+  contributors: ContributorType[];
+} & SwrType => {
+  const { data, isLoading, isValidating, error } = useFetchData<
+    ContributorType[]
+  >("allContributors", api.fetchContributors);
 
   return {
-    contributors: data,
-    isLoading: !data && !error,
+    contributors: data || [],
+    isLoading,
     isValidating,
     error,
   };
 };
 
 // SWR Hook: Fetch Alumni
-export const useFetchAlumni = (batch: string) => {
-  const { data, error, } = useSWR<User[]>(
+export const useFetchAlumni = (
+  batch: string
+): {
+  alumniData: AlumniType[];
+} & SwrType => {
+  const { data, isLoading, isValidating, error } = useFetchData<AlumniType[]>(
     batch ? `alumni_${batch}` : "allAlumni",
     () => api.fetchAlumni(batch)
   );
 
   return {
-    alumni: data,
-    isLoading: data === undefined && !error,
-    error,
-  };
-};
-
-// SWR Hook: Fetch Magazines
-export const useFetchMagazines = () => {
-  const { data, error, isValidating } = useSWR<any[]>("magazineList", api.fetchMagazines);
-
-  return {
-    magazineList: data,
-    isLoading: !data && !error,
+    alumniData: data || [],
+    isLoading,
     isValidating,
     error,
   };
 };
 
-// SWR Hook: Fetch Resources
-export const useFetchResources = () => {
-  const { data, error, isValidating } = useSWR<any[]>("resourcesList", api.fetchResources);
-  console.log(data , " swr");
-  
+// SWR Hook : Fetch Magazines
+export const useFetchMagazines = (): {
+  magazineList: MagazineType[];
+} & SwrType => {
+  const { data, isLoading, isValidating, error } = useFetchData<MagazineType[]>(
+    "magazineList",
+    api.fetchMagazines
+  );
+
   return {
-    resourcesList: data,
-    isLoading: !data && !error,
+    magazineList: data || [],
+    isLoading,
+    isValidating,
+    error,
+  };
+};
+
+// SWR Hook : Fetch Resources
+export const useFetchResources = (): {
+  resourceList: ResourceType[];
+} & SwrType => {
+  const { data, isLoading, isValidating, error } = useFetchData<ResourceType[]>(
+    "resourcesList",
+    api.fetchResources
+  );
+
+  return {
+    resourceList: data || [],
+    isLoading,
     isValidating,
     error,
   };
