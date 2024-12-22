@@ -20,9 +20,9 @@ import { UserData } from "@/lib/types";
 import MotionDivProvider from "@/components/provider/MotionDivProvider";
 
 // Mock API Calls
-const fetchUserData = async (): Promise<UserData> => {
+const fetchUserData = async (): Promise<Partial<UserData>> => {
   return {
-    batch: 2025,
+    batch: "2025",
     phoneNumber: "9876543210",
     name: "Jane Doe",
     linkedInUrl: "https://www.linkedin.com/in/janedoe/",
@@ -80,7 +80,7 @@ const ProfilePage = () => {
   useEffect(() => {
     const loadUserData = async () => {
       const data = await fetchUserData();
-      setUser(data);
+      setUser(data as UserData);
     };
     loadUserData();
   }, []);

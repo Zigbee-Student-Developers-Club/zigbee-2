@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { CustomJwtPayload, verifyToken } from "@/lib/jwt";
 import { checkUserRole, verifyAccessToken } from "../firebase/utils";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "../auth";
 
 export const authenticate = async (req: NextRequest) => {
   try {

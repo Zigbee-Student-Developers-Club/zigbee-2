@@ -59,7 +59,7 @@ const UserUpdateDialogBox: React.FC<UserUpdateDialogBoxProps> = ({
       setFormData({
         id: user.id || " ",
         name: user.name || "",
-        batch: (user.batch as string) || "",
+        batch: user.batch || "",
         email: user.email || "",
         phoneNumber: user.phoneNumber || "",
         linkedInUrl: user.linkedInUrl || "",
@@ -75,7 +75,7 @@ const UserUpdateDialogBox: React.FC<UserUpdateDialogBoxProps> = ({
     }
   }, [user]);
 
-  const handleInputChange = (field: string, value: any) => {
+  const handleInputChange = (field: string, value: unknown) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 

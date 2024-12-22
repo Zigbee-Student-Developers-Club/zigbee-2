@@ -142,9 +142,9 @@ const UserTable = () => {
   const handleDeleteConfirm = useCallback(async () => {
     if (selectedUser) {
       try {
-        const response = await deleteUserById(selectedUser.id); // Delete the user by ID
+        const response = await deleteUserById(selectedUser?.id || ""); // Delete the user by ID
 
-        if (response.message) {
+        if ("message" in response) {
           // If deletion is successful, log success and refresh users list
           console.log(`${selectedUser.name} deleted successfully.`);
 
@@ -220,7 +220,10 @@ const UserTable = () => {
             <SelectGroup>
               <SelectLabel>Batches</SelectLabel>
               {BatchOptions.map((option) => (
-                <SelectItem key={option.value} value={option.value as string}>
+                <SelectItem
+                  key={option.value}
+                  value={option.value as unknown as string}
+                >
                   {option.label}
                 </SelectItem>
               ))}
@@ -350,12 +353,14 @@ const UserTable = () => {
         message={`Are you sure you want to delete "${selectedUser?.name}"?`}
       />
       {/* user data update dialog box */}
-      <UserUpdateDialogBox
-        isOpen={userDataUpdateDialogOpen}
-        onClose={() => setUserDataUpdateDialogOpen(false)}
-        onSave={handleSaveChanges}
-        user={selectedUser}
-      />
+      {selectedUser && (
+        <UserUpdateDialogBox
+          isOpen={userDataUpdateDialogOpen}
+          onClose={() => setUserDataUpdateDialogOpen(false)}
+          onSave={handleSaveChanges}
+          user={selectedUser}
+        />
+      )}
     </div>
   );
 };

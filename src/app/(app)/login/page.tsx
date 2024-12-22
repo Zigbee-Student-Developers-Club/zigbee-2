@@ -31,9 +31,8 @@ const LoginPage = () => {
       }
 
       try {
-        const response = await checkUserExist( email );
-        console.log(response);
-        
+        const response = await checkUserExist(email);
+
         if (response?.isRegistered) {
           setMessage("Email is registered.");
           setMessageColor("text-green-500");
@@ -54,7 +53,7 @@ const LoginPage = () => {
   const handleEmailSubmit = async () => {
     setLoading(true);
     try {
-      const response = await getOtp( email );
+      const response = await getOtp(email);
       if (response) {
         setShowOtpInput(true);
       } else {

@@ -358,7 +358,7 @@ export const checkUserRole = async (id: string) => {
 // Add or update user details
 export const addOrUpdateUserDetails = async (
   id: string | null,
-  data: UserData,
+  data: Partial<UserData>,
   isAdmin: boolean
 ) => {
   let result: boolean = false;
