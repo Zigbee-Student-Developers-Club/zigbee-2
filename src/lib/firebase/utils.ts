@@ -193,7 +193,7 @@ export const getUserById = async (id: string) => {
 // fetch all users by role, batch with pagination
 export const fetchUser = async (
   role?: string,
-  batch?: number,
+  batch?: string,
   page: number = 1,
   countLimit: number = 20
 ) => {
@@ -212,20 +212,31 @@ export const fetchUser = async (
       q = query(q, where("batch", "==", batch));
     }
 
+    // Apply ordering
+    q = query(q, orderBy("name"));
+
     // Get total users
     const allDocs = await getDocs(q);
     totalUsers = allDocs.size;
 
-    // Apply pagination
+    // Get all documents for determining the pagination starting point
+    const allDocuments = await getDocs(q);
     const startIndex = (page - 1) * countLimit;
-    const paginatedQuery = query(
-      q,
-      orderBy("name"),
-      limit(countLimit),
-      startAt(startIndex)
-    );
 
-    const querySnapshot = await getDocs(paginatedQuery);
+    // Determine the starting document for pagination
+    let startDoc = null;
+    if (startIndex > 0 && startIndex < allDocuments.docs.length) {
+      startDoc = allDocuments.docs[startIndex];
+    }
+
+    // Apply pagination
+    if (startDoc) {
+      q = query(q, startAt(startDoc), limit(countLimit));
+    } else {
+      q = query(q, limit(countLimit));
+    }
+
+    const querySnapshot = await getDocs(q);
 
     if (querySnapshot.empty) {
       return { result, totalUsers, error };

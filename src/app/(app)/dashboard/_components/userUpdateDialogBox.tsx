@@ -21,7 +21,7 @@ import { Switch } from "@/components/ui/switch";
 import { ChevronDown } from "lucide-react";
 import Title from "@/components/ui/title";
 import { Textarea } from "@/components/ui/textarea";
-import { UserData } from "@/lib/types";
+import { UserData, validPositions, validRoles } from "@/lib/types";
 import { updateUserById } from "@/lib/axios/allApiCall";
 
 interface UserUpdateDialogBoxProps {
@@ -36,7 +36,7 @@ const UserUpdateDialogBox: React.FC<UserUpdateDialogBoxProps> = ({
   onClose,
   user,
 }) => {
-  const [userData, setFormData] = useState({
+  const [userData, setFormData] = useState<UserData>({
     id: "",
     name: "",
     batch: "",
@@ -46,8 +46,8 @@ const UserUpdateDialogBox: React.FC<UserUpdateDialogBoxProps> = ({
     profileImg: "",
     about: "",
     feedback: "",
-    position: "Select Position",
-    role: "Select Role",
+    position: "" as UserData["position"],
+    role: "guest" as UserData["role"],
     isAdmin: false,
     isContributor: false,
     domain: "",
@@ -57,20 +57,20 @@ const UserUpdateDialogBox: React.FC<UserUpdateDialogBoxProps> = ({
   useEffect(() => {
     if (user) {
       setFormData({
-        id: user.id || " ",
-        name: user.name || "",
-        batch: user.batch || "",
-        email: user.email || "",
-        phoneNumber: user.phoneNumber || "",
-        linkedInUrl: user.linkedInUrl || "",
-        profileImg: user.profileImg || "",
-        about: user.about || "",
-        feedback: user.feedback || "",
-        position: user.position || "Select Position",
-        role: user.role || "Select Role",
-        isAdmin: user.isAdmin || false,
-        isContributor: user.isContributor || false,
-        domain: user.domain || "",
+        id: user?.id || " ",
+        name: user?.name || "",
+        batch: user?.batch || "",
+        email: user?.email || "",
+        phoneNumber: user?.phoneNumber || "",
+        linkedInUrl: user?.linkedInUrl || "",
+        profileImg: user?.profileImg || "",
+        about: user?.about || "",
+        feedback: user?.feedback || "",
+        position: user?.position || "",
+        role: user?.role || "guest",
+        isAdmin: user?.isAdmin || false,
+        isContributor: user?.isContributor || false,
+        domain: user?.domain || "",
       });
     }
   }, [user]);
@@ -80,7 +80,7 @@ const UserUpdateDialogBox: React.FC<UserUpdateDialogBoxProps> = ({
   };
 
   const handleSave = async () => {
-    const response = await updateUserById(userData.id, userData);
+    const response = await updateUserById(userData?.id || "", userData);
     if (response) {
       alert("success");
     }
@@ -104,7 +104,7 @@ const UserUpdateDialogBox: React.FC<UserUpdateDialogBoxProps> = ({
               Full Name
             </Text>
             <Input
-              value={userData.name}
+              value={userData?.name}
               onChange={(e) => handleInputChange("name", e.target.value)}
               placeholder="Full Name"
               disabled
@@ -117,7 +117,7 @@ const UserUpdateDialogBox: React.FC<UserUpdateDialogBoxProps> = ({
             </Text>
             <Input
               type="text"
-              value={userData.batch}
+              value={userData?.batch}
               onChange={(e) => handleInputChange("batch", e.target.value)}
               placeholder="Batch"
               disabled
@@ -130,7 +130,7 @@ const UserUpdateDialogBox: React.FC<UserUpdateDialogBoxProps> = ({
             </Text>
             <Input
               type="email"
-              value={userData.email}
+              value={userData?.email}
               onChange={(e) => handleInputChange("email", e.target.value)}
               placeholder="Email"
               disabled
@@ -143,7 +143,7 @@ const UserUpdateDialogBox: React.FC<UserUpdateDialogBoxProps> = ({
             </Text>
             <Input
               type="text"
-              value={userData.phoneNumber}
+              value={userData?.phoneNumber}
               onChange={(e) => {
                 const value = e.target.value;
                 if (/^\d*$/.test(value)) {
@@ -161,7 +161,7 @@ const UserUpdateDialogBox: React.FC<UserUpdateDialogBoxProps> = ({
             </Text>
             <Input
               type="url"
-              value={userData.linkedInUrl}
+              value={userData?.linkedInUrl}
               onChange={(e) => handleInputChange("linkedInUrl", e.target.value)}
               placeholder="LinkedIn URL"
               disabled
@@ -175,9 +175,10 @@ const UserUpdateDialogBox: React.FC<UserUpdateDialogBoxProps> = ({
 
           <Textarea
             rows={3}
-            value={userData.about}
+            value={userData?.about}
             onChange={(e) => handleInputChange("about", e.target.value)}
             placeholder="Write about yourself..."
+            disabled
           />
         </div>
 
@@ -187,9 +188,10 @@ const UserUpdateDialogBox: React.FC<UserUpdateDialogBoxProps> = ({
           </Text>
           <Textarea
             rows={3}
-            value={userData.feedback}
+            value={userData?.feedback}
             onChange={(e) => handleInputChange("feedback", e.target.value)}
-            placeholder="Write about yourself..."
+            placeholder="Write something about our department & Zigbee..."
+            disabled
           />
         </div>
 
@@ -207,11 +209,11 @@ const UserUpdateDialogBox: React.FC<UserUpdateDialogBoxProps> = ({
                   variant="outline"
                   className="flex w-full items-center justify-between"
                 >
-                  {userData.position} <ChevronDown className="ml-2 h-4 w-4" />
+                  {userData?.position} <ChevronDown className="ml-2 h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
-                {["PC", "CR", "GR", "PV"].map((position) => (
+                {validPositions.map((position) => (
                   <DropdownMenuItem
                     key={position}
                     onSelect={() => handleInputChange("position", position)}
@@ -233,11 +235,11 @@ const UserUpdateDialogBox: React.FC<UserUpdateDialogBoxProps> = ({
                   variant="outline"
                   className="flex w-full items-center justify-between"
                 >
-                  {userData.role} <ChevronDown className="ml-2 h-4 w-4" />
+                  {userData?.role} <ChevronDown className="ml-2 h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
-                {["Guest", "Alumni", "Student"].map((role) => (
+                {validRoles.map((role) => (
                   <DropdownMenuItem
                     key={role}
                     onSelect={() => handleInputChange("role", role)}

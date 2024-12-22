@@ -86,6 +86,7 @@ const LoginPage = () => {
 
         if (session.user.isProvidedBasicData) {
           router.push("/"); // Navigate to callback or default page
+          router.refresh(); // Reload the page
         } else {
           router.push("/upload-profile"); // Navigate to upload profile
         }

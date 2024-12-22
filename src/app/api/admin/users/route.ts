@@ -15,7 +15,7 @@ export const GET = async (req: NextRequest) => {
     const { searchParams } = new URL(req.url);
 
     const role = searchParams.get("role") || "";
-    const batch = parseInt(searchParams.get("batch") || "", 10);
+    const batch = searchParams.get("batch") || "";
     const page = parseInt(searchParams.get("page") || "1", 10);
     const limit = 20;
 
@@ -38,11 +38,11 @@ export const GET = async (req: NextRequest) => {
       current_page: page,
       previous:
         page > 1
-          ? `${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/users?page=${page - 1}`
+          ? `${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/admin/users?page=${page - 1}`
           : null,
       next:
         page < totalPage
-          ? `${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/users?page=${page + 1}`
+          ? `${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/admin/users?page=${page + 1}`
           : null,
       results: result,
     };

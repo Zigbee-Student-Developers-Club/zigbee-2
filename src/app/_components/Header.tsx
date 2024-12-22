@@ -48,7 +48,7 @@ const Header = () => {
     setThemeMenuOpen(false);
     setProfileMenuOpen(false);
   };
-
+  console.log(session);
   return (
     <header className="mx-auto flex w-full max-w-[1200px] items-center justify-between px-4 py-4 md:py-8">
       <Logo />
@@ -71,7 +71,7 @@ const Header = () => {
         <nav
           className={`${
             isMenuOpen ? "block" : "hidden"
-          } absolute left-0 top-16 z-10 w-full bg-white shadow-m md:static md:flex md:w-auto md:bg-transparent md:shadow-none`}
+          } shadow-m absolute left-0 top-16 z-10 w-full bg-white md:static md:flex md:w-auto md:bg-transparent md:shadow-none`}
         >
           <ul className="flex flex-col items-center p-4 md:flex-row md:gap-8 md:p-0">
             {navItemsData.map((item, index) => (
@@ -131,7 +131,7 @@ const Header = () => {
                   />
                   <AvatarFallback>
                     {status === "authenticated"
-                      ? session?.user?.name || "U"
+                      ? session?.user?.name?.charAt(0).toUpperCase() || "U"
                       : "?"}
                   </AvatarFallback>
                 </Avatar>

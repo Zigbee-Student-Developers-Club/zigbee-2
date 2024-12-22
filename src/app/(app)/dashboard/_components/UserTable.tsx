@@ -292,7 +292,7 @@ const UserTable = () => {
                   Failed to load data. Try again.
                 </TableCell>
               </TableRow>
-            ) : userList.length ? (
+            ) : userList?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}

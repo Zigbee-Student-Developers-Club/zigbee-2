@@ -87,10 +87,10 @@ export const uploadUserData = async (
   data: Partial<UserData>
 ): Promise<boolean> => {
   try {
-    const response: AxiosResponse = await apiClient.post("/api/users", data, {
+    const response: AxiosResponse = await apiClient.post("/api/user", data, {
       withCredentials: true,
     });
-    if (response.status === 200) {
+    if (response.status === 201) {
       return true;
     }
     throw new Error("Failed to upload user data.");
@@ -242,7 +242,7 @@ export const fetchUsers = async (
     queryParams.append("page", page.toString());
 
     const response = await apiClient.get(
-      `/api/users?${queryParams.toString()}`,
+      `/api/admin/users?${queryParams.toString()}`,
       {
         withCredentials: true,
       }
@@ -269,7 +269,7 @@ export const updateUserById = async (
   userData: UserData
 ): Promise<{ message: string } | { error: string }> => {
   try {
-    const response = await apiClient.put(`/api/users/${id}`, userData, {
+    const response = await apiClient.put(`/api/admin/users/${id}`, userData, {
       withCredentials: true,
     });
     if (response.status === 200) {
@@ -294,7 +294,7 @@ export const deleteUserById = async (
   id: string
 ): Promise<{ message: string } | { error: string }> => {
   try {
-    const response = await apiClient.delete(`/api/users/${id}`, {
+    const response = await apiClient.delete(`/api/admin/users/${id}`, {
       withCredentials: true,
     });
 

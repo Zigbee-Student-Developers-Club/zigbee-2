@@ -13,27 +13,31 @@ import {
 } from "@/components/ui/dropdown-menu";
 import UploadImageDialog from "@/components/common/UploadImageDialog";
 import { ImageUp, ChevronDown } from "lucide-react";
-import { UserData } from "@/lib/types";
+import { UserData, validPositions } from "@/lib/types";
 import InfoSection from "@/components/common/InfoSection";
 import { uploadUserData } from "@/lib/axios/allApiCall";
 import MotionDivProvider from "@/components/provider/MotionDivProvider";
+import { useSession } from "next-auth/react";
+import { Textarea } from "@/components/ui/textarea";
+import { useRouter } from "next/navigation";
 
 const UploadProfilePage = () => {
   const [user, setUser] = useState<Partial<UserData>>({
     name: "",
-    position: "",
-    batch: "2025",
-    phoneNumber: "",
-    linkedInUrl: "",
     profileImg: "",
+    phoneNumber: "",
+    batch: "",
+    linkedInUrl: "",
     domain: "",
     about: "",
-    // aboutUser: "",
-    // aboutZigbee: " "
+    position: "",
+    feedback: "",
   });
 
   const [loading, setLoading] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const { data: session, update } = useSession();
+  const router = useRouter();
 
   const handleFileUpload = (profileImgUrl: string) => {
     setUser((prevUser) => ({
@@ -63,11 +67,22 @@ const UploadProfilePage = () => {
   const handleSaveChanges = async () => {
     setLoading(true);
     try {
-      await uploadUserData(user);
-      alert("Profile saved successfully!");
+      const res = await uploadUserData(user);
+      if (res) {
+        // Update the session with new data
+        await update({
+          ...session,
+          user: {
+            ...session?.user,
+            isProvidedBasicData: true,
+          },
+        });
+        alert("Profile saved successfully!");
+        router.push("/");
+      }
     } catch (error) {
       alert(
-        `Failed to save profile. Please try again ${(error as Error)?.message || ""}`
+        `${(error as Error)?.message || "Failed to save profile. Please try again"}`
       );
     } finally {
       setLoading(false);
@@ -99,7 +114,7 @@ const UploadProfilePage = () => {
                   className="rounded-full border-8 border-white dark:border-black"
                 />
                 <AvatarFallback className="flex h-64 w-64 items-center justify-center rounded-full border-8 border-white bg-gray-100 text-2xl text-gray-700">
-                  {user?.name ? user.name[0] : "?"}
+                  {user?.name ? user.name[0].toUpperCase() : "?"}
                 </AvatarFallback>
               </Avatar>
               <div
@@ -110,7 +125,7 @@ const UploadProfilePage = () => {
               </div>
             </div>
             <Title size="medium" className="text-black">
-              {user.name || "Your Name"}
+              {user?.name || "Your Name"}
             </Title>
           </div>
         </div>
@@ -130,7 +145,7 @@ const UploadProfilePage = () => {
                 variant="large"
                 className="text-gray-700 dark:text-gray-300"
               >
-                Full Name
+                Full Name*
               </Text>
               <Input
                 value={user?.name || ""}
@@ -174,26 +189,14 @@ const UploadProfilePage = () => {
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
-                  <DropdownMenuItem
-                    onSelect={() => handleInputChange("position", "CR")}
-                  >
-                    CR
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    onSelect={() => handleInputChange("position", "GR")}
-                  >
-                    GR
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    onSelect={() => handleInputChange("position", "PC")}
-                  >
-                    PC
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    onSelect={() => handleInputChange("position", "No Role")}
-                  >
-                    No Role
-                  </DropdownMenuItem>
+                  {validPositions.map((position) => (
+                    <DropdownMenuItem
+                      key={position}
+                      onSelect={() => handleInputChange("position", position)}
+                    >
+                      {position}
+                    </DropdownMenuItem>
+                  ))}
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
@@ -202,7 +205,7 @@ const UploadProfilePage = () => {
                 variant="large"
                 className="text-gray-700 dark:text-gray-300"
               >
-                Phone Number
+                Phone Number*
               </Text>
               <Input
                 type="text"
@@ -249,32 +252,39 @@ const UploadProfilePage = () => {
                 placeholder="Frontend-developer | Android"
               />
             </div>
+
+            {/* About Section */}
+            <div>
+              <Text
+                variant="large"
+                className="text-gray-700 dark:text-gray-300"
+              >
+                About Yourself
+              </Text>
+
+              <Textarea
+                rows={3}
+                value={user?.about}
+                onChange={(e) => handleInputChange("about", e.target.value)}
+                placeholder="Write about yourself..."
+              />
+            </div>
+
+            <div>
+              <Text
+                variant="large"
+                className="text-gray-700 dark:text-gray-300"
+              >
+                Feedback
+              </Text>
+              <Textarea
+                rows={3}
+                value={user?.feedback}
+                onChange={(e) => handleInputChange("feedback", e.target.value)}
+                placeholder="Write something about our department & Zigbee..."
+              />
+            </div>
           </div>
-
-          {/* About Section */}
-          {/* <div className="mt-8">
-          <Text variant="large" className="text-gray-700 dark:text-gray-300">
-            About Yourself
-          </Text>
-          <Textarea
-            rows={5}
-            value={user.aboutUser}
-            onChange={(e) => handleInputChange("aboutUser", e.target.value)}
-            placeholder="Write about yourself..."
-          />
-        </div>
-
-        <div className="mt-8">
-          <Text variant="large" className="text-gray-700 dark:text-gray-300">
-            About Our Club
-          </Text>
-          <Textarea
-            rows={5}
-            value={user.aboutZigbee}
-            onChange={(e) => handleInputChange("aboutZigbee", e.target.value)}
-            placeholder="Write about our club..."
-          />
-        </div> */}
 
           {/* Save Button */}
           <div className="mt-6 flex justify-end">

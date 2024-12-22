@@ -49,11 +49,17 @@ export const authOptions: NextAuthOptions = {
     maxAge: 30 * 24 * 60 * 60, // 30 days
   },
   callbacks: {
-    jwt: async ({ token, user }) => {
+    jwt: async ({ token, trigger, session, user }) => {
       if (user) {
         const myUser = user as User;
         token.isProvidedBasicData = myUser.isProvidedBasicData;
         token.accessToken = myUser.accessToken;
+      }
+      if (trigger === "update") {
+        if (session?.user) {
+          // update your token whatever you like
+          token.isProvidedBasicData = session.user.isProvidedBasicData;
+        }
       }
       return token;
     },
