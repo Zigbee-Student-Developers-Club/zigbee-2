@@ -11,7 +11,7 @@ export const authorize = async (req: NextRequest) => {
 };
 
 export const adminOnly = async (req: NextRequest) => {
-  if (req.userRole !== "admin") {
+  if (!req.isAdmin) {
     return NextResponse.json(
       { error: "Forbidden: Admins only" },
       { status: 403 }

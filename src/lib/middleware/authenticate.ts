@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { CustomJwtPayload, verifyToken } from "@/lib/jwt";
-import { checkUserRole, verifyAccessToken } from "../firebase/utils";
+import { checkAdmin, verifyAccessToken } from "../firebase/utils";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth";
 
@@ -33,11 +33,11 @@ export const authenticate = async (req: NextRequest) => {
       throw Error("You are logged out. Please log in again.");
     }
 
-    // Check user role
-    const role = await (await checkUserRole(userData.id)).result;
+    // check for admin
+    const isAdmin = await checkAdmin(userData.id);
 
     req.user = userData;
-    req.userRole = role || "guest";
+    req.isAdmin = isAdmin || false;
 
     return NextResponse.next();
   } catch (err) {

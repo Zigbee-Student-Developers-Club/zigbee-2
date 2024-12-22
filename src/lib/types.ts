@@ -1,26 +1,26 @@
 export interface UserData {
   id?: string;
-  name: string;
   email: string;
-  batch: string;
-  linkedInUrl: string;
+  name: string;
   profileImg: string;
-  domain: string;
-  phoneNumber?: string;
+  phoneNumber: string;
+  batch?: string;
+  linkedInUrl?: string;
+  domain?: string;
   about?: string;
   feedback?: string;
-  position?: string;
-  role?: string;
+  position?: "CR" | "GR" | "PC" | "PV" | "";
+  role?: "student" | "alumni" | "guest";
   isContributor?: boolean;
   isAdmin?: boolean;
+  isProvidedBasicData?: boolean;
 }
 
-export interface FirebaseFetchUserType {
-  id: string;
-  [key: string]: unknown; // Additional dynamic fields from Firestore
-}
+export const validPositions = ["CR", "GR", "PC", "PV", ""];
+export const validRoles = ["student", "alumni", "guest"];
 
 export interface AlumniType {
+  id?: string;
   name: string;
   batch: number;
   profileImg: string;
@@ -31,6 +31,7 @@ export interface AlumniType {
 }
 
 export interface ContributorType {
+  id?: string;
   name: string;
   batch: number;
   profileImg: string;
@@ -50,6 +51,7 @@ export interface ResourceType {
 }
 
 export interface MagazineType {
+  id?: string;
   title: string;
   url: string;
   image: string;
@@ -71,9 +73,6 @@ export interface EventType {
   thumbnail: string;
   speakers: Speaker[];
 }
-
-export const validPositions = ["CR", "GR", "PC", "PV"];
-export const validRoles = ["student", "alumni", "guest"];
 
 export interface SwrType {
   error: Error | undefined;

@@ -26,7 +26,7 @@ const fetchUserData = async (): Promise<Partial<UserData>> => {
     phoneNumber: "9876543210",
     name: "Jane Doe",
     linkedInUrl: "https://www.linkedin.com/in/janedoe/",
-    position: "No Role",
+    position: "",
     profileImg: "https://github.com/shadcn.png",
     domain: "Full Stack Development",
     about:
