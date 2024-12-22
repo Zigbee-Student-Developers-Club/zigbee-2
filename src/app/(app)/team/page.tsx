@@ -5,6 +5,7 @@ import InfoSection from "@/components/common/InfoSection";
 import { useFetchContributors } from "@/lib/SWRhooks/useSWR";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 import MotionDivProvider from "@/components/provider/MotionDivProvider";
+import { Text } from "@/components/ui/text";
 
 export default function ContributorsPage() {
   const { contributors, isLoading, error } = useFetchContributors();
@@ -22,14 +23,18 @@ export default function ContributorsPage() {
   if (error) {
     return (
       <div className="container mx-auto py-16">
-        <p>Failed to load contributors. Please try again later.</p>
+        <Text variant="small">
+          Failed to load contributors. Please try again later.
+        </Text>
       </div>
     );
   }
 
   return (
+    <>
     <MotionDivProvider>
       <div className="mx-auto max-w-7xl px-4">
+        {/* InfoSection */}
         <InfoSection
           imageSrc="/about-us.webp"
           heading="Our Team"
@@ -37,11 +42,16 @@ export default function ContributorsPage() {
           background="bg-emerald-100"
           darkBackground="dark:bg-emerald-900"
           placedImage={true}
-        />
+        /></div>
+          </MotionDivProvider>
+
+        {/* Title */}
         <Title size="medium" className="mb-10 text-center text-3xl font-bold">
           Our Contributors
         </Title>
-        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+
+        {/* Grid Section */}
+        <div className="mx-auto grid max-w-7xl  mb-12 grid-cols-1 gap-8 px-10 sm:grid-cols-2 lg:grid-cols-4">
           {contributors?.map((contributor, index: number) => (
             <ContributorCard
               key={index}
@@ -52,7 +62,6 @@ export default function ContributorsPage() {
             />
           ))}
         </div>
-      </div>
-    </MotionDivProvider>
+  </>
   );
 }

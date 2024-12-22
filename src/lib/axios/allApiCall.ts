@@ -83,6 +83,8 @@ export const uploadProfileImage = async (file: File): Promise<string> => {
 export const fetchContributors = async (): Promise<User[]> => {
   try {
     const response = await apiClient.get("/api/team", { withCredentials: true });
+    console.log(response);
+    
     return response.data.contributors;
   } catch (error) {
     console.error("API Error in fetchContributors:", error);

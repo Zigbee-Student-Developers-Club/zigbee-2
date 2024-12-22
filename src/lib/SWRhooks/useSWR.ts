@@ -1,5 +1,5 @@
 "use client";
-import useSWR from "swr";
+import useSWR,{mutate} from "swr";
 import * as api from "@/lib/axios/allApiCall";
 import {
   AlumniType,
@@ -7,6 +7,8 @@ import {
   MagazineType,
   ResourceType,
   SwrType,
+  EventType,
+  UsersResponse
 } from "../types";
 
 // generic useFetchData hook for reusability
@@ -77,29 +79,23 @@ export const useFetchMagazines = (): {
 };
 
 // SWR Hook : Fetch Resources
-export const useFetchResources = (): {
-  resourceList: ResourceType[];
-} & SwrType => {
-  const { data, isLoading, isValidating, error } = useFetchData<ResourceType[]>(
-    "resourcesList",
-    api.fetchResources
-  );
-
+export const useFetchResources = () => {
+  const {data ,error , isValidating} = useSWR<ResourceType[]>("resourcesList", api.fetchResources);
   return {
-    resourceList: data || [],
-    isLoading,
-    isValidating,
+    resourceList: Array.isArray(data) ? data : [],
     error,
+    isLoading: !data && !error,
+    isValidating,
   };
-};
+}
 
-// SWR Hook: Fetch Events
+// SWR Hook : Fetch Events
 export const useFetchEvents = () => {
-  const { data, error, isValidating } = useSWR<EventData[] | FetchEventsError>("eventsList", api.fetchEvents);
+  const { data, error, isValidating } = useSWR<EventType[]>("eventsList", api.fetchEvents);
 
   return {
     eventList: Array.isArray(data) ? data : [],
-    error: !Array.isArray(data) ? (data as FetchEventsError)?.error : null,
+    error,
     isLoading: !data && !error,
     isValidating,
   };
@@ -109,7 +105,7 @@ export const useFetchEvents = () => {
 export const useFetchUsers = (role?: string, batch?: number, page: number = 1) => {
   const key = `/api/users?role=${role || ""}&batch=${batch || ""}&page=${page}`;
 
-  const { data, error, isValidating } = useSWR<UsersResponse | UsersError>(key, () =>
+  const { data, error, isValidating } = useSWR<UsersResponse >(key, () =>
     api.fetchUsers(role, batch, page)
   );
 
@@ -119,8 +115,8 @@ export const useFetchUsers = (role?: string, batch?: number, page: number = 1) =
   };
 
   return {
-    userList: isUsersResponse(data) ? data.users.results : [],
-    pagination: isUsersResponse(data)
+    userList: data ? data.users.results : [],
+    pagination: data
       ? {
           totalPages: data.users.total_page,
           currentPage: data.users.current_page,
@@ -128,8 +124,8 @@ export const useFetchUsers = (role?: string, batch?: number, page: number = 1) =
           previousPage: data.users.previous,
         }
       : null,
-    message: isUsersResponse(data) ? data.message : null,
-    error: error || (!isUsersResponse(data) ? (data as UsersError)?.error : null),
+    message: data ? data.message : null,
+    error: error,
     isLoading: !data && !error,
     isValidating,
     refreshUsers,

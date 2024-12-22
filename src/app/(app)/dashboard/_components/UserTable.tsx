@@ -44,8 +44,9 @@ import { BatchOptions } from "@/lib/options";
 import { useFetchUsers } from "@/lib/SWRhooks/useSWR";
 import { UserData } from "@/lib/types";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
-import DeleteDialogBox from "@/components/common/DeleteDialogBox";
+import DeleteDialogBox from "@/app/(app)/dashboard/_components/DeleteDialogBox";
 import { deleteUserById } from "@/lib/axios/allApiCall";
+import UserUpdateDialogBox from "./userUpdateDialogBox";
 
 const UserTable = () => {
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -57,14 +58,21 @@ const UserTable = () => {
   const [page, setPage] = useState<number>(1);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState<UserData | null>(null);
+  const [userDataUpdateDialogOpen, setUserDataUpdateDialogOpen] =
+    useState(false);
 
   const { userList, pagination, isLoading, error, refreshUsers } =
     useFetchUsers(role, batch, page);
+
   const handleDeleteClick = useCallback((user: UserData) => {
     setSelectedUser(user);
     setIsDeleteDialogOpen(true);
   }, []);
 
+  const handleEditClick = useCallback((user: UserData) => {
+    setSelectedUser(user);
+    setUserDataUpdateDialogOpen(true);
+  }, []);
   const columns: ColumnDef<UserData>[] = [
     {
       accessorKey: "name",
@@ -119,7 +127,9 @@ const UserTable = () => {
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem>Edit</DropdownMenuItem>
+            <DropdownMenuItem onClick={() => handleEditClick(row.original)}>
+              Edit
+            </DropdownMenuItem>
             <DropdownMenuItem onClick={() => handleDeleteClick(row.original)}>
               Delete
             </DropdownMenuItem>
@@ -137,7 +147,7 @@ const UserTable = () => {
         if (response.message) {
           // If deletion is successful, log success and refresh users list
           console.log(`${selectedUser.name} deleted successfully.`);
-          
+
           // Refresh the data using mutate function to update the user list
           refreshUsers(); // No need for await, just call mutate
         } else {
@@ -151,8 +161,10 @@ const UserTable = () => {
       }
     }
   }, [selectedUser, refreshUsers]);
-  
-  
+
+  const handleSaveChanges = () => {
+    console.log("triggered");
+  };
 
   useEffect(() => {
     setPage(1);
@@ -335,7 +347,15 @@ const UserTable = () => {
         isOpen={isDeleteDialogOpen}
         onClose={() => setIsDeleteDialogOpen(false)}
         onContinue={handleDeleteConfirm}
-        message={`Are you sure you want to delete "${selectedUser?.name}"?`}/>
+        message={`Are you sure you want to delete "${selectedUser?.name}"?`}
+      />
+      {/* user data update dialog box */}
+      <UserUpdateDialogBox
+        isOpen={userDataUpdateDialogOpen}
+        onClose={() => setUserDataUpdateDialogOpen(false)}
+        onSave={handleSaveChanges}
+        user={selectedUser}
+      />
     </div>
   );
 };

@@ -25,8 +25,8 @@ export default function ContributorCard({
       className="cursor-pointer rounded-lg text-center shadow-md hover:shadow-xl"
     >
       <a href={linkedinURL} target="_blank" rel="noopener noreferrer">
-        <Card className="flex flex-col items-center bg-white px-2 py-4 dark:bg-slate-900">
-          <Avatar className="mb-4 mt-8 h-36 w-36 overflow-hidden rounded-full">
+        <Card className="flex flex-col items-center bg-white px-2 py-4  dark:bg-slate-900 w-auto">
+          <Avatar className="mt-8 h-36 w-36 overflow-hidden rounded-full">
             <AvatarImage
               src={profileImage}
               alt="User Avatar"
@@ -36,8 +36,8 @@ export default function ContributorCard({
               {name ? name[0].toUpperCase() : "P"}
             </AvatarFallback>
           </Avatar>
-          <Title size="small" className="mt-4 text-xl font-semibold capitalize">{name.split(" ")[0]}</Title>
-          <Text variant="small" className="text-gray-600 dark:text-gray-300">Batch : {batch}</Text>
+          <Title size="small" className="m-0 mt-8 text-xl font-semibold capitalize">{name.split(" ")[0]}</Title>
+          <Text variant="small" className="m-0 mt-2 mb-6  text-gray-600 dark:text-gray-300">Batch : {batch}</Text>
         </Card>
       </a>
     </motion.div>

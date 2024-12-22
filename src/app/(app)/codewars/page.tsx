@@ -192,7 +192,7 @@ export default function CodeWar() {
         />
 
         {/* Batch Selector */}
-        <div className="flex flex-col items-center justify-end gap-4 px-20 md:flex-row">
+        <div className="flex flex-col items-center justify-start gap-4 px-10 md:flex-row mx-auto max-w-7xl">
           <Text className="font-medium">Choose the batch:</Text>
           <Select2
             data={batchOptions}
