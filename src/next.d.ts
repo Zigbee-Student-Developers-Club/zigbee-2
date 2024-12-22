@@ -4,6 +4,6 @@ import { JwtPayload } from "jsonwebtoken";
 declare module "next/server" {
   interface NextRequest {
     user: JwtPayload;
-    userRole: string;
+    isAdmin: boolean;
   }
 }

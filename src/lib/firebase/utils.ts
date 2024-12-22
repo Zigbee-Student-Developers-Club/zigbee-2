@@ -18,7 +18,6 @@ import {
   AlumniType,
   ContributorType,
   EventType,
-  FirebaseFetchUserType,
   MagazineType,
   ResourceType,
   UserData,
@@ -158,7 +157,7 @@ export const verifyOtp = async (email: string, otp: string) => {
 
 // check user by id
 export const getUserById = async (id: string) => {
-  let result = null;
+  let result: Partial<UserData> | null = null;
   let error: string | null = null;
 
   try {
@@ -169,16 +168,20 @@ export const getUserById = async (id: string) => {
       throw new Error("User not found.");
     }
 
-    const userData: {
-      [key: string]: unknown;
-    } = userDoc.data();
+    const userData = userDoc.data();
 
-    delete userData.tempOtp;
-    delete userData.accessToken;
-    delete userData.isProvidedBasicData;
-    delete userData.isVerified;
-
-    result = userData;
+    result = {
+      id: userDoc.id,
+      name: userData?.name,
+      email: userData?.email,
+      phoneNumber: userData?.phoneNumber,
+      batch: userData?.batch,
+      linkedInUrl: userData?.linkedInUrl,
+      domain: userData?.domain,
+      feedback: userData?.feedback,
+      about: userData?.about,
+      position: userData?.position,
+    };
     error = null;
     return { result, error };
   } catch (err) {
@@ -231,16 +234,22 @@ export const fetchUser = async (
     result = querySnapshot.docs.map((doc) => {
       const data = doc.data();
 
-      const filteredData: FirebaseFetchUserType = {
+      const filteredData: Partial<UserData> = {
         id: doc.id,
-        ...data,
+        name: data?.name,
+        email: data?.email,
+        phoneNumber: data?.phoneNumber,
+        batch: data?.batch,
+        linkedInUrl: data?.linkedInUrl,
+        profileImg: data?.profileImg,
+        domain: data?.domain,
+        about: data?.about,
+        feedback: data?.feedback,
+        position: data?.position,
+        role: data?.role,
+        isAdmin: data?.isAdmin,
+        isContributor: data?.isContributor,
       };
-
-      // Remove sensitive fields
-      delete filteredData.tempOtp;
-      delete filteredData.accessToken;
-      delete filteredData.isProvidedBasicData;
-      delete filteredData.isVerified;
 
       return filteredData;
     });
@@ -258,7 +267,7 @@ export const fetchAlumni = async (batch?: number) => {
   let error: string | null = null;
 
   try {
-    let q = query(userCollection, where("role", "in", ["alumni", "admin"]));
+    let q = query(userCollection, where("role", "==", "alumni"));
 
     if (batch) {
       q = query(q, where("batch", "==", batch));
@@ -273,9 +282,7 @@ export const fetchAlumni = async (batch?: number) => {
     result = querySnapshot.docs.map((doc) => {
       const data = doc.data();
 
-      const filteredData: {
-        id: string;
-      } & AlumniType = {
+      const filteredData: AlumniType = {
         id: doc.id,
         name: data.name,
         batch: data.batch,
@@ -313,9 +320,7 @@ export const fetchContributors = async () => {
     result = querySnapshot.docs.map((doc) => {
       const data = doc.data();
 
-      const filteredData: {
-        id: string;
-      } & ContributorType = {
+      const filteredData: ContributorType = {
         id: doc.id,
         name: data.name,
         batch: data.batch,
@@ -337,21 +342,40 @@ export const fetchContributors = async () => {
 };
 
 // Check user role
-export const checkUserRole = async (id: string) => {
+// export const checkUserRole = async (id: string) => {
+//   try {
+//     const docRef = doc(userCollection, id);
+//     const userDoc = await getDoc(docRef);
+
+//     if (!userDoc.exists()) {
+//       return { result: null, error: "User not found." };
+//     }
+
+//     const role = userDoc.data()?.role || null;
+
+//     return { result: role, error: null };
+//   } catch (err) {
+//     const error = handleError(err, "checkUserRole");
+//     return { result: null, error };
+//   }
+// };
+
+// check if admin or not
+export const checkAdmin = async (id: string): Promise<boolean> => {
   try {
     const docRef = doc(userCollection, id);
     const userDoc = await getDoc(docRef);
 
     if (!userDoc.exists()) {
-      return { result: null, error: "User not found." };
+      return false;
     }
 
-    const role = userDoc.data()?.role || null;
+    const isAdmin = userDoc.data()?.isAdmin || false;
 
-    return { result: role, error: null };
+    return isAdmin;
   } catch (err) {
-    const error = handleError(err, "checkUserRole");
-    return { result: null, error };
+    handleError(err, "checkAdmin");
+    return false;
   }
 };
 
@@ -365,20 +389,22 @@ export const addOrUpdateUserDetails = async (
   let error: string | null = null;
 
   try {
-    // For new user creation
+    // For new user creation by admin
     if (!id && isAdmin) {
-      const newUser = {
-        name: data.name,
-        batch: data.batch,
-        linkedInUrl: data.linkedInUrl,
-        profileImg: data.profileImg,
+      const newUser: Partial<UserData> = {
+        name: data.name || "",
+        profileImg: data.profileImg || "",
+        phoneNumber: data.phoneNumber || "",
+        batch: data.batch || "",
+        linkedInUrl: data.linkedInUrl || "",
         domain: data.domain || "",
-        phoneNumber: data.phoneNumber || null,
         about: data.about || "",
         role: data.role || "guest",
         position: data.position || "",
         isContributor: data.isContributor || false,
-        isProvidedBasicData: true,
+        isAdmin: data.isAdmin || false,
+        isProvidedBasicData: false, // as no email is there
+        // no need for feedback as admin cannot provide others feedback
       };
 
       const newDoc = await addDoc(userCollection, newUser);
@@ -391,7 +417,7 @@ export const addOrUpdateUserDetails = async (
       return { result, error };
     }
 
-    // For existing user updates
+    // For updating existing user details
     if (!id) {
       throw new Error("User ID is required for updating details.");
     }
@@ -405,44 +431,40 @@ export const addOrUpdateUserDetails = async (
 
     const userData = userDoc.data();
 
-    // Check if basic data is already provided
-    if (userData?.isProvidedBasicData) {
-      // Update existing data without overwriting sensitive fields
+    // Users updating their basic details
+    if (!isAdmin) {
       const updatedData: Partial<UserData> = {
-        name: data.name || userData.name,
-        batch: data.batch || userData.batch,
-        linkedInUrl: data.linkedInUrl || userData.linkedInUrl,
-        profileImg: data.profileImg || userData.profileImg,
-        domain: data.domain || userData.domain,
-        phoneNumber: data.phoneNumber || userData.phoneNumber,
-        about: data.about || userData.about,
-      };
-
-      if (isAdmin) {
-        updatedData.role = data.role || userData.role;
-        updatedData.position = data.position || userData.position;
-        updatedData.isContributor =
-          data.isContributor ?? userData.isContributor;
-      }
-
-      await updateDoc(docRef, updatedData);
-    } else {
-      // Add basic data if not provided yet
-      const newBasicData = {
-        name: data.name,
-        batch: data.batch,
-        linkedInUrl: data.linkedInUrl,
-        profileImg: data.profileImg,
-        domain: data.domain || "",
-        phoneNumber: data.phoneNumber || null,
-        about: data.about || "",
-        role: isAdmin ? data.role : "guest",
-        position: isAdmin ? data.position : "",
-        isContributor: isAdmin ? data.isContributor : false,
+        name: data.name || userData.name || "",
+        profileImg: data.profileImg || userData.profileImg || "",
+        phoneNumber: data.phoneNumber || userData.phoneNumber || "",
+        batch: data.batch || userData.batch || "",
+        linkedInUrl: data.linkedInUrl || userData.linkedInUrl || "",
+        domain: data.domain || userData.domain || "",
+        about: data.about || userData.about || "",
+        position: data.position || userData.position || "",
+        feedback: data.feedback || userData.feedback || "",
+        role: userData.role || "guest",
+        isContributor: userData.isContributor || false,
+        isAdmin: userData.isAdmin || false,
         isProvidedBasicData: true,
       };
 
-      await updateDoc(docRef, newBasicData);
+      await updateDoc(docRef, updatedData);
+    } else {
+      // Admin updating sensitive details
+      const adminUpdatedData: Partial<UserData> = {};
+
+      if ("role" in data) adminUpdatedData.role = data.role || userData.role;
+      if ("position" in data)
+        adminUpdatedData.position = data.position || userData.position;
+      if ("isContributor" in data) {
+        adminUpdatedData.isContributor =
+          data.isContributor || userData.isContributor;
+      }
+      if ("isAdmin" in data)
+        adminUpdatedData.isAdmin = data.isAdmin || userData.isAdmin;
+
+      await updateDoc(docRef, adminUpdatedData);
     }
 
     result = true;
@@ -528,9 +550,7 @@ export const fetchResources = async (domain?: string) => {
     result = querySnapshot.docs.map((doc) => {
       const data = doc.data();
 
-      const filteredData: {
-        id: string;
-      } & ResourceType = {
+      const filteredData: ResourceType = {
         id: doc.id,
         name: data.name,
         url: data.url,
@@ -580,9 +600,7 @@ export const fetchMagazines = async () => {
     result = querySnapshot.docs.map((doc) => {
       const data = doc.data();
 
-      const filteredData: {
-        id: string;
-      } & MagazineType = {
+      const filteredData: MagazineType = {
         id: doc.id,
         title: data.title,
         url: data.url,

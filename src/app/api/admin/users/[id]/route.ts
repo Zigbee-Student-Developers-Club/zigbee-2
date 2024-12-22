@@ -5,10 +5,10 @@ import {
 } from "@/lib/firebase/utils";
 import { authenticate } from "@/lib/middleware/authenticate";
 import { adminOnly } from "@/lib/middleware/authorize";
-import { validPositions, validRoles } from "@/lib/types";
+import { UserData, validPositions, validRoles } from "@/lib/types";
 import { NextRequest, NextResponse } from "next/server";
 
-// get user by id - own details
+// get user by id
 export const GET = async (
   req: NextRequest,
   { params }: { params: { id: string } }
@@ -19,16 +19,8 @@ export const GET = async (
     const authResponse = await authenticate(req);
     if (authResponse.status !== 200) return authResponse;
 
-    const userData = req.user;
-
-    if (id !== userData.id) {
-      return NextResponse.json(
-        {
-          error: "You are not authorized to view this user's details.",
-        },
-        { status: 404 }
-      );
-    }
+    const adminResponse = await adminOnly(req);
+    if (adminResponse.status !== 200) return adminResponse;
 
     const { result, error } = await getUserById(id);
 
@@ -68,32 +60,15 @@ export const PUT = async (
 
     const { id } = params;
 
-    const {
-      name,
-      batch,
-      linkedInUrl,
-      profileImg,
-      domain,
-      phoneNumber,
-      about,
-      position,
-      role,
-      isContributor,
-    } = await req.json();
+    const { position, role, isAdmin, isContributor } = await req.json();
 
     // Prepare updated user data
-    const userDetails = {
-      name,
-      batch,
-      linkedInUrl,
-      profileImg,
-      domain,
-      phoneNumber,
-      about,
-      position: validPositions.includes(position) && position,
-      role: validRoles.includes(role) && role,
-      isContributor: isContributor,
-    };
+    const userDetails: Partial<UserData> = {};
+    if (position && validPositions.includes(position))
+      userDetails.position = position || "";
+    if (role && validRoles.includes(role)) userDetails.role = role || "guest";
+    if (isAdmin !== undefined) userDetails.isAdmin = isAdmin;
+    if (isContributor !== undefined) userDetails.isContributor = isContributor;
 
     const { result, error } = await addOrUpdateUserDetails(
       id,
@@ -104,7 +79,7 @@ export const PUT = async (
     if (error || !result) {
       return NextResponse.json(
         {
-          error: "Unexpected error in updating user details.",
+          error: error || "Unexpected error in updating user details.",
         },
         { status: 500 }
       );
