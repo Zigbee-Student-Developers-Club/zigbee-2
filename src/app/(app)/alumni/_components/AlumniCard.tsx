@@ -1,9 +1,10 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/utils"; // Utility function for conditional classNames
+import { Text } from "@/components/ui/text";
+import { cn } from "@/lib/utils";
 import { NextPage } from "next";
 import Link from "next/link";
-import { Linkedin } from "lucide-react"; // Using Lucide icons
+import { Linkedin } from "react-bootstrap-icons";
 
 interface AlumDataProp {
   alumData: {
@@ -19,18 +20,24 @@ const AlumniCard: NextPage<AlumDataProp> = ({ alumData }) => {
     <div className="h-full rounded-lg bg-cyan-200 p-6 text-center capitalize shadow-md">
       <div className="flex h-full flex-col items-center">
         {/* Avatar */}
-        <Avatar className="mb-6 h-24 w-24">
+        <Avatar className="my-4 h-36 w-36 overflow-hidden rounded-full">
           <AvatarImage
-            src={alumData?.imgURL || "https://bit.ly/broken-link"}
+            src={alumData?.imgURL}
             alt={alumData.name}
+            className="h-full w-full object-cover object-center"
           />
-          <AvatarFallback>{alumData.name[0]}</AvatarFallback>
+          <AvatarFallback className="flex h-36 w-36 items-center justify-center rounded-full border-4 border-white bg-gray-100 text-2xl text-gray-700">
+            {alumData.name.toUpperCase().split(" ")[0]}
+          </AvatarFallback>
         </Avatar>
 
         {/* Name and Badge */}
-        <h3 className="text-sm font-semibold">
-          {alumData.name.toLowerCase()}
-          {["PC", "CR", "GR"].includes(alumData.position || "") && (
+          {" "}
+          <Text variant="small" className=" font-semibold">
+            {alumData.name.toLowerCase()}{" "}
+          {["PC", "CR", "GR"].includes(
+            alumData.position?.toUpperCase() || ""
+          ) && (
             <Badge
               className={cn(
                 "ml-2",
@@ -41,8 +48,9 @@ const AlumniCard: NextPage<AlumDataProp> = ({ alumData }) => {
             >
               {alumData.position}
             </Badge>
+
           )}
-        </h3>
+                     </Text>
 
         {/* LinkedIn Link */}
         {alumData?.linkedinURL && (
@@ -52,7 +60,7 @@ const AlumniCard: NextPage<AlumDataProp> = ({ alumData }) => {
             rel="noopener noreferrer"
             className="my-4 text-blue-600 hover:text-blue-800"
           >
-            <Linkedin size={24} />
+            <Linkedin size={20} />
           </Link>
         )}
       </div>

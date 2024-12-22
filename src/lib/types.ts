@@ -1,14 +1,18 @@
 export interface UserData {
+  id: string;
   name: string;
+  email: string;
   batch: number;
   linkedInUrl: string;
   profileImg: string;
   domain: string;
   phoneNumber?: string;
   about?: string;
+  feedback?: string;
   position?: string;
   role?: string;
   isContributor?: boolean;
+  isAdmin?: boolean;
 }
 
 export interface FirebaseFetchUserType {
@@ -37,6 +41,7 @@ export interface ContributorType {
 }
 
 export interface ResourceType {
+  id : string;
   name: string;
   url: string;
   domain: string;
@@ -59,6 +64,7 @@ export interface Speaker {
 }
 
 export interface EventType {
+  id: string;
   topic: string;
   eventDate: string;
   location: string;
@@ -67,10 +73,21 @@ export interface EventType {
 }
 
 export const validPositions = ["CR", "GR", "PC", "PV"];
-export const validRoles = ["alumni", "admin", "guest"];
+export const validRoles = ["student", "alumni", "guest"];
 
 export interface SwrType {
   error: Error | undefined;
   isValidating: boolean;
   isLoading: boolean;
+}
+
+export interface UsersResponse {
+  users: {
+    total_page: number;
+    current_page: number;
+    previous: string | null;
+    next: string | null;
+    results: UserData[];
+  };
+  message: string;
 }

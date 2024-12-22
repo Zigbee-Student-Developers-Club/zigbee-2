@@ -11,23 +11,14 @@ import { useFetchResources } from "@/lib/SWRhooks/useSWR";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 import MotionDivProvider from "@/components/provider/MotionDivProvider";
 
+const domainOptions = ["all", "Frontend", "Backend", "Designing", "Networking", "Full Stack"]; // Example of domain options
+
 export default function Resources() {
   const [resourceOption, setResourceOption] = useState("all");
 
   // Fetch resources using the SWR hook
   const { resourceList, isLoading, error } = useFetchResources();
 
-  // Dropdown options
-  const domainOptions = [
-    { value: "all", label: "All Resources" },
-    { value: "androidDev", label: "Android App Development" },
-    { value: "backend", label: "Backend Development" },
-    { value: "designing", label: "Designing" },
-    { value: "frontend", label: "Frontend Development" },
-    { value: "networking", label: "Networking" },
-  ];
-
-  // Handle loading and error states
   if (isLoading) {
     return (
       <div className="container mx-auto flex items-center justify-center py-16">
@@ -37,14 +28,15 @@ export default function Resources() {
   }
 
   if (error) {
+    console.error("Error fetching resources:", error);
     return (
-      <div className="container mx-auto py-16">
+      <div className="container mx-auto py-16 text-center">
         <p>Failed to load resources. Please try again later.</p>
+        <button className="mt-4 text-blue-600" >Retry</button>
       </div>
     );
   }
 
-  // Filter resources based on the selected option
   const filteredResources =
     resourceOption === "all"
       ? resourceList
@@ -82,14 +74,14 @@ export default function Resources() {
           </div>
 
           {/* Resource Cards */}
-          <div className="mt-8 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {filteredResources?.map((item, index: number) => (
+          <div className="my-8 min-h-36 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {filteredResources?.map((item) => (
               <motion.div
-                key={index}
+                key={item?.id || item?.name} 
                 className="w-full"
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: index * 0.1 }}
+                transition={{ duration: 0.4, delay: filteredResources.indexOf(item) * 0.1 }}
               >
                 <Link href={item?.url || "#"} target="_blank">
                   <ResourceCard

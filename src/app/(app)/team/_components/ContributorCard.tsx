@@ -2,6 +2,8 @@
 import { motion } from "framer-motion";
 import { Card } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@radix-ui/react-avatar";
+import Title from "@/components/ui/title";
+import { Text } from "@/components/ui/text";
 
 interface ContributorProps {
   name: string;
@@ -23,21 +25,19 @@ export default function ContributorCard({
       className="cursor-pointer rounded-lg text-center shadow-md hover:shadow-xl"
     >
       <a href={linkedinURL} target="_blank" rel="noopener noreferrer">
-        <Card className="flex flex-col items-center bg-white px-2 py-4">
-          <Avatar className="mb-4 mt-8 rounded-full">
+        <Card className="flex flex-col items-center bg-white px-2 py-4  dark:bg-slate-900 w-auto">
+          <Avatar className="mt-8 h-36 w-36 overflow-hidden rounded-full">
             <AvatarImage
               src={profileImage}
               alt="User Avatar"
-              height={150}
-              width={150}
-              className="h-[150px] w-[150px] rounded-full border-4 border-white"
+              className="h-full w-full object-cover object-center"
             />
             <AvatarFallback className="flex h-36 w-36 items-center justify-center rounded-full border-4 border-white bg-gray-100 text-2xl text-gray-700">
               {name ? name[0].toUpperCase() : "P"}
             </AvatarFallback>
           </Avatar>
-          <h3 className="mt-4 text-xl font-semibold">{name}</h3>
-          <p className="mt-2 text-sm text-gray-600">Batch : {batch}</p>
+          <Title size="small" className="m-0 mt-8 text-xl font-semibold capitalize">{name.split(" ")[0]}</Title>
+          <Text variant="small" className="m-0 mt-2 mb-6  text-gray-600 dark:text-gray-300">Batch : {batch}</Text>
         </Card>
       </a>
     </motion.div>
