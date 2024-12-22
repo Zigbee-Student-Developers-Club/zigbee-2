@@ -1,14 +1,18 @@
 export interface UserData {
+  id: string;
   name: string;
+  email: string;
   batch: number;
   linkedInUrl: string;
   profileImg: string;
   domain: string;
   phoneNumber?: string;
   about?: string;
+  feedback?: string;
   position?: string;
   role?: string;
   isContributor?: boolean;
+  isAdmin?: boolean;
 }
 
 export interface FirebaseFetchUserType {
@@ -69,7 +73,7 @@ export interface EventType {
 }
 
 export const validPositions = ["CR", "GR", "PC", "PV"];
-export const validRoles = ["student", "admin", "guest"];
+export const validRoles = ["student", "alumni", "guest"];
 
 export interface SwrType {
   error: Error | undefined;

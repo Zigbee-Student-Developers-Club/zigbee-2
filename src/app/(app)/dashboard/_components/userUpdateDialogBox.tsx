@@ -22,6 +22,7 @@ import { ChevronDown } from "lucide-react";
 import Title from "@/components/ui/title";
 import { Textarea } from "@/components/ui/textarea";
 import { UserData } from "@/lib/types";
+import { updateUserById } from "@/lib/axios/allApiCall";
 
 interface UserUpdateDialogBoxProps {
   isOpen: boolean;
@@ -33,38 +34,43 @@ interface UserUpdateDialogBoxProps {
 const UserUpdateDialogBox: React.FC<UserUpdateDialogBoxProps> = ({
   isOpen,
   onClose,
-  onSave,
   user,
 }) => {
-  const [formData, setFormData] = useState({
+  const [userData, setFormData] = useState({
+    id: "",
     name: "",
     batch: "",
     email: "",
     phoneNumber: "",
     linkedInUrl: "",
+    profileImg: "",
     about: "",
     feedback: "",
     position: "Select Position",
     role: "Select Role",
     isAdmin: false,
     isContributor: false,
+    domain: "",
   });
 
-  // Sync formData with user prop
+  // Sync userData with user prop
   useEffect(() => {
     if (user) {
       setFormData({
+        id: user.id || " ",
         name: user.name || "",
-        batch: user.batch || "",
+        batch: (user.batch as string) || "",
         email: user.email || "",
         phoneNumber: user.phoneNumber || "",
         linkedInUrl: user.linkedInUrl || "",
+        profileImg: user.profileImg || "",
         about: user.about || "",
         feedback: user.feedback || "",
         position: user.position || "Select Position",
         role: user.role || "Select Role",
         isAdmin: user.isAdmin || false,
         isContributor: user.isContributor || false,
+        domain: user.domain || "",
       });
     }
   }, [user]);
@@ -73,8 +79,11 @@ const UserUpdateDialogBox: React.FC<UserUpdateDialogBoxProps> = ({
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handleSave = () => {
-    onSave(formData);
+  const handleSave = async () => {
+    const response = await updateUserById(userData.id, userData);
+    if (response) {
+      alert("success");
+    }
     onClose();
   };
 
@@ -95,7 +104,7 @@ const UserUpdateDialogBox: React.FC<UserUpdateDialogBoxProps> = ({
               Full Name
             </Text>
             <Input
-              value={formData.name}
+              value={userData.name}
               onChange={(e) => handleInputChange("name", e.target.value)}
               placeholder="Full Name"
               disabled
@@ -108,7 +117,7 @@ const UserUpdateDialogBox: React.FC<UserUpdateDialogBoxProps> = ({
             </Text>
             <Input
               type="text"
-              value={formData.batch}
+              value={userData.batch}
               onChange={(e) => handleInputChange("batch", e.target.value)}
               placeholder="Batch"
               disabled
@@ -121,7 +130,7 @@ const UserUpdateDialogBox: React.FC<UserUpdateDialogBoxProps> = ({
             </Text>
             <Input
               type="email"
-              value={formData.email}
+              value={userData.email}
               onChange={(e) => handleInputChange("email", e.target.value)}
               placeholder="Email"
               disabled
@@ -134,7 +143,7 @@ const UserUpdateDialogBox: React.FC<UserUpdateDialogBoxProps> = ({
             </Text>
             <Input
               type="text"
-              value={formData.phoneNumber}
+              value={userData.phoneNumber}
               onChange={(e) => {
                 const value = e.target.value;
                 if (/^\d*$/.test(value)) {
@@ -152,7 +161,7 @@ const UserUpdateDialogBox: React.FC<UserUpdateDialogBoxProps> = ({
             </Text>
             <Input
               type="url"
-              value={formData.linkedInUrl}
+              value={userData.linkedInUrl}
               onChange={(e) => handleInputChange("linkedInUrl", e.target.value)}
               placeholder="LinkedIn URL"
               disabled
@@ -166,7 +175,7 @@ const UserUpdateDialogBox: React.FC<UserUpdateDialogBoxProps> = ({
 
           <Textarea
             rows={3}
-            value={formData.about}
+            value={userData.about}
             onChange={(e) => handleInputChange("about", e.target.value)}
             placeholder="Write about yourself..."
           />
@@ -178,7 +187,7 @@ const UserUpdateDialogBox: React.FC<UserUpdateDialogBoxProps> = ({
           </Text>
           <Textarea
             rows={3}
-            value={formData.feedback}
+            value={userData.feedback}
             onChange={(e) => handleInputChange("feedback", e.target.value)}
             placeholder="Write about yourself..."
           />
@@ -198,7 +207,7 @@ const UserUpdateDialogBox: React.FC<UserUpdateDialogBoxProps> = ({
                   variant="outline"
                   className="flex w-full items-center justify-between"
                 >
-                  {formData.position} <ChevronDown className="ml-2 h-4 w-4" />
+                  {userData.position} <ChevronDown className="ml-2 h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
@@ -224,11 +233,11 @@ const UserUpdateDialogBox: React.FC<UserUpdateDialogBoxProps> = ({
                   variant="outline"
                   className="flex w-full items-center justify-between"
                 >
-                  {formData.role} <ChevronDown className="ml-2 h-4 w-4" />
+                  {userData.role} <ChevronDown className="ml-2 h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
-                {["Guest", "Alumini", "Student"].map((role) => (
+                {["Guest", "Alumni", "Student"].map((role) => (
                   <DropdownMenuItem
                     key={role}
                     onSelect={() => handleInputChange("role", role)}
@@ -245,7 +254,7 @@ const UserUpdateDialogBox: React.FC<UserUpdateDialogBoxProps> = ({
               Is Admin
             </Text>
             <Switch
-              checked={formData.isAdmin}
+              checked={userData.isAdmin}
               onCheckedChange={(checked) =>
                 handleInputChange("isAdmin", checked)
               }
@@ -257,7 +266,7 @@ const UserUpdateDialogBox: React.FC<UserUpdateDialogBoxProps> = ({
               Is Contributor
             </Text>
             <Switch
-              checked={formData.isContributor}
+              checked={userData.isContributor}
               onCheckedChange={(checked) =>
                 handleInputChange("isContributor", checked)
               }
