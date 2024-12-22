@@ -29,7 +29,7 @@ export default function AlumniConnect() {
   }
 
   if (error) {
-    return <div>Error: {error}</div>;
+    return <div>Error: {error.message}</div>;
   }
 
   // Type check for eventList

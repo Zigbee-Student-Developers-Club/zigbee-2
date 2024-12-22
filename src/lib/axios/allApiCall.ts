@@ -1,13 +1,14 @@
 import apiClient from "./axiosConfig";
 import {
+  AlumniType,
+  ContributorType,
   EventType,
   MagazineType,
   ResourceType,
   UserData,
   UsersResponse,
 } from "@/lib/types";
-import { AxiosResponse } from "axios";
-import Error from "next/error";
+import { AxiosResponse, AxiosError } from "axios";
 
 // 1. Check User Existence
 export const checkUserExist = async (
@@ -17,23 +18,35 @@ export const checkUserExist = async (
     const response: AxiosResponse<{ isRegistered: boolean }> =
       await apiClient.post("/api/check-user", { email });
     return response.data;
-  } catch (error) {
-    console.error("API Error in checkUserExist:", error);
-    throw new Error("Failed to check user existence");
+  } catch (error: unknown) {
+    if (error instanceof AxiosError) {
+      console.error("API Error in checkUserExist:", error.message);
+      throw new Error(
+        error.response?.data?.error || "Failed to check user existence"
+      );
+    }
+    console.error("Unexpected Error in checkUserExist:", error);
+    throw new Error("Unexpected error in checkUserExist.");
   }
 };
 
 // 2. Get OTP
 export const getOtp = async (email: string): Promise<boolean> => {
   try {
-    console.log(email);
     const response: AxiosResponse = await apiClient.post("/api/sendotp", {
       email,
-    }); // Corrected payload
-    return response.status === 200;
-  } catch (error) {
-    console.error("API Error in getOtp:", error);
-    return false;
+    });
+    if (response.status === 200) {
+      return true;
+    }
+    throw new Error("Failed to send OTP.");
+  } catch (error: unknown) {
+    if (error instanceof AxiosError) {
+      console.error("API Error in getOtp:", error.message);
+      throw new Error(error.response?.data?.error || "Failed to send OTP.");
+    }
+    console.error("Unexpected Error in getOtp:", error);
+    throw new Error("Unexpected error in getOtp.");
   }
 };
 
@@ -41,7 +54,12 @@ export const getOtp = async (email: string): Promise<boolean> => {
 export const verifyEmailOtp = async (
   email: string,
   otp: string
-): Promise<{ isProvidedBasicData?: boolean } | null> => {
+): Promise<{
+  isProvidedBasicData?: boolean;
+  token?: string;
+  name?: string;
+  profileImg?: string;
+} | null> => {
   try {
     const response: AxiosResponse<{ isProvidedBasicData?: boolean }> =
       await apiClient.post("/api/verifyotp", {
@@ -49,9 +67,18 @@ export const verifyEmailOtp = async (
         otp,
       });
     return response.data;
-  } catch (error) {
-    console.error("API Error in verifyEmailOtp:", error);
-    return null;
+  } catch (error: unknown) {
+    if (error instanceof AxiosError) {
+      console.error(
+        "API Error in verifyEmailOtp:",
+        error.response?.data?.error
+      );
+      throw new Error(
+        error.response?.data?.error || "Failed to verify email OTP."
+      );
+    }
+    console.error("Unexpected Error in verifyEmailOtp:", error);
+    throw new Error("Unexpected error in verifyEmailOtp.");
   }
 };
 
@@ -63,10 +90,19 @@ export const uploadUserData = async (
     const response: AxiosResponse = await apiClient.post("/api/users", data, {
       withCredentials: true,
     });
-    return response.status === 200;
-  } catch (error) {
-    console.error("API Error in uploadUserData:", error);
-    return false;
+    if (response.status === 200) {
+      return true;
+    }
+    throw new Error("Failed to upload user data.");
+  } catch (error: unknown) {
+    if (error instanceof AxiosError) {
+      console.error("API Error in uploadUserData:", error.message);
+      throw new Error(
+        error.response?.data?.error || "Failed to upload user data."
+      );
+    }
+    console.error("Unexpected Error in uploadUserData:", error);
+    throw new Error("Unexpected error in uploadUserData.");
   }
 };
 
@@ -85,38 +121,52 @@ export const uploadProfileImage = async (file: File): Promise<string> => {
       }
     );
     return response.data;
-  } catch (error) {
-    console.error("API Error in uploadProfileImage:", error);
-    throw error;
+  } catch (error: unknown) {
+    if (error instanceof AxiosError) {
+      console.error("API Error in uploadProfileImage:", error.message);
+      throw new Error(
+        error.response?.data?.error || "Failed to upload profile image."
+      );
+    }
+    console.error("Unexpected Error in uploadProfileImage:", error);
+    throw new Error("Unexpected error in uploadProfileImage.");
   }
 };
 
 // 6. Fetch Contributors
-export const fetchContributors = async (): Promise<UserData[]> => {
+export const fetchContributors = async (): Promise<ContributorType[]> => {
   try {
     const response = await apiClient.get("/api/team", {
       withCredentials: true,
     });
-    console.log(response);
-
     return response.data.contributors;
-  } catch (error) {
-    console.error("API Error in fetchContributors:", error);
-    throw error;
+  } catch (error: unknown) {
+    if (error instanceof AxiosError) {
+      console.error("API Error in fetchContributors:", error.message);
+      throw new Error(
+        error.response?.data?.error || "Failed to fetch contributors."
+      );
+    }
+    console.error("Unexpected Error in fetchContributors:", error);
+    throw new Error("Unexpected error in fetchContributors.");
   }
 };
 
 // 7. Fetch Alumni
-export const fetchAlumni = async (batch?: string): Promise<UserData[]> => {
+export const fetchAlumni = async (batch?: string): Promise<AlumniType[]> => {
   try {
     const response = await apiClient.get("/api/alumni", {
       withCredentials: true,
       params: batch ? { batch } : {},
     });
     return response.data.alumnus;
-  } catch (error) {
-    console.error("API Error in fetchAlumni:", error);
-    throw error;
+  } catch (error: unknown) {
+    if (error instanceof AxiosError) {
+      console.error("API Error in fetchAlumni:", error.message);
+      throw new Error(error.response?.data?.error || "Failed to fetch alumni.");
+    }
+    console.error("Unexpected Error in fetchAlumni:", error);
+    throw new Error("Unexpected error in fetchAlumni.");
   }
 };
 
@@ -127,9 +177,15 @@ export const fetchMagazines = async (): Promise<MagazineType[]> => {
       withCredentials: true,
     });
     return response.data.magazines;
-  } catch (error) {
-    console.error("API Error in fetchMagazines:", error);
-    throw error;
+  } catch (error: unknown) {
+    if (error instanceof AxiosError) {
+      console.error("API Error in fetchMagazines:", error.message);
+      throw new Error(
+        error.response?.data?.error || "Failed to fetch magazines."
+      );
+    }
+    console.error("Unexpected Error in fetchMagazines:", error);
+    throw new Error("Unexpected error in fetchMagazines.");
   }
 };
 
@@ -139,11 +195,16 @@ export const fetchResources = async (): Promise<ResourceType[]> => {
     const response = await apiClient.get("/api/resource", {
       withCredentials: true,
     });
-    console.log(response.data);
     return response.data.resources;
-  } catch (error) {
-    console.error("API Error in fetchResources:", error);
-    throw error;
+  } catch (error: unknown) {
+    if (error instanceof AxiosError) {
+      console.error("API Error in fetchResources:", error.message);
+      throw new Error(
+        error.response?.data?.error || "Failed to fetch resources."
+      );
+    }
+    console.error("Unexpected Error in fetchResources:", error);
+    throw new Error("Unexpected error in fetchResources.");
   }
 };
 
@@ -151,28 +212,29 @@ export const fetchResources = async (): Promise<ResourceType[]> => {
 export const fetchEvents = async (): Promise<EventType[]> => {
   try {
     const response = await apiClient.get("/api/event", {
-      withCredentials: true, // Ensure that credentials (cookies) are included if needed
+      withCredentials: true,
     });
 
-    if (response.status !== 200) {
-      const errorResponse = response.data;
-      return errorResponse;
+    if (response.status === 200) {
+      return response.data.events;
     }
-
-    const data: EventType = response.data;
-    return data;
-  } catch (error) {
-    console.error("API Error in fetchEvents:", error);
-    throw new Error(error);
+    throw new Error("Failed to fetch events");
+  } catch (error: unknown) {
+    if (error instanceof AxiosError) {
+      console.error("API Error in fetchEvents:", error.message);
+      throw new Error(error.response?.data?.error || "Failed to fetch events.");
+    }
+    console.error("Unexpected Error in fetchEvents:", error);
+    throw new Error("Unexpected error in fetchEvents.");
   }
 };
 
 // 11. Fetch Users
 export const fetchUsers = async (
   role?: string,
-  batch?: number,
+  batch?: string,
   page: number = 1
-): Promise<UsersResponse | { error: string }> => {
+): Promise<UsersResponse> => {
   try {
     const queryParams = new URLSearchParams();
     if (role) queryParams.append("role", role);
@@ -182,49 +244,52 @@ export const fetchUsers = async (
     const response = await apiClient.get(
       `/api/users?${queryParams.toString()}`,
       {
-        headers: { "Content-Type": "application/json" },
-        withCredentials: true, // For sending cookies (if needed)
+        withCredentials: true,
       }
     );
 
-    if (response.status !== 200) {
-      const errorResponse = response.data;
-      return errorResponse;
+    if (response.status === 200) {
+      return response.data;
     }
 
-    const data: UsersResponse = response.data;
-    return data;
-  }catch (error: unknown) { 
-    console.error("API Error in fetchUsers:", error);
-
-    return { error : error.data || "Unexpected error in fetching users." };
+    throw new Error("Failed to fetch users");
+  } catch (error: unknown) {
+    if (error instanceof AxiosError) {
+      console.error("API Error in fetchUsers:", error.message);
+      throw new Error(error.response?.data?.error || "Failed to fetch users.");
+    }
+    console.error("Unexpected Error in fetchUsers:", error);
+    throw new Error("Unexpected error in fetchUsers.");
   }
-  
 };
 
-
-//12. Update user details by ID (admin only)
+// 12. Update User by ID (Admin Only)
 export const updateUserById = async (
   id: string,
   userData: UserData
 ): Promise<{ message: string } | { error: string }> => {
-  return apiClient
-    .put(`/api/users/${id}`, userData, {
+  try {
+    const response = await apiClient.put(`/api/users/${id}`, userData, {
       withCredentials: true,
-    })
-    .then((response) => {
-      if (response.status === 200) {
-        return response.data;
-      } else {
-        return { error: "Unexpected response from server." };
-      }
-    })
-    .catch((error: Error) => {
-      return { error: error || "Unexpected error in updating user details." };
     });
+    if (response.status === 200) {
+      return response.data;
+    }
+    throw new Error("Unexpected response from server.");
+  } catch (error: unknown) {
+    if (error instanceof AxiosError) {
+      console.error("API Error in updateUserById:", error.message);
+      throw new Error(
+        error.response?.data?.error ||
+          "Unexpected error in updating user details."
+      );
+    }
+    console.error("Unexpected Error in updateUserById:", error);
+    throw new Error("Unexpected error in updating user details.");
+  }
 };
 
-// 13. Delete User by ID :( delete done by admin)
+// 13. Delete User by ID (Admin Only)
 export const deleteUserById = async (
   id: string
 ): Promise<{ message: string } | { error: string }> => {
@@ -235,11 +300,16 @@ export const deleteUserById = async (
 
     if (response.status === 200) {
       return { message: "User deleted successfully." };
-    } else {
-      return { error: "Unexpected error in deleting user." };
     }
-  } catch (error) {
-    console.error("API Error in deleteUserById:", error);
-    return { error: "Unexpected error in deleting user." };
+    throw new Error("Unexpected error in deleting user.");
+  } catch (error: unknown) {
+    if (error instanceof AxiosError) {
+      console.error("API Error in deleteUserById:", error.message);
+      throw new Error(
+        error.response?.data?.error || "Unexpected error in deleting user."
+      );
+    }
+    console.error("Unexpected Error in deleteUserById:", error);
+    throw new Error("Unexpected error in deleting user.");
   }
 };

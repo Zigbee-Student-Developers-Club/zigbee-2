@@ -19,10 +19,10 @@ import { uploadUserData } from "@/lib/axios/allApiCall";
 import MotionDivProvider from "@/components/provider/MotionDivProvider";
 
 const UploadProfilePage = () => {
-  const [user, setUser] = useState<UserData>({
+  const [user, setUser] = useState<Partial<UserData>>({
     name: "",
     position: "",
-    batch: 2025,
+    batch: "2025",
     phoneNumber: "",
     linkedInUrl: "",
     profileImg: "",

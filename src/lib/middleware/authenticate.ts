@@ -1,17 +1,19 @@
 import { NextRequest, NextResponse } from "next/server";
 import { CustomJwtPayload, verifyToken } from "@/lib/jwt";
 import { checkUserRole, verifyAccessToken } from "../firebase/utils";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../auth";
 
 export const authenticate = async (req: NextRequest) => {
-  const tokenCookie = req.cookies.get("x-auth-token")?.value;
-
-  if (!tokenCookie || !tokenCookie.startsWith("Bearer ")) {
-    throw Error("Token is required");
-  }
-
-  const token = tokenCookie.split("Bearer ")[1];
-
   try {
+    const session = await getServerSession(authOptions);
+
+    const token = session?.user?.accessToken || "";
+
+    if (!token) {
+      return NextResponse.redirect(new URL("/login", req.url));
+    }
+
     const userData = (await verifyToken(token)) as CustomJwtPayload;
 
     if (!userData) {

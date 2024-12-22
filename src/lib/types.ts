@@ -1,8 +1,8 @@
 export interface UserData {
-  id: string;
+  id?: string;
   name: string;
   email: string;
-  batch: number;
+  batch: string;
   linkedInUrl: string;
   profileImg: string;
   domain: string;
@@ -41,7 +41,7 @@ export interface ContributorType {
 }
 
 export interface ResourceType {
-  id : string;
+  id?: string;
   name: string;
   url: string;
   domain: string;
@@ -64,7 +64,7 @@ export interface Speaker {
 }
 
 export interface EventType {
-  id: string;
+  id?: string;
   topic: string;
   eventDate: string;
   location: string;

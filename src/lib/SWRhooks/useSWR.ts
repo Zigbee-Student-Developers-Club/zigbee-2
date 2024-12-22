@@ -1,5 +1,5 @@
 "use client";
-import useSWR,{mutate} from "swr";
+import useSWR, { mutate } from "swr";
 import * as api from "@/lib/axios/allApiCall";
 import {
   AlumniType,
@@ -8,7 +8,7 @@ import {
   ResourceType,
   SwrType,
   EventType,
-  UsersResponse
+  UsersResponse,
 } from "../types";
 
 // generic useFetchData hook for reusability
@@ -79,33 +79,48 @@ export const useFetchMagazines = (): {
 };
 
 // SWR Hook : Fetch Resources
-export const useFetchResources = () => {
-  const {data ,error , isValidating} = useSWR<ResourceType[]>("resourcesList", api.fetchResources);
+export const useFetchResources = (): {
+  resourceList: ResourceType[];
+} & SwrType => {
+  const { data, isLoading, isValidating, error } = useFetchData<ResourceType[]>(
+    "resourcesList",
+    api.fetchResources
+  );
+
   return {
-    resourceList: Array.isArray(data) ? data : [],
-    error,
-    isLoading: !data && !error,
+    resourceList: data || [],
+    isLoading,
     isValidating,
+    error,
   };
-}
+};
 
 // SWR Hook : Fetch Events
-export const useFetchEvents = () => {
-  const { data, error, isValidating } = useSWR<EventType[]>("eventsList", api.fetchEvents);
+export const useFetchEvents = (): {
+  eventList: EventType[];
+} & SwrType => {
+  const { data, isLoading, isValidating, error } = useFetchData<EventType[]>(
+    "eventsList",
+    api.fetchEvents
+  );
 
   return {
-    eventList: Array.isArray(data) ? data : [],
-    error,
-    isLoading: !data && !error,
+    eventList: data || [],
+    isLoading,
     isValidating,
+    error,
   };
 };
 
 // SWR Hook: Fetch Users
-export const useFetchUsers = (role?: string, batch?: number, page: number = 1) => {
+export const useFetchUsers = (
+  role?: string,
+  batch?: string,
+  page: number = 1
+) => {
   const key = `/api/users?role=${role || ""}&batch=${batch || ""}&page=${page}`;
 
-  const { data, error, isValidating } = useSWR<UsersResponse >(key, () =>
+  const { data, error, isValidating } = useSWR<UsersResponse>(key, () =>
     api.fetchUsers(role, batch, page)
   );
 
