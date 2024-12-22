@@ -48,7 +48,7 @@ const Header = () => {
     setThemeMenuOpen(false);
     setProfileMenuOpen(false);
   };
-  console.log(session);
+
   return (
     <header className="mx-auto flex w-full max-w-[1200px] items-center justify-between px-4 py-4 md:py-8">
       <Logo />

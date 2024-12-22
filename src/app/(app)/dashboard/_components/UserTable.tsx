@@ -146,8 +146,7 @@ const UserTable = () => {
 
         if ("message" in response) {
           // If deletion is successful, log success and refresh users list
-          console.log(`${selectedUser.name} deleted successfully.`);
-
+          alert(`${selectedUser.name} deleted successfully.`);
           // Refresh the data using mutate function to update the user list
           refreshUsers(); // No need for await, just call mutate
         } else {
