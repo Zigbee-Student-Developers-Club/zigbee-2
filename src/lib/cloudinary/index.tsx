@@ -1,4 +1,8 @@
-import { v2 as cloudinary } from "cloudinary";
+import {
+  v2 as cloudinary,
+  UploadApiResponse,
+  UploadApiErrorResponse,
+} from "cloudinary";
 import { Readable } from "stream";
 
 cloudinary.config({
@@ -7,21 +11,29 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-export const uploadProfileToCloudinary = async (
+export const uploadImageToCloudinary = async (
+  folderName: string,
   fileBuffer: Buffer,
   fileName: string
 ): Promise<string | undefined> => {
   return new Promise((resolve, reject) => {
     const uploadStream = cloudinary.uploader.upload_stream(
       {
-        folder: "profiles",
+        folder: folderName,
         public_id: fileName.split(".")[0],
       },
-      (error, result) => {
+      (
+        error: UploadApiErrorResponse | undefined,
+        result: UploadApiResponse | undefined
+      ) => {
         if (error) {
           return reject(error);
         }
-        resolve(result?.secure_url);
+        if (result) {
+          resolve(result.secure_url);
+        } else {
+          reject(new Error("Upload failed, result is undefined"));
+        }
       }
     );
 
