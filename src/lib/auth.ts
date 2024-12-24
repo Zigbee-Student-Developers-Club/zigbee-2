@@ -26,6 +26,7 @@ export const authOptions: NextAuthOptions = {
             return {
               id: credentials.email,
               isProvidedBasicData: response.isProvidedBasicData,
+              isAdmin: response.isAdmin,
               accessToken: response.token,
               name: response.name,
               image: response.profileImg,
@@ -53,6 +54,7 @@ export const authOptions: NextAuthOptions = {
       if (user) {
         const myUser = user as User;
         token.isProvidedBasicData = myUser.isProvidedBasicData;
+        token.isAdmin = myUser.isAdmin;
         token.accessToken = myUser.accessToken;
       }
       if (trigger === "update") {
@@ -89,6 +91,7 @@ declare module "next-auth" {
 declare module "next-auth/jwt" {
   interface JWT {
     isProvidedBasicData: boolean;
+    isAdmin: boolean;
     accessToken: string;
   }
 }
@@ -96,5 +99,6 @@ declare module "next-auth/jwt" {
 // Interface for extended user data
 interface User extends AdapterUser {
   isProvidedBasicData: boolean;
+  isAdmin: boolean;
   accessToken: string;
 }

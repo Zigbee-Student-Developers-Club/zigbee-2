@@ -11,26 +11,54 @@ export const authenticate = async (req: NextRequest) => {
     const token = session?.user?.accessToken || "";
 
     if (!token) {
-      return NextResponse.redirect(new URL("/login", req.url));
+      return NextResponse.json(
+        {
+          error: "Unauthorized: Authentication required",
+        },
+        {
+          status: 401,
+        }
+      );
     }
 
     const userData = (await verifyToken(token)) as CustomJwtPayload;
 
     if (!userData) {
-      throw Error("Invalid user data");
+      return NextResponse.json(
+        {
+          error: "Invalid token",
+        },
+        {
+          status: 401,
+        }
+      );
     }
 
     // console.log(userData);
 
     // if the token is expired
     if (userData.exp && userData.exp < Date.now() / 1000) {
-      throw Error("Your session has expired. Please log in again.");
+      return NextResponse.json(
+        {
+          error: "Token expired",
+        },
+        {
+          status: 401,
+        }
+      );
     }
 
     const { result, error } = await verifyAccessToken(token);
 
     if (error || !result) {
-      throw Error("You are logged out. Please log in again.");
+      return NextResponse.json(
+        {
+          error: error || "Invalid token",
+        },
+        {
+          status: 401,
+        }
+      );
     }
 
     // check for admin
@@ -41,7 +69,9 @@ export const authenticate = async (req: NextRequest) => {
 
     return NextResponse.next();
   } catch (err) {
-    console.error("Authenticate middleware error", err);
-    return NextResponse.redirect(new URL("/login", req.url));
+    return NextResponse.json(
+      { error: (err as Error).message || "Internal error occurred" },
+      { status: 500 }
+    );
   }
 };

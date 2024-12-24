@@ -1,62 +1,86 @@
 import { NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt";
-import type { NextRequest } from "next/server";
+import { verifyToken } from "./lib/jwt";
+import { NextRequestWithAuth, withAuth } from "next-auth/middleware";
 
-const publicPaths = [
-  "/",
-  "/codewars",
-  "/events",
-  "/gallery",
-  "/login",
-  "/magazines",
-  "/resources",
-  "/team",
-];
 const protectedRoutes = [
   "/alumni",
-  "/dashboard",
   "/profile",
   "/upload-profile",
+  "/api/alumni",
+  "/api/user",
 ];
 
-export async function middleware(req: NextRequest) {
+const adminRoutes = ["/api/admin", "/dashboard"];
+
+async function authenticate(req: NextRequestWithAuth) {
   const token = await getToken({ req, secret: process.env.AUTH_SECRET });
+
+  if (!token) {
+    return { isAuthenticated: false };
+  }
+
+  // Additional token verification
+  const userData = await verifyToken(token?.accessToken);
+  if (!userData) {
+    return { isAuthenticated: false };
+  }
+
+  return {
+    isBasicDataProvided: token?.isProvidedBasicData,
+    isAdmin: token?.isAdmin,
+    isAuthenticated: true,
+    user: userData,
+  };
+}
+
+export default withAuth(async function middleware(req: NextRequestWithAuth) {
   const currentPath = req.nextUrl.pathname;
 
-  // If the route is protected (like /alumni, /dashboard, /profile)
-  if (protectedRoutes.some((path) => currentPath.startsWith(path))) {
-    // If not authenticated, redirect to login
-    if (!token) {
-      return NextResponse.redirect(new URL("/login", req.url));
-    }
+  // Authenticate user
+  const { isBasicDataProvided, isAdmin, isAuthenticated, user } =
+    await authenticate(req);
 
-    // Ensure the user has provided basic data before accessing certain routes
-    if (token && !token.isProvidedBasicData) {
-      if (currentPath !== "/upload-profile") {
-        return NextResponse.redirect(new URL("/upload-profile", req.url));
-      }
-    }
-  }
-  // add for admin only routes
-
-  // Allow the request if the user is accessing a public page
-  if (publicPaths.some((path) => currentPath.startsWith(path))) {
-    return NextResponse.next();
+  if (isBasicDataProvided && currentPath === "/upload-profile") {
+    return NextResponse.redirect(new URL("/", req.url));
   }
 
-  // If the user is not authenticated, redirect to login page only if the user is not already on that page
-  if (currentPath !== "/login") {
+  if (!isAuthenticated || !user) {
     return NextResponse.redirect(new URL("/login", req.url));
   }
 
-  return NextResponse.next(); // Allow the request if none of the conditions match
-}
+  // Redirect users who haven't provided basic data
+  if (!isBasicDataProvided && currentPath !== "/upload-profile") {
+    return NextResponse.redirect(new URL("/upload-profile", req.url));
+  }
+
+  // Allow protected routes
+  if (
+    isAuthenticated &&
+    protectedRoutes.some((path) => currentPath.startsWith(path))
+  ) {
+    console.log("protected hits");
+    return NextResponse.next();
+  }
+
+  // Allow admin routes
+  if (isAdmin && adminRoutes.some((path) => currentPath.startsWith(path))) {
+    console.log("admin hits");
+    return NextResponse.next();
+  }
+
+  // Default to redirect if no conditions match
+  return NextResponse.redirect(new URL("/login", req.url));
+});
 
 export const config = {
   matcher: [
-    "/dashboard", // Match protected routes
-    "/profile", // Match protected routes
-    "/upload-profile", // Match protected routes
-    "/alumni", // Match protected routes
+    "/alumni",
+    "/profile",
+    "/upload-profile",
+    "/api/alumni",
+    "/api/user",
+    "/api/admin/:path*",
+    "/dashboard",
   ],
 };

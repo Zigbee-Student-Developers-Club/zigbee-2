@@ -104,6 +104,7 @@ export const verifyOtp = async (email: string, otp: string) => {
     name: string | null;
     profileImg: string | null;
     isProvidedBasicData: boolean;
+    isAdmin: boolean;
     token: string | null;
   } | null = null;
   let error: string | null = null;
@@ -146,6 +147,7 @@ export const verifyOtp = async (email: string, otp: string) => {
       name: data?.name,
       profileImg: data?.profileImg,
       isProvidedBasicData: !!data?.isProvidedBasicData,
+      isAdmin: !!data?.isAdmin,
       token,
     };
   } catch (err) {

@@ -56,6 +56,7 @@ export const verifyEmailOtp = async (
   otp: string
 ): Promise<{
   isProvidedBasicData?: boolean;
+  isAdmin?: boolean;
   token?: string;
   name?: string;
   profileImg?: string;

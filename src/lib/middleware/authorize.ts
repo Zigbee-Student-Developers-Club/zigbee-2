@@ -1,15 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 
-export const authorize = async (req: NextRequest) => {
-  if (!req.user) {
-    return NextResponse.json(
-      { error: "Unauthorized: Authentication required" },
-      { status: 401 }
-    );
-  }
-  return NextResponse.next();
-};
-
 export const adminOnly = async (req: NextRequest) => {
   if (!req.isAdmin) {
     return NextResponse.json(
