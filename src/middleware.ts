@@ -8,7 +8,6 @@ const protectedRoutes = [
   "/profile",
   "/upload-profile",
   "/api/alumni",
-  "/api/user",
 ];
 
 const adminRoutes = ["/api/admin", "/dashboard"];
@@ -63,6 +62,11 @@ export default withAuth(async function middleware(req: NextRequestWithAuth) {
     return NextResponse.next();
   }
 
+  if (!isAdmin && adminRoutes.some((path) => currentPath.startsWith(path))) {
+    console.log("Your are not authorized to access this page");
+    return NextResponse.redirect(new URL("/", req.url));
+  }
+
   // Allow admin routes
   if (isAdmin && adminRoutes.some((path) => currentPath.startsWith(path))) {
     console.log("admin hits");
@@ -79,7 +83,6 @@ export const config = {
     "/profile",
     "/upload-profile",
     "/api/alumni",
-    "/api/user",
     "/api/admin/:path*",
     "/dashboard",
   ],
