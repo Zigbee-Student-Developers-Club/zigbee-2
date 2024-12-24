@@ -36,10 +36,10 @@ export default function InfoSection({
   }, [isInView]);
 
   return (
-    <div ref={ref} className="container mx-auto my-8 max-w-[1200px]">
+    <div ref={ref} className="container mx-auto my-4 max-w-[1200px]">
       <MotionDivProvider>
         <div
-          className={`mx-auto my-8 max-w-7xl rounded-2xl px-8 py-16 ${background} ${darkBackground}`}
+          className={`mx-auto max-w-7xl rounded-2xl px-8 py-16 ${background} ${darkBackground}`}
         >
           <div
             className={`flex ${
