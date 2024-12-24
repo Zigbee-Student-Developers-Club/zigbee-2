@@ -21,6 +21,7 @@ export const uploadImageToCloudinary = async (
       {
         folder: folderName,
         public_id: fileName.split(".")[0],
+        format: "webp", // Convert the file to WebP format
       },
       (
         error: UploadApiErrorResponse | undefined,
