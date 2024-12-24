@@ -230,16 +230,19 @@ export const fetchEvents = async (): Promise<EventType[]> => {
   }
 };
 
-// 11. Fetch Users
 export const fetchUsers = async (
   role?: string,
   batch?: string,
-  page: number = 1
+  page: number = 1,
+  isAdmin: boolean = false,
+  isContributor: boolean = false
 ): Promise<UsersResponse> => {
   try {
     const queryParams = new URLSearchParams();
     if (role) queryParams.append("role", role);
     if (batch) queryParams.append("batch", batch.toString());
+    if (isAdmin) queryParams.append("isadmin", String(isAdmin)); 
+    if (isContributor) queryParams.append("iscontributor", String(isContributor)); 
     queryParams.append("page", page.toString());
 
     const response = await apiClient.get(
@@ -263,6 +266,7 @@ export const fetchUsers = async (
     throw new Error("Unexpected error in fetchUsers.");
   }
 };
+
 
 // 12. Update User by ID (Admin Only)
 export const updateUserById = async (
@@ -316,7 +320,7 @@ export const deleteUserById = async (
 };
 
 // 14. get user profile data
-export const getUserProfile = async (): Promise<UserData | null | undefined> => {
+export const getUserProfile = async (): Promise<UserData | null> => {
   try {
     const response = await apiClient.get<{ user: UserData }>("api/user", { withCredentials: true });
     if (response.status === 200) {
@@ -329,4 +333,29 @@ export const getUserProfile = async (): Promise<UserData | null | undefined> => 
   }
 };
 
+
+// 15. update the user profile by the user with Authentication
+
+export const updateUserData = async (
+  data: Partial<UserData>
+): Promise<boolean> => {
+  try {
+    const response: AxiosResponse = await apiClient.put("/api/user", data, {
+      withCredentials: true,
+    });
+    if (response.status === 200) {
+      return true;
+    }
+    throw new Error("Failed to upload user data.");
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      console.error("API Error in uploadUserData:", error.message);
+      throw new Error(
+        error.response?.data?.error || "Failed to upload user data."
+      );
+    }
+    console.error("Unexpected Error in uploadUserData:", error);
+    throw new Error("Unexpected error in uploadUserData.");
+  }
+};
 

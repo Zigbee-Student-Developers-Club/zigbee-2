@@ -42,7 +42,7 @@ import {
 } from "@/components/ui/select";
 import { BatchOptions } from "@/lib/options";
 import { useFetchUsers } from "@/lib/SWRhooks/useSWR";
-import { UserData } from "@/lib/types";
+import { UserData} from "@/lib/types";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 import DeleteDialogBox from "@/app/(app)/dashboard/_components/DeleteDialogBox";
 import { deleteUserById } from "@/lib/axios/allApiCall";
@@ -58,6 +58,7 @@ const UserTable = () => {
   const [role, setRole] = useState<string | undefined>();
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
   const [isContributor, setIsContributor] = useState<boolean>(false);
+  const [search, setSearch] = useState<string | null>();
   const [page, setPage] = useState<number>(1);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState<UserData | null>(null);
@@ -65,7 +66,7 @@ const UserTable = () => {
     useState(false);
 
   const { userList, pagination, isLoading, error, refreshUsers } =
-    useFetchUsers(role, batch, page);
+    useFetchUsers(role, batch, page,isAdmin,isContributor);
 
   const handleDeleteClick = useCallback((user: UserData) => {
     setSelectedUser(user);
@@ -206,7 +207,7 @@ const UserTable = () => {
             type="text"
             placeholder="Search...(not implemented)"
             className="w-[240px] rounded-md border border-gray-300 p-2"
-            // onChange={(e) => setSearch(e.target.value)}
+            onChange={(e) => setSearch(e.target.value)}
           />
           <div>
             <DropdownMenu>
@@ -266,7 +267,7 @@ const UserTable = () => {
               <SelectContent>
                 <SelectGroup>
                   <SelectLabel>Roles</SelectLabel>
-                  <SelectItem value="admin">Admin</SelectItem>
+                  <SelectItem value="student">student</SelectItem>
                   <SelectItem value="alumni">Alumni</SelectItem>
                   <SelectItem value="guest">Guest</SelectItem>
                 </SelectGroup>
@@ -313,14 +314,17 @@ const UserTable = () => {
               </TableRow>
             ))}
           </TableHeader>
+
           <TableBody>
             {isLoading ? (
               <TableRow>
                 <TableCell
                   colSpan={columns.length}
-                  className="min-h-24 w-full text-center"
+                  className="h-24 text-center"
                 >
-                  <LoadingSpinner />
+                  <div className="flex items-center justify-center">
+                    <LoadingSpinner />
+                  </div>
                 </TableCell>
               </TableRow>
             ) : error ? (

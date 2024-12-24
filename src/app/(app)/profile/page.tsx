@@ -19,8 +19,9 @@ import { ImageUp, ChevronDown } from "lucide-react";
 import { UserData } from "@/lib/types";
 import MotionDivProvider from "@/components/provider/MotionDivProvider";
 
-import { useFetchUserProfile } from "@/lib/SWRhooks/useSWR"; // Adjust import as needed
+import { useFetchUserProfile } from "@/lib/SWRhooks/useSWR";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
+import { updateUserData } from "@/lib/axios/allApiCall";
 
 const ProfilePage = () => {
   const { userProfile, isLoading, isValidating, error } = useFetchUserProfile();
@@ -40,23 +41,9 @@ const ProfilePage = () => {
     });
   };
 
-  useEffect(() => {
-    return () => {
-      if (user?.profileImg) {
-        URL.revokeObjectURL(user.profileImg);
-      }
-    };
-  }, [user?.profileImg]);
-
   const handleToggle = () => {
     setEditMode(!editMode);
   };
-
-  useEffect(() => {
-    if (userProfile) {
-      setUser(userProfile);
-    }
-  }, [userProfile]);
 
   const handleInputChange = (
     field: keyof UserData,
@@ -66,11 +53,47 @@ const ProfilePage = () => {
     setUser({ ...user, [field]: value });
   };
 
+  const handleSaveChanges = async () => {
+    if (!user) return;
+    setLoading(true);
+    try {
+      const response = await updateUserData(user);
+      if (response) {
+        setEditMode(false);
+      } else {
+        alert("some error occured ");
+      }
+    } catch (error) {
+      console.error("Error updating profile:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (userProfile) {
+      setUser(userProfile);
+    }
+  }, [userProfile]);
+
+  useEffect(() => {
+    return () => {
+      if (user?.profileImg) {
+        URL.revokeObjectURL(user.profileImg);
+      }
+    };
+  }, [user?.profileImg]);
+
   if (isLoading || isValidating) {
-    return <div className="min-h-72 flex justify-center items-center"><LoadingSpinner/></div>;
+    return (
+      <div className="flex min-h-72 items-center justify-center">
+        <LoadingSpinner />
+      </div>
+    );
   }
 
   if (error) {
+    console.error("Error fetching user profile:", error);
     return <div>Error fetching user profile</div>;
   }
 
@@ -86,13 +109,13 @@ const ProfilePage = () => {
           <div className="h-full w-full bg-lime-400 object-cover" />
           <div className="absolute inset-0 flex flex-col items-center justify-center space-y-4 bg-black/30">
             <div className="group relative">
-              <Avatar className="h-52 w-52">
+              <Avatar className="h-52 w-52 cursor-pointer overflow-hidden rounded-full">
                 <AvatarImage
                   src={user?.profileImg || ""}
                   alt="User Avatar"
-                  className="rounded-full border-8 border-white dark:border-black"
+                  className="h-full w-full object-cover object-center"
                 />
-                <AvatarFallback className="flex h-64 w-64 items-center justify-center rounded-full border-8 border-white bg-gray-100 text-2xl text-gray-700">
+                <AvatarFallback className="flex h-52 w-52 items-center justify-center rounded-full border-4 border-white bg-gray-100 text-xl text-gray-700">
                   {user?.name ? user.name[0].toUpperCase() : "P"}
                 </AvatarFallback>
               </Avatar>
@@ -109,7 +132,9 @@ const ProfilePage = () => {
               {user.name}
             </Title>
 
-            <Text variant="small" className=" text-gray-900 dark:text-white"> {user.role} </Text>
+            <Text variant="small" className="text-gray-900 dark:text-white">
+              {user.role}
+            </Text>
           </div>
           <div className="absolute inset-2 flex items-end justify-end space-x-2">
             <Text variant="large" className="text-sm text-black">
@@ -127,7 +152,7 @@ const ProfilePage = () => {
         <div className="mt-6 flex items-center justify-between">
           <Title
             size="medium"
-            className=" font-bold text-gray-900 dark:text-white"
+            className="font-bold text-gray-900 dark:text-white"
           >
             Profile Details
           </Title>
@@ -170,22 +195,22 @@ const ProfilePage = () => {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
                   <DropdownMenuItem
-                    onSelect={() => handleInputChange("position", "CR")}
+                    onClick={() => handleInputChange("position", "CR")}
                   >
                     CR
                   </DropdownMenuItem>
                   <DropdownMenuItem
-                    onSelect={() => handleInputChange("position", "GR")}
+                    onClick={() => handleInputChange("position", "GR")}
                   >
                     GR
                   </DropdownMenuItem>
                   <DropdownMenuItem
-                    onSelect={() => handleInputChange("position", "PC")}
+                    onClick={() => handleInputChange("position", "PC")}
                   >
                     PC
                   </DropdownMenuItem>
                   <DropdownMenuItem
-                    onSelect={() => handleInputChange("position", "No Role")}
+                    onClick={() => handleInputChange("position", "No Role")}
                   >
                     No Role
                   </DropdownMenuItem>
@@ -206,7 +231,7 @@ const ProfilePage = () => {
             </Text>
             {editMode ? (
               <Input
-                type="number"
+                type="text"
                 value={user.batch}
                 onChange={(e) =>
                   handleInputChange("batch", Number(e.target.value))
@@ -228,7 +253,7 @@ const ProfilePage = () => {
             </Text>
             {editMode ? (
               <Input
-                type="number"
+                type="text"
                 value={user.phoneNumber || ""}
                 onChange={(e) =>
                   handleInputChange("phoneNumber", e.target.value || null)
@@ -260,7 +285,7 @@ const ProfilePage = () => {
             ) : (
               <Text variant="small">
                 <a
-                  href={user.linkedInUrl}
+                  href={user.linkedInUrl || "#"}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-blue-600 underline dark:text-blue-400"
@@ -274,7 +299,7 @@ const ProfilePage = () => {
 
         {/* About Section */}
         <div className="mt-8">
-          <Text variant="large" className="text-gray-700 dark:text-gray-300">
+          <Text variant="large" className="m-0 p-0 text-gray-700 dark:text-gray-300">
             About Yourself
           </Text>
           {editMode ? (
@@ -285,14 +310,14 @@ const ProfilePage = () => {
               placeholder="Write about yourself..."
             />
           ) : (
-            <Text className="text-gray-700 dark:text-gray-400">
+            <Text variant="small" className="text-gray-700 dark:text-gray-400">
               {user.about}
             </Text>
           )}
         </div>
 
-        <div>
-          <Text variant="large" className="text-gray-700 dark:text-gray-300">
+        <div className="mt-8">
+          <Text variant="large" className="m-0 text-gray-700 dark:text-gray-300">
             Feedback
           </Text>
           {editMode ? (
@@ -300,10 +325,10 @@ const ProfilePage = () => {
               rows={5}
               value={user.feedback}
               onChange={(e) => handleInputChange("feedback", e.target.value)}
-              placeholder="Write about yourself..."
+              placeholder="Your feedback..."
             />
           ) : (
-            <Text className="text-gray-700 dark:text-gray-400">
+            <Text variant="small"  className="text-gray-700 dark:text-gray-400">
               {user.feedback}
             </Text>
           )}
@@ -312,10 +337,7 @@ const ProfilePage = () => {
         {/* Save Button */}
         {editMode && (
           <div className="mt-6 flex justify-end">
-            <Button
-              // onClick={handleSaveChanges}
-              disabled={loading}
-            >
+            <Button onClick={handleSaveChanges} disabled={loading}>
               Save Changes
             </Button>
           </div>

@@ -1,4 +1,5 @@
 export const BatchOptions = [
+  { value: null, label: "All Batch" },
   { value: 1996, label: "1996" },
   { value: 1997, label: "1997" },
   { value: 1998, label: "1998" },

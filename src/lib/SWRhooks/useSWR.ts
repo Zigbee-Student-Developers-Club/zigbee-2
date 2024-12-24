@@ -116,9 +116,11 @@ export const useFetchEvents = (): {
 export const useFetchUsers = (
   role?: string,
   batch?: string,
-  page: number = 1
+  page: number = 1,
+  isAdmin: boolean = false,
+  isContributor: boolean = false
 ) => {
-  const key = `/api/users?role=${role || ""}&batch=${batch || ""}&page=${page}`;
+  const key = `/api/users?role=${role || ""}&batch=${batch || ""}&page=${page}&isadmin=${isAdmin}&iscontributor=${isContributor}`;
 
   const { data, error, isValidating } = useSWR<UsersResponse>(key, () =>
     api.fetchUsers(role, batch, page)
@@ -150,12 +152,18 @@ export const useFetchUsers = (
 // SWR Hook : user profile
 export const useFetchUserProfile = () => {
   const { data, error, isLoading, isValidating } = useSWR(
-    "userProfile",  // key used to store user data
-    api.getUserProfile
+    "userProfile",
+    api.getUserProfile,
+    {
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
+      dedupingInterval: 60000,
+    }
   );
 
+  // Optional: Allow manual refresh if needed
   const refreshUserProfile = () => {
-    mutate("userProfile"); 
+    mutate("userProfile");
   };
 
   return {
@@ -163,6 +171,6 @@ export const useFetchUserProfile = () => {
     isLoading,
     isValidating,
     error,
-    refreshUserProfile  // Expose the refresh function
+    refreshUserProfile, 
   };
 };
