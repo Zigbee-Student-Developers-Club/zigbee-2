@@ -19,27 +19,12 @@ import { ImageUp, ChevronDown } from "lucide-react";
 import { UserData } from "@/lib/types";
 import MotionDivProvider from "@/components/provider/MotionDivProvider";
 
-// Mock API Calls
-const fetchUserData = async (): Promise<Partial<UserData>> => {
-  return {
-    batch: "2025",
-    phoneNumber: "9876543210",
-    name: "Jane Doe",
-    linkedInUrl: "https://www.linkedin.com/in/janedoe/",
-    position: "",
-    profileImg: "https://github.com/shadcn.png",
-    domain: "Full Stack Development",
-    about:
-      "Enthusiastic developer with a passion for building scalable applications.",
-  };
-};
-
-const saveUserData = async (data: UserData) => {
-  console.log("Saving user data:", data);
-  return true;
-};
+import { useFetchUserProfile } from "@/lib/SWRhooks/useSWR"; // Adjust import as needed
+import LoadingSpinner from "@/components/common/LoadingSpinner";
 
 const ProfilePage = () => {
+  const { userProfile, isLoading, isValidating, error } = useFetchUserProfile();
+
   const [user, setUser] = useState<UserData | null>(null);
   const [editMode, setEditMode] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -47,10 +32,10 @@ const ProfilePage = () => {
 
   const handleFileUpload = (profileImgUrl: string) => {
     setUser((prevUser) => {
-      if (!prevUser) return null; // Ensure safety for a null state
+      if (!prevUser) return null;
       return {
-        ...prevUser, // Preserve the rest of the user data
-        profileImg: profileImgUrl, // Update the profile image URL
+        ...prevUser,
+        profileImg: profileImgUrl,
       };
     });
   };
@@ -63,27 +48,15 @@ const ProfilePage = () => {
     };
   }, [user?.profileImg]);
 
-  const handleToggle = async () => {
-    if (editMode) {
-      const confirmSave = window.confirm(
-        "Save changes before exiting edit mode?"
-      );
-      if (confirmSave) {
-        setLoading(true);
-        await saveUserData(user!);
-        setLoading(false);
-      }
-    }
+  const handleToggle = () => {
     setEditMode(!editMode);
   };
 
   useEffect(() => {
-    const loadUserData = async () => {
-      const data = await fetchUserData();
-      setUser(data as UserData);
-    };
-    loadUserData();
-  }, []);
+    if (userProfile) {
+      setUser(userProfile);
+    }
+  }, [userProfile]);
 
   const handleInputChange = (
     field: keyof UserData,
@@ -93,8 +66,16 @@ const ProfilePage = () => {
     setUser({ ...user, [field]: value });
   };
 
+  if (isLoading || isValidating) {
+    return <div className="min-h-72 flex justify-center items-center"><LoadingSpinner/></div>;
+  }
+
+  if (error) {
+    return <div>Error fetching user profile</div>;
+  }
+
   if (!user) {
-    return <div>Loading...</div>;
+    return <div>No user profile found</div>;
   }
 
   return (
@@ -107,12 +88,12 @@ const ProfilePage = () => {
             <div className="group relative">
               <Avatar className="h-52 w-52">
                 <AvatarImage
-                  src={user.profileImg || "https://github.com/shadcn.png"}
+                  src={user?.profileImg || ""}
                   alt="User Avatar"
                   className="rounded-full border-8 border-white dark:border-black"
                 />
                 <AvatarFallback className="flex h-64 w-64 items-center justify-center rounded-full border-8 border-white bg-gray-100 text-2xl text-gray-700">
-                  {user.name ? user.name[0] : "P"}
+                  {user?.name ? user.name[0].toUpperCase() : "P"}
                 </AvatarFallback>
               </Avatar>
               {editMode && (
@@ -127,6 +108,8 @@ const ProfilePage = () => {
             <Title size="medium" className="text-black">
               {user.name}
             </Title>
+
+            <Text variant="small" className=" text-gray-900 dark:text-white"> {user.role} </Text>
           </div>
           <div className="absolute inset-2 flex items-end justify-end space-x-2">
             <Text variant="large" className="text-sm text-black">
@@ -144,7 +127,7 @@ const ProfilePage = () => {
         <div className="mt-6 flex items-center justify-between">
           <Title
             size="medium"
-            className="text-2xl font-bold text-gray-900 dark:text-white"
+            className=" font-bold text-gray-900 dark:text-white"
           >
             Profile Details
           </Title>
@@ -292,7 +275,7 @@ const ProfilePage = () => {
         {/* About Section */}
         <div className="mt-8">
           <Text variant="large" className="text-gray-700 dark:text-gray-300">
-            About
+            About Yourself
           </Text>
           {editMode ? (
             <Textarea
@@ -304,6 +287,24 @@ const ProfilePage = () => {
           ) : (
             <Text className="text-gray-700 dark:text-gray-400">
               {user.about}
+            </Text>
+          )}
+        </div>
+
+        <div>
+          <Text variant="large" className="text-gray-700 dark:text-gray-300">
+            Feedback
+          </Text>
+          {editMode ? (
+            <Textarea
+              rows={5}
+              value={user.feedback}
+              onChange={(e) => handleInputChange("feedback", e.target.value)}
+              placeholder="Write about yourself..."
+            />
+          ) : (
+            <Text className="text-gray-700 dark:text-gray-400">
+              {user.feedback}
             </Text>
           )}
         </div>

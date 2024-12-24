@@ -47,6 +47,7 @@ import LoadingSpinner from "@/components/common/LoadingSpinner";
 import DeleteDialogBox from "@/app/(app)/dashboard/_components/DeleteDialogBox";
 import { deleteUserById } from "@/lib/axios/allApiCall";
 import UserUpdateDialogBox from "./userUpdateDialogBox";
+import { Switch } from "@/components/ui/switch";
 
 const UserTable = () => {
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -55,6 +56,8 @@ const UserTable = () => {
   const [rowSelection, setRowSelection] = useState({});
   const [batch, setBatch] = useState<string | undefined>();
   const [role, setRole] = useState<string | undefined>();
+  const [isAdmin, setIsAdmin] = useState<boolean>(false);
+  const [isContributor, setIsContributor] = useState<boolean>(false);
   const [page, setPage] = useState<number>(1);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState<UserData | null>(null);
@@ -197,60 +200,98 @@ const UserTable = () => {
   return (
     <div className="w-full">
       {/* Filters */}
-      <div className="flex items-center py-4">
-        <Select value={role} onValueChange={(value) => setRole(value)}>
-          <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="Select Role" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              <SelectLabel>Roles</SelectLabel>
-              <SelectItem value="admin">Admin</SelectItem>
-              <SelectItem value="alumni">Alumni</SelectItem>
-              <SelectItem value="guest">Guest</SelectItem>
-            </SelectGroup>
-          </SelectContent>
-        </Select>
-        <Select value={batch} onValueChange={(value) => setBatch(value)}>
-          <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="Select Batch" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              <SelectLabel>Batches</SelectLabel>
-              {BatchOptions.map((option) => (
-                <SelectItem
-                  key={option.value}
-                  value={option.value as unknown as string}
-                >
-                  {option.label}
-                </SelectItem>
-              ))}
-            </SelectGroup>
-          </SelectContent>
-        </Select>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="ml-auto">
-              Columns <ChevronDown />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            {table
-              .getAllColumns()
-              .filter((column) => column.getCanHide())
-              .map((column) => (
-                <DropdownMenuCheckboxItem
-                  key={column.id}
-                  className="capitalize"
-                  checked={column.getIsVisible()}
-                  onCheckedChange={(value) => column.toggleVisibility(!!value)}
-                >
-                  {column.id}
-                </DropdownMenuCheckboxItem>
-              ))}
-          </DropdownMenuContent>
-        </DropdownMenu>
+      <div className="my-4 space-y-4">
+        <div className="flex items-center justify-between gap-6">
+          <input
+            type="text"
+            placeholder="Search...(not implemented)"
+            className="w-[240px] rounded-md border border-gray-300 p-2"
+            // onChange={(e) => setSearch(e.target.value)}
+          />
+          <div>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline">
+                  Columns <ChevronDown />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                {table
+                  .getAllColumns()
+                  .filter((column) => column.getCanHide())
+                  .map((column) => (
+                    <DropdownMenuCheckboxItem
+                      key={column.id}
+                      className="capitalize"
+                      checked={column.getIsVisible()}
+                      onCheckedChange={(value) =>
+                        column.toggleVisibility(!!value)
+                      }
+                    >
+                      {column.id}
+                    </DropdownMenuCheckboxItem>
+                  ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2 gap-4 md:grid-cols-6">
+          <div>
+            <Select value={batch} onValueChange={(value) => setBatch(value)}>
+              <SelectTrigger className="">
+                <SelectValue placeholder="Select Batch" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>Batches</SelectLabel>
+                  {BatchOptions.map((option) => (
+                    <SelectItem
+                      key={option.value}
+                      value={option.value as unknown as string}
+                    >
+                      {option.label}
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div>
+            <Select value={role} onValueChange={(value) => setRole(value)}>
+              <SelectTrigger className="">
+                <SelectValue placeholder="Select Role" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>Roles</SelectLabel>
+                  <SelectItem value="admin">Admin</SelectItem>
+                  <SelectItem value="alumni">Alumni</SelectItem>
+                  <SelectItem value="guest">Guest</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="flex items-center gap-4">
+            <span>Is Admin</span>
+            <Switch
+              checked={isAdmin}
+              onCheckedChange={(value) => setIsAdmin(value)}
+              className="shadcn-switch"
+            />
+          </div>
+
+          <div className="flex items-center gap-4">
+            <span>Is Contributor</span>
+            <Switch
+              checked={isContributor}
+              onCheckedChange={(value) => setIsContributor(value)}
+              className="shadcn-switch"
+            />
+          </div>
+        </div>
       </div>
 
       {/* Table */}
@@ -277,7 +318,7 @@ const UserTable = () => {
               <TableRow>
                 <TableCell
                   colSpan={columns.length}
-                  className="h-24 text-center"
+                  className="min-h-24 w-full text-center"
                 >
                   <LoadingSpinner />
                 </TableCell>

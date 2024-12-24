@@ -50,7 +50,7 @@ const Header = () => {
   };
 
   return (
-    <header className="mx-auto flex w-full max-w-[1200px] items-center justify-between px-4 py-4 md:py-8">
+    <header className="mx-auto flex w-full max-w-[1200px] items-center justify-between  py-4 md:py-8">
       <Logo />
 
       <div className="flex flex-row-reverse items-center gap-3 md:flex-row">
@@ -119,17 +119,18 @@ const Header = () => {
               onOpenChange={setProfileMenuOpen}
             >
               <DropdownMenuTrigger asChild>
-                <Avatar className="cursor-pointer">
+                <Avatar className=" h-10 w-auto overflow-hidden rounded-full cursor-pointer">
                   <AvatarImage
                     src={
-                      status === "authenticated"
+                      status == "authenticated"
                         ? session?.user?.image ||
                           "https://github.com/shadcn.png"
                         : ""
                     }
                     alt="User Avatar"
+                    className="h-full w-full object-cover object-center"
                   />
-                  <AvatarFallback>
+                  <AvatarFallback className="flex h-10 w-10 items-center justify-center rounded-full border-4 border-white bg-gray-100 text-xl text-gray-700">
                     {status === "authenticated"
                       ? session?.user?.name?.charAt(0).toUpperCase() || "U"
                       : "?"}

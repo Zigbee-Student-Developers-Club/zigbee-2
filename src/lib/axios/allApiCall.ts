@@ -313,3 +313,19 @@ export const deleteUserById = async (
     throw new Error("Unexpected error in deleting user.");
   }
 };
+
+// 14. get user profile data
+export const getUserProfile = async (): Promise<UserData | null | undefined> => {
+  try {
+    const response = await apiClient.get<{ user: UserData }>("api/user", { withCredentials: true });
+    if (response.status === 200) {
+      return response.data.user;  
+    }
+    return null;  
+  } catch (error) {
+    console.error("Error fetching user profile:", error);
+    return null;  
+  }
+};
+
+

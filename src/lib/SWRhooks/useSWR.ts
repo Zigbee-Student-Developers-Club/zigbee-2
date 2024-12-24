@@ -146,3 +146,23 @@ export const useFetchUsers = (
     refreshUsers,
   };
 };
+
+// SWR Hook : user profile
+export const useFetchUserProfile = () => {
+  const { data, error, isLoading, isValidating } = useSWR(
+    "userProfile",  // key used to store user data
+    api.getUserProfile
+  );
+
+  const refreshUserProfile = () => {
+    mutate("userProfile"); 
+  };
+
+  return {
+    userProfile: data || null,
+    isLoading,
+    isValidating,
+    error,
+    refreshUserProfile  // Expose the refresh function
+  };
+};

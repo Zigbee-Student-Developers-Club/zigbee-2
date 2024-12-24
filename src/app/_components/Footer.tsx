@@ -8,15 +8,16 @@ import {
   Twitter,
 } from "react-bootstrap-icons";
 import Logo from "@/app/_components/Logo";
+import { Text } from "@/components/ui/text";
 
 export default function Footer() {
   return (
-    <div className="mt-6 rounded-xl bg-gray-100 px-8 py-8 text-gray-800 dark:bg-neutral-900 dark:text-gray-300">
-      <div className="container mx-auto flex flex-wrap items-start justify-between gap-4 py-4">
+    <div className="mt-6  flex flex-col w-full  rounded-xl bg-gray-100 px-2 py-8 text-gray-800 dark:bg-neutral-900 dark:text-gray-300">
+      <div className="container mx-auto max-w-[1200px]  flex flex-wrap items-start justify-between gap-4 py-4">
         {/* Logo and Address */}
         <div className="flex flex-col items-start">
           <Logo />
-          <p className="mt-2">Dept. of CSA, OUTR, Bhubaneswar.</p>
+          <Text variant="small" className="mt-2">Dept. of CSA, OUTR, Bhubaneswar.</Text>
         </div>
 
         {/* Navigation Links - Column 1 */}
@@ -98,12 +99,12 @@ export default function Footer() {
       </div>
 
       {/* Divider */}
-      <div className="container mx-auto my-6 border-t border-gray-300"></div>
+      <div className="container mx-auto  max-w-[1200px]  my-6 border-t border-gray-300"></div>
 
       {/* Footer Text */}
-      <p className="mt-6 text-center">
+      <Text variant="small" className="mt-6 mx-auto max-w-[1200px] text-center">
         © 2024 Zigbee Student Developers&apos; Club. All rights reserved
-      </p>
+      </Text>
     </div>
   );
 }
