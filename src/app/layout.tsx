@@ -32,7 +32,9 @@ export default function RootLayout({
         >
           <NextAuthSessionProvider>
             <Header />
-            {children}
+            <div className="container mx-auto max-w-[1200px] px-4 py-8 text-gray-800 dark:text-gray-300 sm:px-6">
+              {children}
+            </div>
           </NextAuthSessionProvider>
           <Footer />
         </ThemeProvider>

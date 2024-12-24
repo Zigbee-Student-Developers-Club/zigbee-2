@@ -11,10 +11,10 @@ const Logo = () => {
   return (
     <Link href={"/"}>
       <h1
-        className={`text-4xl font-bold text-blue-500 dark:text-blue-500 ${sacramento.className}`}
+        className={`text-3xl font-bold text-blue-500 dark:text-blue-500 lg:text-4xl ${sacramento.className}`}
       >
-        <span className="text-5xl">&#60;</span>
-        Zigbee /<span className="text-5xl">&#62;</span>
+        <span className="text-4xl lg:text-5xl">&#60;</span>
+        Zigbee /<span className="text-4xl lg:text-5xl">&#62;</span>
       </h1>
     </Link>
   );

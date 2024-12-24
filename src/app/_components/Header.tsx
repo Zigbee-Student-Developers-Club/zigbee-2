@@ -50,7 +50,7 @@ const Header = () => {
   };
 
   return (
-    <header className="mx-auto flex w-full max-w-[1200px] items-center justify-between  py-4 md:py-8">
+    <header className="mx-auto flex w-full max-w-[1200px] items-center justify-between px-4 py-4 sm:px-6 md:py-8">
       <Logo />
 
       <div className="flex flex-row-reverse items-center gap-3 md:flex-row">
@@ -73,7 +73,7 @@ const Header = () => {
             isMenuOpen ? "block" : "hidden"
           } shadow-m absolute left-0 top-16 z-10 w-full bg-white md:static md:flex md:w-auto md:bg-transparent md:shadow-none`}
         >
-          <ul className="flex flex-col items-center p-4 md:flex-row md:gap-8 md:p-0">
+          <ul className="flex flex-col items-center gap-3 p-4 md:flex-row md:p-0 lg:gap-8">
             {navItemsData.map((item, index) => (
               <li key={index} className="mb-2 md:mb-0">
                 <Link
@@ -119,7 +119,7 @@ const Header = () => {
               onOpenChange={setProfileMenuOpen}
             >
               <DropdownMenuTrigger asChild>
-                <Avatar className=" h-10 w-auto overflow-hidden rounded-full cursor-pointer">
+                <Avatar className="h-10 w-auto cursor-pointer overflow-hidden rounded-full">
                   <AvatarImage
                     src={
                       status == "authenticated"

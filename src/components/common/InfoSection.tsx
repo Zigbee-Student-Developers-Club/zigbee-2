@@ -63,7 +63,7 @@ export default function InfoSection({
             <div className="flex-1">
               <Title
                 size="large"
-                className="font-extrabold text-gray-800 dark:text-gray-200"
+                className="text-center font-extrabold text-gray-800 dark:text-gray-200 md:text-left"
               >
                 {heading}
               </Title>
