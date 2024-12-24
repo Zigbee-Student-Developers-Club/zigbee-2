@@ -75,6 +75,8 @@ const UploadProfilePage = () => {
           user: {
             ...session?.user,
             isProvidedBasicData: true,
+            name: user?.name,
+            image: user?.profileImg,
           },
         });
         alert("Profile saved successfully!");

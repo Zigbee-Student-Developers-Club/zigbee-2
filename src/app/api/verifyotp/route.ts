@@ -38,7 +38,7 @@ export const POST = async (req: NextRequest) => {
       );
     }
 
-    const { isProvidedBasicData, token, name, profileImg } = result;
+    const { isProvidedBasicData, isAdmin, token, name, profileImg } = result;
 
     if (!token) {
       return NextResponse.json(
@@ -54,8 +54,9 @@ export const POST = async (req: NextRequest) => {
         name,
         profileImg,
         isProvidedBasicData,
-        message: "Login successful",
+        isAdmin,
         token, // Return the token for NextAuth to handle
+        message: "Login successful",
       },
       { status: 200 }
     );

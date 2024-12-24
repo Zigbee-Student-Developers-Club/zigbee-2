@@ -56,6 +56,7 @@ export const verifyEmailOtp = async (
   otp: string
 ): Promise<{
   isProvidedBasicData?: boolean;
+  isAdmin?: boolean;
   token?: string;
   name?: string;
   profileImg?: string;
@@ -94,7 +95,7 @@ export const uploadUserData = async (
       return true;
     }
     throw new Error("Failed to upload user data.");
-  } catch (error: unknown) {
+  } catch (error) {
     if (error instanceof AxiosError) {
       console.error("API Error in uploadUserData:", error.message);
       throw new Error(
@@ -120,7 +121,7 @@ export const uploadProfileImage = async (file: File): Promise<string> => {
         withCredentials: true,
       }
     );
-    return response.data;
+    return response.data?.secureUrl;
   } catch (error: unknown) {
     if (error instanceof AxiosError) {
       console.error("API Error in uploadProfileImage:", error.message);

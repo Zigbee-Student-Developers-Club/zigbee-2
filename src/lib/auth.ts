@@ -26,6 +26,7 @@ export const authOptions: NextAuthOptions = {
             return {
               id: credentials.email,
               isProvidedBasicData: response.isProvidedBasicData,
+              isAdmin: response.isAdmin,
               accessToken: response.token,
               name: response.name,
               image: response.profileImg,
@@ -52,21 +53,27 @@ export const authOptions: NextAuthOptions = {
     jwt: async ({ token, trigger, session, user }) => {
       if (user) {
         const myUser = user as User;
-        token.isProvidedBasicData = myUser.isProvidedBasicData;
-        token.accessToken = myUser.accessToken;
+        token.isProvidedBasicData = myUser?.isProvidedBasicData;
+        token.isAdmin = myUser?.isAdmin;
+        token.accessToken = myUser?.accessToken;
       }
       if (trigger === "update") {
         if (session?.user) {
           // update your token whatever you like
-          token.isProvidedBasicData = session.user.isProvidedBasicData;
+          token.isProvidedBasicData = session.user?.isProvidedBasicData;
+          token.name = session.user?.name;
+          token.picture = session.user?.image;
         }
       }
       return token;
     },
     session: async ({ session, token }) => {
       if (session.user) {
-        session.user.isProvidedBasicData = token.isProvidedBasicData as boolean;
-        session.user.accessToken = token.accessToken as string;
+        session.user.name = token?.name as string;
+        session.user.image = token?.picture as string;
+        session.user.isProvidedBasicData =
+          token?.isProvidedBasicData as boolean;
+        session.user.accessToken = token?.accessToken as string;
       }
       return session;
     },
@@ -89,6 +96,7 @@ declare module "next-auth" {
 declare module "next-auth/jwt" {
   interface JWT {
     isProvidedBasicData: boolean;
+    isAdmin: boolean;
     accessToken: string;
   }
 }
@@ -96,5 +104,6 @@ declare module "next-auth/jwt" {
 // Interface for extended user data
 interface User extends AdapterUser {
   isProvidedBasicData: boolean;
+  isAdmin: boolean;
   accessToken: string;
 }

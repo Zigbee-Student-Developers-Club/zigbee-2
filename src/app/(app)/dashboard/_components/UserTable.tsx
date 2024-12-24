@@ -329,7 +329,8 @@ const UserTable = () => {
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  Failed to load data. Try again.
+                  {(error as Error).message ||
+                    "Failed to load data. Try again."}
                 </TableCell>
               </TableRow>
             ) : userList?.length ? (
