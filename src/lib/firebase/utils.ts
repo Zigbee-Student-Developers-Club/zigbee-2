@@ -175,6 +175,7 @@ export const getUserById = async (id: string) => {
       name: userData?.name,
       email: userData?.email,
       phoneNumber: userData?.phoneNumber,
+      profileImg: userData?.profileImg,
       batch: userData?.batch,
       linkedInUrl: userData?.linkedInUrl,
       domain: userData?.domain,

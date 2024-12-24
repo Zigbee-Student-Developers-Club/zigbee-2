@@ -120,7 +120,7 @@ export const uploadProfileImage = async (file: File): Promise<string> => {
         withCredentials: true,
       }
     );
-    return response.data;
+    return response.data?.secureUrl;
   } catch (error: unknown) {
     if (error instanceof AxiosError) {
       console.error("API Error in uploadProfileImage:", error.message);
