@@ -20,21 +20,19 @@ const AlumniCard: NextPage<AlumDataProp> = ({ alumData }) => {
     <div className="h-full rounded-lg bg-cyan-200 p-6 text-center capitalize shadow-md">
       <div className="flex h-full flex-col items-center">
         {/* Avatar */}
-        <Avatar className="my-4 h-36 w-36 overflow-hidden rounded-full">
+        <Avatar className="my-4 h-28 w-28 overflow-hidden rounded-full sm:h-36 sm:w-36">
           <AvatarImage
             src={alumData?.imgURL}
             alt={alumData.name}
             className="h-full w-full object-cover object-center"
           />
-          <AvatarFallback className="flex h-36 w-36 items-center justify-center rounded-full border-4 border-white bg-gray-100 text-2xl text-gray-700">
+          <AvatarFallback className="flex h-28 w-28 items-center justify-center rounded-full border-4 border-white bg-gray-100 text-2xl text-gray-700">
             {alumData.name.toUpperCase().split(" ")[0]}
           </AvatarFallback>
         </Avatar>
-
-        {/* Name and Badge */}
-          {" "}
-          <Text variant="small" className=" font-semibold">
-            {alumData.name.toLowerCase()}{" "}
+        {/* Name and Badge */}{" "}
+        <Text variant="small" className="font-semibold">
+          {alumData.name.toLowerCase()}{" "}
           {["PC", "CR", "GR"].includes(
             alumData.position?.toUpperCase() || ""
           ) && (
@@ -48,10 +46,8 @@ const AlumniCard: NextPage<AlumDataProp> = ({ alumData }) => {
             >
               {alumData.position}
             </Badge>
-
           )}
-                     </Text>
-
+        </Text>
         {/* LinkedIn Link */}
         {alumData?.linkedinURL && (
           <Link

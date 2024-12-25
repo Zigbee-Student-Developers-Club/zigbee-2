@@ -43,7 +43,7 @@ export default function Alumni() {
       >
         {/* Tabs List */}
         <TabsList className="flex flex-wrap justify-start rounded-lg bg-transparent">
-          <ScrollArea className="max-w-80 rounded-md border md:mx-auto md:max-w-[1200px] md:px-4">
+          <ScrollArea className="w-full rounded-md border md:mx-auto md:max-w-[1200px] md:px-4">
             <div className="flex space-x-2 bg-transparent p-2 py-4">
               {tabs.map((tab) => (
                 <TabsTrigger
@@ -79,7 +79,7 @@ export default function Alumni() {
                 ))}
               </div>
             ) : (
-              <div className="grid grid-cols-2 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
+              <div className="grid grid-cols-1 gap-6 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
                 {alumniData && alumniData.length > 0 ? (
                   alumniData
                     .sort((a, b) => a.name.localeCompare(b.name))
