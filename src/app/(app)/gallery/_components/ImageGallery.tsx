@@ -67,7 +67,7 @@ export const ImageGallery = () => {
               src={image.src}
               alt={image.alt}
               width={300}
-              height={200}
+              height={300}
               className="rounded-lg object-cover"
             />
           </div>

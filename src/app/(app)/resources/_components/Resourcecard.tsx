@@ -72,17 +72,19 @@ const ResourceCard: NextPage<ResourceCardProps> = ({ data }) => {
       ></div>
 
       {/* Card Content */}
-      <div className="relative z-10">
-        <Title
-          size="medium"
-          className="mb-2 text-lg font-extrabold text-gray-900"
-        >
+      <div className="relative z-10 flex h-full flex-col justify-between">
+        {/* Course Name */}
+        <Title size="medium" className="text-lg font-extrabold text-gray-900">
           {data.courseName}
         </Title>
-        <Text className="px-2 text-gray-700">with</Text>
-        <Text className="px-2 text-xl font-black text-gray-900">
-          {data.author}
-        </Text>
+
+        {/* Author Name */}
+        <div className="flex flex-col items-start">
+          <Text className="text-gray-700">with</Text>
+          <Text className="text-xl font-black text-gray-900">
+            {data.author}
+          </Text>
+        </div>
       </div>
     </Card>
   );
