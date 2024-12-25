@@ -3,11 +3,13 @@ import { Text } from "@/components/ui/text";
 import Title from "@/components/ui/title";
 import { NextPage } from "next";
 import clsx from "clsx";
+import { Badge } from "@/components/ui/badge";
 
 interface ResourceCardProps {
   data: {
     courseName: string;
     author: string;
+    badge?: string; // Optional badge field
   };
 }
 
@@ -89,7 +91,15 @@ const ResourceCard: NextPage<ResourceCardProps> = ({ data }) => {
         <div className="mt-auto">
           <Text className="px-2 text-gray-700">with</Text>
           <Text className="px-2 text-xl font-black text-gray-900">
-            {data.author}
+            {data.author} <br />
+            {data?.badge && (
+              <Badge
+                variant="outline"
+                className="break-words text-sm font-bold text-blue-900"
+              >
+                {data?.badge}
+              </Badge>
+            )}
           </Text>
         </div>
       </div>

@@ -88,8 +88,11 @@ export default function Resources() {
                 <Link href={item?.url || "#"} target="_blank">
                   <ResourceCard
                     data={{
-                      courseName: item?.name || "Unknown Course",
-                      author: item?.author || "Unknown Author",
+                      badge:
+                        DomainOptions.find((opt) => opt.value === item?.domain)
+                          ?.label || "N/A", // Fallback to "N/A" if no matching domain is found
+                      courseName: item?.name || "N/A",
+                      author: item?.author || "N/A",
                     }}
                   />
                 </Link>
