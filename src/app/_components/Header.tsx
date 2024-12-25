@@ -71,7 +71,7 @@ const Header = () => {
         <nav
           className={`${
             isMenuOpen ? "block" : "hidden"
-          } shadow-m absolute left-0 top-16 z-10 w-full bg-white md:static md:flex md:w-auto md:bg-transparent md:shadow-none`}
+          } shadow-m absolute left-0 top-16 z-10 w-full min-w-80 bg-white md:static md:flex md:w-auto md:bg-transparent md:shadow-none`}
         >
           <ul className="flex flex-col items-center gap-3 p-4 md:flex-row md:p-0 lg:gap-8">
             {navItemsData.map((item, index) => (
