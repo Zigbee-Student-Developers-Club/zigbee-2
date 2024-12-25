@@ -256,9 +256,8 @@ export const fetchUsers = async (
     const queryParams = new URLSearchParams();
     if (role) queryParams.append("role", role);
     if (batch) queryParams.append("batch", batch.toString());
-    if (isAdmin) queryParams.append("isadmin", String(isAdmin));
-    if (isContributor)
-      queryParams.append("iscontributor", String(isContributor));
+    if (isAdmin) queryParams.append("admin", String(isAdmin));
+    if (isContributor) queryParams.append("contributor", String(isContributor));
     queryParams.append("page", page.toString());
 
     const response = await apiClient.get(

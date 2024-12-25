@@ -37,10 +37,7 @@ const handleError = (err: unknown, method: string): string => {
     console.error(`Firebase Error in ${method} :: `, err); // Log the error only in development
   }
 
-  return (
-    (err as Error).message ||
-    "An unexpected error occurred. Please try again later."
-  );
+  return "An unexpected error occurred. Please try again later.";
 };
 
 // check if a user is registered
@@ -201,10 +198,12 @@ export const getUserById = async (id: string) => {
 
 // fetch all users by role, batch with pagination
 export const fetchUser = async (
+  page: number = 1,
+  countLimit: number = 20,
   role?: string,
   batch?: string,
-  page: number = 1,
-  countLimit: number = 20
+  isAdmin?: string,
+  isContributor?: string
 ) => {
   let result = null;
   let error = null;
@@ -219,6 +218,14 @@ export const fetchUser = async (
 
     if (batch) {
       q = query(q, where("batch", "==", batch));
+    }
+
+    if (isAdmin) {
+      q = query(q, where("isAdmin", "==", isAdmin === "true"));
+    }
+
+    if (isContributor) {
+      q = query(q, where("isContributor", "==", isContributor === "true"));
     }
 
     // Apply ordering

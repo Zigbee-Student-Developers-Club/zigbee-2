@@ -17,13 +17,17 @@ export const GET = async (req: NextRequest) => {
     const role = searchParams.get("role") || "";
     const batch = searchParams.get("batch") || "";
     const page = parseInt(searchParams.get("page") || "1", 10);
+    const isAdmin = searchParams.get("admin") || "";
+    const isContributor = searchParams.get("contributor") || "";
     const limit = 20;
 
     const { result, totalUsers, error } = await fetchUser(
+      page,
+      limit,
       role,
       batch,
-      page,
-      limit
+      isAdmin,
+      isContributor
     );
 
     if (error) {

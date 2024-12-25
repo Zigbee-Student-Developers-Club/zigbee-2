@@ -120,10 +120,10 @@ export const useFetchUsers = (
   isAdmin: boolean = false,
   isContributor: boolean = false
 ) => {
-  const key = `/api/users?role=${role || ""}&batch=${batch || ""}&page=${page}&isadmin=${isAdmin}&iscontributor=${isContributor}`;
+  const key = `/api/admin/users?role=${role || ""}&batch=${batch || ""}&page=${page}&admin=${isAdmin}&contributor=${isContributor}`;
 
   const { data, error, isValidating } = useSWR<UsersResponse>(key, () =>
-    api.fetchUsers(role, batch, page)
+    api.fetchUsers(role, batch, page, isAdmin, isContributor)
   );
 
   // Mutate function for refreshing data manually
@@ -171,6 +171,6 @@ export const useFetchUserProfile = () => {
     isLoading,
     isValidating,
     error,
-    refreshUserProfile, 
+    refreshUserProfile,
   };
 };
