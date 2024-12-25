@@ -33,8 +33,14 @@ const eventCollection = collection(db, "events");
 
 // handling error
 const handleError = (err: unknown, method: string): string => {
-  console.error(`Firebase Error in ${method} :: `, err); // Log the error
-  return "An unexpected error occurred. Please try again later.";
+  if (process.env.NODE_ENV === "development") {
+    console.error(`Firebase Error in ${method} :: `, err); // Log the error only in development
+  }
+
+  return (
+    (err as Error).message ||
+    "An unexpected error occurred. Please try again later."
+  );
 };
 
 // check if a user is registered

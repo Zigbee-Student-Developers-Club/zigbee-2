@@ -70,7 +70,7 @@ export const POST = async (req: NextRequest) => {
       { status: 201 }
     );
   } catch (error) {
-    console.error("Unexpected error in POST handler:", error);
+    // console.error("Unexpected error in POST handler:", error);
     return NextResponse.json(
       {
         error:
@@ -139,7 +139,7 @@ export const PUT = async (req: NextRequest) => {
       { status: 200 }
     );
   } catch (error) {
-    console.error("Unexpected error in PUT handler:", error);
+    // console.error("Unexpected error in PUT handler:", error);
     return NextResponse.json(
       {
         error:
@@ -173,10 +173,12 @@ export const GET = async (req: NextRequest) => {
       { status: 200 }
     );
   } catch (error) {
-    console.error("Unexpected error in GET handler:", error);
+    // console.error("Unexpected error in GET handler:", error);
     return NextResponse.json(
       {
-        error: "An error occurred while fetching user details.",
+        error:
+          (error as Error).message ||
+          "An error occurred while fetching user details.",
       },
       { status: 500 }
     );

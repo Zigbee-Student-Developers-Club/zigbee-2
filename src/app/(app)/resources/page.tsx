@@ -27,7 +27,7 @@ export default function Resources() {
   }
 
   if (error) {
-    console.error("Error fetching resources:", error);
+    // console.error("Error fetching resources:", error);
     return (
       <div className="container mx-auto py-16 text-center">
         <p>Failed to load resources. Please try again later.</p>

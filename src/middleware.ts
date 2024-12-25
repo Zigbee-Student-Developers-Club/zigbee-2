@@ -58,18 +58,18 @@ export default withAuth(async function middleware(req: NextRequestWithAuth) {
     isAuthenticated &&
     protectedRoutes.some((path) => currentPath.startsWith(path))
   ) {
-    console.log("protected hits");
+    // console.log("protected hits");
     return NextResponse.next();
   }
 
   if (!isAdmin && adminRoutes.some((path) => currentPath.startsWith(path))) {
-    console.log("Your are not authorized to access this page");
+    // console.log("Your are not authorized to access this page");
     return NextResponse.redirect(new URL("/", req.url));
   }
 
   // Allow admin routes
   if (isAdmin && adminRoutes.some((path) => currentPath.startsWith(path))) {
-    console.log("admin hits");
+    // console.log("admin hits");
     return NextResponse.next();
   }
 

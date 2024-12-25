@@ -155,10 +155,12 @@ const UserTable = () => {
           // Refresh the data using mutate function to update the user list
           refreshUsers(); // No need for await, just call mutate
         } else {
-          console.error("Failed to delete user:", response.error);
+          alert(response.error || "Failed to delete user. Please try again. ");
         }
       } catch (error) {
-        console.error("Error deleting user:", error);
+        alert(
+          (error as Error).message || "Failed to delete user. Please try again."
+        );
       } finally {
         setIsDeleteDialogOpen(false); // Close the delete confirmation dialog
         setSelectedUser(null); // Reset selected user

@@ -27,7 +27,7 @@ export const GET = async (req: NextRequest) => {
     );
 
     if (error) {
-      console.error("Error in fetchUser:", error);
+      // console.error("Error in fetchUser:", error);
       return NextResponse.json({ error }, { status: 500 });
     }
 
@@ -55,10 +55,12 @@ export const GET = async (req: NextRequest) => {
       { status: 200 }
     );
   } catch (error) {
-    console.error("Unexpected error in GET handler:", error);
+    // console.error("Unexpected error in GET handler:", error);
     return NextResponse.json(
       {
-        error: "An unexpected error occurred. Please try again later.",
+        error:
+          (error as Error).message ||
+          "An unexpected error occurred. Please try again later.",
       },
       { status: 500 }
     );

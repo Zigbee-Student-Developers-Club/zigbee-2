@@ -105,7 +105,7 @@ const ProfilePage = () => {
   }
 
   if (error) {
-    console.error("Error fetching user profile:", error);
+    // console.error("Error fetching user profile:", error);
     return <div>Error fetching user profile</div>;
   }
 

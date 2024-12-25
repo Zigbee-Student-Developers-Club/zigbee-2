@@ -93,9 +93,12 @@ export const POST = async (req: NextRequest) => {
       { status: 201 }
     );
   } catch (error) {
-    console.error("Error while adding event", error);
+    // console.error("Error while adding event", error);
     return NextResponse.json(
-      { error: "Unexpected error while adding event." },
+      {
+        error:
+          (error as Error).message || "Unexpected error while adding event.",
+      },
       { status: 500 }
     );
   }

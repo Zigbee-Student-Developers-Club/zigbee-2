@@ -32,7 +32,7 @@ export const verifyToken = async (token: string): Promise<CustomJwtPayload> => {
 
     return payload as CustomJwtPayload;
   } catch (error) {
-    console.error("verifyToken error", error);
-    throw new Error("Failed to verify token");
+    // console.error("verifyToken error", error);
+    throw new Error((error as Error).message || "Failed to verify token");
   }
 };
