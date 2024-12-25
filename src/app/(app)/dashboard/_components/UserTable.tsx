@@ -42,7 +42,7 @@ import {
 } from "@/components/ui/select";
 import { BatchOptions } from "@/lib/options";
 import { useFetchUsers } from "@/lib/SWRhooks/useSWR";
-import { UserData} from "@/lib/types";
+import { UserData } from "@/lib/types";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 import DeleteDialogBox from "@/app/(app)/dashboard/_components/DeleteDialogBox";
 import { deleteUserById } from "@/lib/axios/allApiCall";
@@ -58,6 +58,7 @@ const UserTable = () => {
   const [role, setRole] = useState<string | undefined>();
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
   const [isContributor, setIsContributor] = useState<boolean>(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [search, setSearch] = useState<string | null>();
   const [page, setPage] = useState<number>(1);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
@@ -66,7 +67,7 @@ const UserTable = () => {
     useState(false);
 
   const { userList, pagination, isLoading, error, refreshUsers } =
-    useFetchUsers(role, batch, page,isAdmin,isContributor);
+    useFetchUsers(role, batch, page, isAdmin, isContributor);
 
   const handleDeleteClick = useCallback((user: UserData) => {
     setSelectedUser(user);
