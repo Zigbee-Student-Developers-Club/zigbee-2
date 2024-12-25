@@ -135,6 +135,7 @@ const LoginPage = () => {
 
           {showOtpInput ? (
             <OtpInputSection
+              email={email}
               setOtp={setOtp}
               isOtpFilled={isOtpFilled}
               setISOtpFilled={setISOtpFilled}
@@ -142,6 +143,7 @@ const LoginPage = () => {
               handleOtpSubmit={handleOtpSubmit}
               resetOtpState={resetOtpState}
               message={message}
+              setMessage={setMessage}
               messageColor={messageColor}
             />
           ) : (
