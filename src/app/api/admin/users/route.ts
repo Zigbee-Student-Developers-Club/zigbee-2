@@ -17,17 +17,21 @@ export const GET = async (req: NextRequest) => {
     const role = searchParams.get("role") || "";
     const batch = searchParams.get("batch") || "";
     const page = parseInt(searchParams.get("page") || "1", 10);
+    const isAdmin = searchParams.get("admin") || "";
+    const isContributor = searchParams.get("contributor") || "";
     const limit = 20;
 
     const { result, totalUsers, error } = await fetchUser(
+      page,
+      limit,
       role,
       batch,
-      page,
-      limit
+      isAdmin,
+      isContributor
     );
 
     if (error) {
-      console.error("Error in fetchUser:", error);
+      // console.error("Error in fetchUser:", error);
       return NextResponse.json({ error }, { status: 500 });
     }
 
@@ -55,10 +59,12 @@ export const GET = async (req: NextRequest) => {
       { status: 200 }
     );
   } catch (error) {
-    console.error("Unexpected error in GET handler:", error);
+    // console.error("Unexpected error in GET handler:", error);
     return NextResponse.json(
       {
-        error: "An unexpected error occurred. Please try again later.",
+        error:
+          (error as Error).message ||
+          "An unexpected error occurred. Please try again later.",
       },
       { status: 500 }
     );

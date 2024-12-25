@@ -52,7 +52,7 @@ export default function FAQ() {
                       transition={{ duration: 0.3, ease: "easeInOut" }}
                       className="overflow-hidden"
                     >
-                      <div className="p-4 text-gray-800 dark:text-gray-300">
+                      <div className="py-4 text-sm text-gray-800 dark:text-gray-300 md:text-base">
                         {faq.content}
                       </div>
                     </motion.div>

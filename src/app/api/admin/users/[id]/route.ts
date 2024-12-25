@@ -36,10 +36,12 @@ export const GET = async (
       { status: 200 }
     );
   } catch (error) {
-    console.error("Unexpected error in GET handler:", error);
+    // console.error("Unexpected error in GET handler:", error);
     return NextResponse.json(
       {
-        error: "An error occurred while fetching user details.",
+        error:
+          (error as Error).message ||
+          "An error occurred while fetching user details.",
       },
       { status: 500 }
     );
@@ -92,10 +94,12 @@ export const PUT = async (
       { status: 200 }
     );
   } catch (error) {
-    console.error("Unexpected error in PUT handler:", error);
+    // console.error("Unexpected error in PUT handler:", error);
     return NextResponse.json(
       {
-        error: "Unexpected error in updating user details.",
+        error:
+          (error as Error).message ||
+          "Unexpected error in updating user details.",
       },
       { status: 500 }
     );
@@ -134,10 +138,10 @@ export const DELETE = async (
       { status: 200 }
     );
   } catch (error) {
-    console.error("Unexpected error in DELETE handler:", error);
+    // console.error("Unexpected error in DELETE handler:", error);
     return NextResponse.json(
       {
-        error: "Unexpected error in deleting user.",
+        error: (error as Error).message || "Unexpected error in deleting user.",
       },
       { status: 500 }
     );

@@ -54,7 +54,7 @@ export const ImageGallery = () => {
     <div className="w-full overflow-hidden">
       <div
         ref={scrollRef1}
-        className="mb-8 flex gap-4 overflow-x-hidden"
+        className="mb-8 flex gap-4 overflow-x-hidden rounded-lg"
         style={{ width: "200%" }}
       >
         {images.concat(images).map((image, index) => (
@@ -75,7 +75,7 @@ export const ImageGallery = () => {
       </div>
       <div
         ref={scrollRef2}
-        className="flex gap-4 overflow-x-hidden"
+        className="flex gap-4 overflow-x-hidden rounded-lg"
         style={{ width: "200%" }}
       >
         {images.concat(images).map((image, index) => (

@@ -34,9 +34,12 @@ export const POST = async (req: NextRequest) => {
       { status: secureUrl ? 200 : 400 }
     );
   } catch (error) {
-    console.error("Error uploading image:", error);
+    // console.error("Error uploading image:", error);
     return NextResponse.json(
-      { error: "Unexpected error while uploading image" },
+      {
+        error:
+          (error as Error).message || "Unexpected error while uploading image",
+      },
       { status: 500 }
     );
   }

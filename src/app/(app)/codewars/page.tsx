@@ -192,7 +192,7 @@ export default function CodeWar() {
         />
 
         {/* Batch Selector */}
-        <div className="flex flex-col items-center justify-start gap-4 px-10 md:flex-row mx-auto max-w-7xl">
+        <div className="mx-auto flex max-w-7xl flex-col items-center justify-start gap-4 px-10 md:flex-row">
           <Text className="font-medium">Choose the batch:</Text>
           <Select2
             data={batchOptions}
@@ -220,7 +220,7 @@ export default function CodeWar() {
             A Glimpse of Codewars {selectedBatch} ✨
           </Title>
 
-          <div className="h-[900px]">
+          <div className="mx-auto h-[1000px] w-full max-w-7xl md:h-[950px]">
             <LayoutGrid cards={gallery2024} />
           </div>
         </div>

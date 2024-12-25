@@ -16,12 +16,13 @@ import {
 } from "@/components/ui/dropdown-menu";
 import UploadImageDialog from "@/components/common/UploadImageDialog";
 import { ImageUp, ChevronDown } from "lucide-react";
-import { UserData } from "@/lib/types";
+import { UserData, validPositions } from "@/lib/types";
 import MotionDivProvider from "@/components/provider/MotionDivProvider";
 
 import { useFetchUserProfile } from "@/lib/SWRhooks/useSWR";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 import { updateUserData } from "@/lib/axios/allApiCall";
+import { useSession } from "next-auth/react";
 
 const ProfilePage = () => {
   const { userProfile, isLoading, isValidating, error } = useFetchUserProfile();
@@ -30,6 +31,7 @@ const ProfilePage = () => {
   const [editMode, setEditMode] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const { data: session, update } = useSession();
 
   const handleFileUpload = (profileImgUrl: string) => {
     setUser((prevUser) => {
@@ -59,12 +61,22 @@ const ProfilePage = () => {
     try {
       const response = await updateUserData(user);
       if (response) {
+        // Update the session with new data
+        await update({
+          ...session,
+          user: {
+            ...session?.user,
+            name: user?.name,
+            image: user?.profileImg,
+          },
+        });
+        alert("Your profile updated successfully");
         setEditMode(false);
       } else {
-        alert("some error occured ");
+        alert("Some error occurred ");
       }
     } catch (error) {
-      console.error("Error updating profile:", error);
+      alert((error as Error).message || "Failed to save the data");
     } finally {
       setLoading(false);
     }
@@ -93,7 +105,7 @@ const ProfilePage = () => {
   }
 
   if (error) {
-    console.error("Error fetching user profile:", error);
+    // console.error("Error fetching user profile:", error);
     return <div>Error fetching user profile</div>;
   }
 
@@ -158,7 +170,7 @@ const ProfilePage = () => {
           </Title>
         </div>
 
-        <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2">
+        <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div>
             <Text variant="large" className="text-gray-700 dark:text-gray-300">
               Full Name
@@ -189,31 +201,20 @@ const ProfilePage = () => {
                     variant="outline"
                     className="flex w-full items-center justify-between"
                   >
-                    {user.position || "Select Position"}
+                    {user?.position || "Select Position"}{" "}
+                    {/* Fallback for position */}
                     <ChevronDown className="ml-2 h-4 w-4" />
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
-                  <DropdownMenuItem
-                    onClick={() => handleInputChange("position", "CR")}
-                  >
-                    CR
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    onClick={() => handleInputChange("position", "GR")}
-                  >
-                    GR
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    onClick={() => handleInputChange("position", "PC")}
-                  >
-                    PC
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    onClick={() => handleInputChange("position", "No Role")}
-                  >
-                    No Role
-                  </DropdownMenuItem>
+                  {validPositions.map((position: string) => (
+                    <DropdownMenuItem
+                      key={position}
+                      onSelect={() => handleInputChange("position", position)}
+                    >
+                      {position === "" ? "No role" : position}
+                    </DropdownMenuItem>
+                  ))}
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
@@ -233,9 +234,7 @@ const ProfilePage = () => {
               <Input
                 type="text"
                 value={user.batch}
-                onChange={(e) =>
-                  handleInputChange("batch", Number(e.target.value))
-                }
+                onChange={(e) => handleInputChange("batch", e.target.value)}
               />
             ) : (
               <Text
@@ -295,43 +294,76 @@ const ProfilePage = () => {
               </Text>
             )}
           </div>
-        </div>
 
-        {/* About Section */}
-        <div className="mt-8">
-          <Text variant="large" className="m-0 p-0 text-gray-700 dark:text-gray-300">
-            About Yourself
-          </Text>
-          {editMode ? (
-            <Textarea
-              rows={5}
-              value={user.about}
-              onChange={(e) => handleInputChange("about", e.target.value)}
-              placeholder="Write about yourself..."
-            />
-          ) : (
-            <Text variant="small" className="text-gray-700 dark:text-gray-400">
-              {user.about}
+          <div>
+            <Text variant="large" className="text-gray-700 dark:text-gray-300">
+              Domain
             </Text>
-          )}
-        </div>
+            {editMode ? (
+              <Input
+                type="url"
+                value={user.domain}
+                onChange={(e) => handleInputChange("domain", e.target.value)}
+                placeholder="Android Developer"
+              />
+            ) : (
+              <Text
+                variant="small"
+                className="text-gray-700 dark:text-gray-400"
+              >
+                {user.domain || "N/A"}
+              </Text>
+            )}
+          </div>
 
-        <div className="mt-8">
-          <Text variant="large" className="m-0 text-gray-700 dark:text-gray-300">
-            Feedback
-          </Text>
-          {editMode ? (
-            <Textarea
-              rows={5}
-              value={user.feedback}
-              onChange={(e) => handleInputChange("feedback", e.target.value)}
-              placeholder="Your feedback..."
-            />
-          ) : (
-            <Text variant="small"  className="text-gray-700 dark:text-gray-400">
-              {user.feedback}
+          {/* About Section */}
+          <div className="mt-8">
+            <Text
+              variant="large"
+              className="m-0 p-0 text-gray-700 dark:text-gray-300"
+            >
+              About Yourself
             </Text>
-          )}
+            {editMode ? (
+              <Textarea
+                rows={5}
+                value={user.about}
+                onChange={(e) => handleInputChange("about", e.target.value)}
+                placeholder="Write about yourself..."
+              />
+            ) : (
+              <Text
+                variant="small"
+                className="text-gray-700 dark:text-gray-400"
+              >
+                {user.about}
+              </Text>
+            )}
+          </div>
+
+          <div className="mt-8">
+            <Text
+              variant="large"
+              className="m-0 text-gray-700 dark:text-gray-300"
+            >
+              Feedback
+            </Text>
+            {editMode ? (
+              <Textarea
+                rows={5}
+                value={user.feedback}
+                onChange={(e) => handleInputChange("feedback", e.target.value)}
+                placeholder="Write something about our department & Zigbee..."
+              />
+            ) : (
+              <Text
+                variant="small"
+                className="text-gray-700 dark:text-gray-400"
+              >
+                {user.feedback}
+              </Text>
+            )}
+          </div>
         </div>
 
         {/* Save Button */}

@@ -161,14 +161,33 @@ const UploadProfilePage = () => {
                 variant="large"
                 className="text-gray-700 dark:text-gray-300"
               >
+                Phone Number*
+              </Text>
+              <Input
+                type="text"
+                value={user?.phoneNumber || ""}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  // Allow only numeric input
+                  if (/^\d*$/.test(value)) {
+                    handleInputChange("phoneNumber", value);
+                  }
+                }}
+                placeholder="Phone Number"
+              />
+            </div>
+
+            <div>
+              <Text
+                variant="large"
+                className="text-gray-700 dark:text-gray-300"
+              >
                 Batch
               </Text>
               <Input
                 type="text"
                 value={user?.batch || ""}
-                onChange={(e) =>
-                  handleInputChange("batch", Number(e.target.value))
-                }
+                onChange={(e) => handleInputChange("batch", e.target.value)}
                 placeholder="2025"
               />
             </div>
@@ -201,26 +220,6 @@ const UploadProfilePage = () => {
                   ))}
                 </DropdownMenuContent>
               </DropdownMenu>
-            </div>
-            <div>
-              <Text
-                variant="large"
-                className="text-gray-700 dark:text-gray-300"
-              >
-                Phone Number*
-              </Text>
-              <Input
-                type="text"
-                value={user?.phoneNumber || ""}
-                onChange={(e) => {
-                  const value = e.target.value;
-                  // Allow only numeric input
-                  if (/^\d*$/.test(value)) {
-                    handleInputChange("phoneNumber", value);
-                  }
-                }}
-                placeholder="Phone Number"
-              />
             </div>
 
             <div>

@@ -17,10 +17,12 @@ export const GET = async () => {
       { status: 200 }
     );
   } catch (error) {
-    console.error("Unexpected error while fetching magazines:", error);
+    // console.error("Unexpected error while fetching magazines:", error);
     return NextResponse.json(
       {
-        error: "Unexpected error while fetching magazines",
+        error:
+          (error as Error).message ||
+          "Unexpected error while fetching magazines",
       },
       { status: 500 }
     );

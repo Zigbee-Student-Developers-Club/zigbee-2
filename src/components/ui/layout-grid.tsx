@@ -49,7 +49,7 @@ export const LayoutGrid = ({ cards }: { cards: Card[] }) => {
       <motion.div
         onClick={handleOutsideClick}
         className={cn(
-          "absolute left-0 top-0 z-10 h-full w-full bg-black opacity-0",
+          "absolute left-0 top-0 z-10 h-full w-full rounded-lg bg-black bg-opacity-40",
           selected?.id ? "pointer-events-auto" : "pointer-events-none"
         )}
         animate={{ opacity: selected?.id ? 0.3 : 0 }}
@@ -66,7 +66,7 @@ const ImageComponent = ({ card }: { card: Card }) => {
       height="500"
       width="500"
       className={cn(
-        "absolute inset-0 h-full w-full object-cover object-top transition duration-200"
+        "absolute inset-0 h-full w-full cursor-pointer object-cover object-top transition duration-200"
       )}
       alt="thumbnail"
     />
@@ -83,7 +83,7 @@ const SelectedCard = ({ selected }: { selected: Card | null }) => {
         animate={{
           opacity: 0.6,
         }}
-        className="absolute inset-0 z-10 h-full w-full bg-black opacity-60"
+        className="absolute inset-0 z-10 h-full w-full bg-black bg-opacity-30"
       />
       <motion.div
         layoutId={`content-${selected?.id}`}
@@ -103,7 +103,7 @@ const SelectedCard = ({ selected }: { selected: Card | null }) => {
           duration: 0.3,
           ease: "easeInOut",
         }}
-        className="relative z-[70] px-8 pb-4"
+        className="relative z-[70] inline rounded-lg bg-black bg-opacity-60 p-2 px-8 pb-4 text-center text-3xl text-white"
       >
         {selected?.content}
       </motion.div>

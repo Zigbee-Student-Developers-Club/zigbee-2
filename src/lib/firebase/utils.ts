@@ -33,7 +33,10 @@ const eventCollection = collection(db, "events");
 
 // handling error
 const handleError = (err: unknown, method: string): string => {
-  console.error(`Firebase Error in ${method} :: `, err); // Log the error
+  if (process.env.NODE_ENV === "development") {
+    console.error(`Firebase Error in ${method} :: `, err); // Log the error only in development
+  }
+
   return "An unexpected error occurred. Please try again later.";
 };
 
@@ -195,10 +198,12 @@ export const getUserById = async (id: string) => {
 
 // fetch all users by role, batch with pagination
 export const fetchUser = async (
+  page: number = 1,
+  countLimit: number = 20,
   role?: string,
   batch?: string,
-  page: number = 1,
-  countLimit: number = 20
+  isAdmin?: string,
+  isContributor?: string
 ) => {
   let result = null;
   let error = null;
@@ -213,6 +218,14 @@ export const fetchUser = async (
 
     if (batch) {
       q = query(q, where("batch", "==", batch));
+    }
+
+    if (isAdmin) {
+      q = query(q, where("isAdmin", "==", isAdmin === "true"));
+    }
+
+    if (isContributor) {
+      q = query(q, where("isContributor", "==", isContributor === "true"));
     }
 
     // Apply ordering
@@ -276,7 +289,7 @@ export const fetchUser = async (
 };
 
 // fetch alumni
-export const fetchAlumni = async (batch?: number) => {
+export const fetchAlumni = async (batch?: string) => {
   let result = null;
   let error: string | null = null;
 

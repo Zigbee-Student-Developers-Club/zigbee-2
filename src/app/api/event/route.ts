@@ -17,10 +17,11 @@ export const GET = async () => {
       { status: 200 }
     );
   } catch (error) {
-    console.error("Unexpected error while fetching events:", error);
+    // console.error("Unexpected error while fetching events:", error);
     return NextResponse.json(
       {
-        error: "Unexpected error while fetching events",
+        error:
+          (error as Error).message || "Unexpected error while fetching events",
       },
       { status: 500 }
     );

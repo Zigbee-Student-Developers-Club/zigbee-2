@@ -5,9 +5,9 @@ export const GET = async (req: NextRequest) => {
   try {
     const { searchParams } = new URL(req.url);
 
-    const batch = searchParams.get("domain") || undefined;
+    const domain = searchParams.get("domain") || undefined;
 
-    const { result, error } = await fetchResources(batch);
+    const { result, error } = await fetchResources(domain);
 
     if (error) {
       return NextResponse.json({ error }, { status: 500 });
@@ -21,10 +21,12 @@ export const GET = async (req: NextRequest) => {
       { status: 200 }
     );
   } catch (error) {
-    console.error("Unexpected error while fetching resources:", error);
+    // console.error("Unexpected error while fetching resources:", error);
     return NextResponse.json(
       {
-        error: "Unexpected error while fetching resources",
+        error:
+          (error as Error).message ||
+          "Unexpected error while fetching resources",
       },
       { status: 500 }
     );

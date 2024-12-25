@@ -32,3 +32,28 @@ export const BatchOptions = [
   { value: 2025, label: "2025" },
   { value: 2026, label: "2026" },
 ];
+
+export const DomainOptions = [
+  { value: "all", label: "All Resources" },
+  // Added for campus placement
+  { value: "aptitude", label: "Aptitude Preparation" },
+  { value: "dsa", label: "Data Structures & Algorithms (DSA)" },
+  { value: "interview", label: "Interview Preparation" },
+  { value: "softskills", label: "Soft Skills Development" },
+
+  // Added for skills enhancement
+  { value: "frontend", label: "Frontend Development" },
+  { value: "backend", label: "Backend Development" },
+  { value: "fullstack", label: "Fullstack Development" },
+  { value: "mobile", label: "Mobile App Development" },
+  { value: "networking", label: "Networking" },
+  { value: "design", label: "UI/UX Design" },
+  { value: "datascience", label: "Data Science & Analytics" },
+  { value: "ai", label: "AI & Machine Learning" },
+  { value: "devops", label: "DevOps & Cloud" },
+  { value: "cybersecurity", label: "Cybersecurity" },
+  { value: "blockchain", label: "Blockchain & IoT" },
+  { value: "gamedev", label: "Game Development" },
+  { value: "opensource", label: "Open Source Contribution" },
+  { value: "other", label: "Other" },
+];

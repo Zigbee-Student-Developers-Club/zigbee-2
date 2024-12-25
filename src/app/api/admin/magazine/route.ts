@@ -44,9 +44,12 @@ export const POST = async (req: NextRequest) => {
       { status: 201 }
     );
   } catch (error) {
-    console.error("Error while adding magazine", error);
+    // console.error("Error while adding magazine", error);
     return NextResponse.json(
-      { error: "Unexpected error while adding magazine." },
+      {
+        error:
+          (error as Error).message || "Unexpected error while adding magazine.",
+      },
       { status: 500 }
     );
   }

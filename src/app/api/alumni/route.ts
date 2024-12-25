@@ -10,7 +10,7 @@ export const GET = async (req: NextRequest) => {
 
     const { searchParams } = new URL(req.url);
 
-    const batch = parseInt(searchParams.get("batch") || "", 10);
+    const batch = searchParams.get("batch") || "";
 
     const { result, error } = await fetchAlumni(batch);
 
@@ -26,10 +26,11 @@ export const GET = async (req: NextRequest) => {
       { status: 200 }
     );
   } catch (error) {
-    console.error("Unexpected error while fetching alumnus:", error);
+    // console.error("Unexpected error while fetching alumnus:", error);
     return NextResponse.json(
       {
-        error: "Unexpected error while fetching alumnus",
+        error:
+          (error as Error).message || "Unexpected error while fetching alumnus",
       },
       { status: 500 }
     );

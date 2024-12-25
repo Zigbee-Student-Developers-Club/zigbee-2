@@ -21,10 +21,12 @@ export const GET = async () => {
       { status: 200 }
     );
   } catch (error) {
-    console.error("Unexpected Error while fetching contributors:", error);
+    // console.error("Unexpected Error while fetching contributors:", error);
     return NextResponse.json(
       {
-        error: "Unexpected Error while fetching contributors",
+        error:
+          (error as Error).message ||
+          "Unexpected Error while fetching contributors",
       },
       { status: 500 }
     );

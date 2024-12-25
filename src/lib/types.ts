@@ -18,11 +18,31 @@ export interface UserData {
 
 export const validPositions = ["CR", "GR", "PC", "PV", ""];
 export const validRoles = ["student", "alumni", "guest"];
+export const validDomains = [
+  "aptitude",
+  "dsa",
+  "interview",
+  "softskills",
+  "frontend",
+  "backend",
+  "fullstack",
+  "mobile",
+  "networking",
+  "design",
+  "datascience",
+  "ai",
+  "devops",
+  "cybersecurity",
+  "blockchain",
+  "gamedev",
+  "opensource",
+  "other",
+];
 
 export interface AlumniType {
   id?: string;
   name: string;
-  batch: number;
+  batch: string;
   profileImg: string;
   linkedInUrl: string;
   position: string;
@@ -33,7 +53,7 @@ export interface AlumniType {
 export interface ContributorType {
   id?: string;
   name: string;
-  batch: number;
+  batch: string;
   profileImg: string;
   linkedInUrl: string;
   isContributor: boolean;

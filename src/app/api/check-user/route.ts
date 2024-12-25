@@ -28,10 +28,12 @@ export const POST = async (req: NextRequest) => {
       { status: 200 }
     );
   } catch (err) {
-    console.error("Unexpected error in check-user POST handler:", err);
+    // console.error("Unexpected error in check-user POST handler:", err);
     return NextResponse.json(
       {
-        error: "An unexpected error occurred. Please try again later.",
+        error:
+          (err as Error).message ||
+          "An unexpected error occurred. Please try again later.",
       },
       { status: 500 }
     );

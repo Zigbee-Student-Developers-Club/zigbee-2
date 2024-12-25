@@ -36,10 +36,10 @@ export default function InfoSection({
   }, [isInView]);
 
   return (
-    <div ref={ref} className="container mx-auto my-8 max-w-[1200px]">
+    <div ref={ref} className="container mx-auto my-4 max-w-[1200px]">
       <MotionDivProvider>
         <div
-          className={`mx-auto my-8 max-w-7xl rounded-2xl px-8 py-16 ${background} ${darkBackground}`}
+          className={`mx-auto max-w-7xl rounded-2xl px-8 py-16 ${background} ${darkBackground}`}
         >
           <div
             className={`flex ${
@@ -63,7 +63,7 @@ export default function InfoSection({
             <div className="flex-1">
               <Title
                 size="large"
-                className="font-extrabold text-gray-800 dark:text-gray-200"
+                className="text-center font-extrabold text-gray-800 dark:text-gray-200 md:text-left"
               >
                 {heading}
               </Title>
