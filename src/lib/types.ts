@@ -18,6 +18,26 @@ export interface UserData {
 
 export const validPositions = ["CR", "GR", "PC", "PV", ""];
 export const validRoles = ["student", "alumni", "guest"];
+export const validDomains = [
+  "aptitude",
+  "dsa",
+  "interview",
+  "softskills",
+  "frontend",
+  "backend",
+  "fullstack",
+  "mobile",
+  "networking",
+  "design",
+  "datascience",
+  "ai",
+  "devops",
+  "cybersecurity",
+  "blockchain",
+  "gamedev",
+  "opensource",
+  "other",
+];
 
 export interface AlumniType {
   id?: string;

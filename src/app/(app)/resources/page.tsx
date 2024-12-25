@@ -10,8 +10,7 @@ import ResourceCard from "./_components/Resourcecard";
 import { useFetchResources } from "@/lib/SWRhooks/useSWR";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 import MotionDivProvider from "@/components/provider/MotionDivProvider";
-
-const domainOptions = ["all", "Frontend", "Backend", "Designing", "Networking", "Full Stack"]; // Example of domain options
+import { DomainOptions } from "@/lib/options";
 
 export default function Resources() {
   const [resourceOption, setResourceOption] = useState("all");
@@ -32,7 +31,7 @@ export default function Resources() {
     return (
       <div className="container mx-auto py-16 text-center">
         <p>Failed to load resources. Please try again later.</p>
-        <button className="mt-4 text-blue-600" >Retry</button>
+        <button className="mt-4 text-blue-600">Retry</button>
       </div>
     );
   }
@@ -66,7 +65,7 @@ export default function Resources() {
           <div className="flex flex-col items-center justify-center gap-4 py-8 md:flex-row">
             <Text className="font-medium">Choose your domain:</Text>
             <Select2
-              data={domainOptions}
+              data={DomainOptions}
               value={resourceOption}
               onChange={setResourceOption}
               placeholder="Select a domain"
@@ -74,14 +73,17 @@ export default function Resources() {
           </div>
 
           {/* Resource Cards */}
-          <div className="my-8 min-h-36 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          <div className="m-5 my-8 grid min-h-36 grid-cols-1 gap-8 sm:m-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {filteredResources?.map((item) => (
               <motion.div
-                key={item?.id || item?.name} 
+                key={item?.id || item?.name}
                 className="w-full"
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: filteredResources.indexOf(item) * 0.1 }}
+                transition={{
+                  duration: 0.4,
+                  delay: filteredResources.indexOf(item) * 0.1,
+                }}
               >
                 <Link href={item?.url || "#"} target="_blank">
                   <ResourceCard
