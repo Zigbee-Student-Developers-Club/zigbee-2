@@ -62,16 +62,18 @@ export default function AlumniConnect() {
           placedImage={false}
         />
 
-        <div className="container mx-auto my-16 mt-10 grid max-w-[1200px] gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+        {/* Responsive grid */}
+        <div className="container mx-auto my-16 mt-10 grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           {eventList.map((event: EventType) => (
             <Card
               key={event.id}
-              className="flex flex-col overflow-hidden bg-gray-100 text-black transition-all duration-300 hover:shadow-xl"
+              className="flex flex-col overflow-hidden bg-gray-100 text-black shadow-md transition-all duration-300 hover:shadow-xl"
             >
+              {/* Card Header */}
               <CardHeader className="p-0">
                 <div className="overflow-hidden">
                   <Image
-                    className="max-h-48 rounded-t-lg transition-transform duration-300 hover:scale-105"
+                    className="max-h-48 w-full rounded-t-lg object-cover transition-transform duration-300 hover:scale-105"
                     src={event.thumbnail || "/fallback-image.png"}
                     alt={`${event.topic} thumbnail`}
                     width={400}
@@ -79,12 +81,14 @@ export default function AlumniConnect() {
                   />
                 </div>
               </CardHeader>
+
+              {/* Card Content */}
               <CardContent className="flex-grow p-6">
                 <div className="mb-6">
                   <CardTitle className="text-xl font-bold">
                     {event.topic}
                   </CardTitle>
-                  <div className="mt-3 flex items-center gap-2 text-sm text-blue-900">
+                  <div className="mt-3 flex flex-wrap items-center gap-2 text-sm text-blue-900">
                     <Badge
                       variant="outline"
                       className="font-bold text-blue-900"
@@ -125,6 +129,8 @@ export default function AlumniConnect() {
                   )}
                 </div>
               </CardContent>
+
+              {/* Card Footer */}
               <CardFooter className="flex flex-col items-start gap-2 border-t border-gray-200 p-4">
                 <div className="flex w-full items-center gap-2 text-blue-900">
                   <Calendar className="h-5 w-5" />
@@ -134,7 +140,11 @@ export default function AlumniConnect() {
                 </div>
                 <Button
                   variant="outline"
-                  className={`w-full ${isEventExpired(event.eventDate) ? "bg-red-500/10 text-red-500 hover:text-red-600" : "bg-green-500/40 text-green-500 hover:text-green-600"}`}
+                  className={`w-full ${
+                    isEventExpired(event.eventDate)
+                      ? "bg-red-500/10 text-red-500 hover:text-red-600"
+                      : "bg-green-500/40 text-green-500 hover:text-green-600"
+                  }`}
                 >
                   {isEventExpired(event.eventDate)
                     ? "Event Expired"
