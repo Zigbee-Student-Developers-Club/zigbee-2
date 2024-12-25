@@ -187,9 +187,7 @@ const UploadProfilePage = () => {
               <Input
                 type="text"
                 value={user?.batch || ""}
-                onChange={(e) =>
-                  handleInputChange("batch", Number(e.target.value))
-                }
+                onChange={(e) => handleInputChange("batch", e.target.value)}
                 placeholder="2025"
               />
             </div>

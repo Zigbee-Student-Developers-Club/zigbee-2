@@ -5,9 +5,9 @@ export const GET = async (req: NextRequest) => {
   try {
     const { searchParams } = new URL(req.url);
 
-    const batch = searchParams.get("domain") || undefined;
+    const domain = searchParams.get("domain") || undefined;
 
-    const { result, error } = await fetchResources(batch);
+    const { result, error } = await fetchResources(domain);
 
     if (error) {
       return NextResponse.json({ error }, { status: 500 });

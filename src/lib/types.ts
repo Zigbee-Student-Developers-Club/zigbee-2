@@ -42,7 +42,7 @@ export const validDomains = [
 export interface AlumniType {
   id?: string;
   name: string;
-  batch: number;
+  batch: string;
   profileImg: string;
   linkedInUrl: string;
   position: string;
@@ -53,7 +53,7 @@ export interface AlumniType {
 export interface ContributorType {
   id?: string;
   name: string;
-  batch: number;
+  batch: string;
   profileImg: string;
   linkedInUrl: string;
   isContributor: boolean;

@@ -10,7 +10,7 @@ export const GET = async (req: NextRequest) => {
 
     const { searchParams } = new URL(req.url);
 
-    const batch = parseInt(searchParams.get("batch") || "", 10);
+    const batch = searchParams.get("batch") || "";
 
     const { result, error } = await fetchAlumni(batch);
 

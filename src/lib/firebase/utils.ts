@@ -282,7 +282,7 @@ export const fetchUser = async (
 };
 
 // fetch alumni
-export const fetchAlumni = async (batch?: number) => {
+export const fetchAlumni = async (batch?: string) => {
   let result = null;
   let error: string | null = null;
 
