@@ -1,7 +1,7 @@
 import { addResource } from "@/lib/firebase/utils";
 import { authenticate } from "@/lib/middleware/authenticate";
 import { adminOnly } from "@/lib/middleware/authorize";
-import { ResourceType } from "@/lib/types";
+import { ResourceType, validDomains } from "@/lib/types";
 import { NextRequest, NextResponse } from "next/server";
 
 export const POST = async (req: NextRequest) => {
@@ -21,10 +21,19 @@ export const POST = async (req: NextRequest) => {
       );
     }
 
+    if (validDomains.includes(domain) === false) {
+      return NextResponse.json({
+        error:
+          "Invalid domain. Please choose from the available options. (aptitude, dsa, interview, softskills, frontend, backend, fullstack, mobile, networking, design, datascience, ai, devops, cybersecurity, blockchain, gamedev, opensource, other)",
+      });
+    }
+
+    const resourceDomain = validDomains.includes(domain) ? domain : "other";
+
     const data: ResourceType = {
       name,
       url,
-      domain,
+      domain: resourceDomain,
       author,
       uploadedOn: new Date().toISOString(),
     };

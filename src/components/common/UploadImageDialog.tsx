@@ -28,11 +28,28 @@ const UploadImageDialog: React.FC<UploadDialogProps> = ({
 }) => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files?.[0]) {
-      setSelectedFile(e.target.files[0]);
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    // Validate file type
+    if (!file.type.startsWith("image/")) {
+      setErrorMessage("Only image files are allowed.");
+      setSelectedFile(null); // Clear any previously selected file
+      return;
     }
+
+    // Validate file size (max 2MB)
+    if (file.size > 2 * 1024 * 1024) {
+      setErrorMessage("File size cannot exceed 2MB.");
+      setSelectedFile(null); // Clear any previously selected file
+      return;
+    }
+
+    setErrorMessage(null); // Clear any existing errors
+    setSelectedFile(file);
   };
 
   const handleSave = async () => {
@@ -104,12 +121,20 @@ const UploadImageDialog: React.FC<UploadDialogProps> = ({
               Selected File: No File
             </Text>
           )}
+          {errorMessage && (
+            <Text variant="small" className="text-red-500">
+              {errorMessage}
+            </Text>
+          )}
         </div>
         <DialogFooter className="flex gap-2">
           <Button variant="secondary" onClick={onClose}>
             Cancel
           </Button>
-          <Button onClick={handleSave} disabled={!selectedFile || isLoading}>
+          <Button
+            onClick={handleSave}
+            disabled={!selectedFile || !!errorMessage || isLoading}
+          >
             {isLoading ? "Uploading..." : "Save"}
           </Button>
         </DialogFooter>

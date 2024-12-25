@@ -12,27 +12,35 @@ export const POST = async (req: NextRequest) => {
     const adminResponse = await adminOnly(req);
     if (adminResponse.status !== 200) return adminResponse;
 
-    const { topic, eventDate, location, thumbnail, speakers }: EventType =
-      await req.json();
+    const {
+      topic,
+      eventDateTime,
+      location,
+      thumbnail,
+      speakers,
+    }: EventType & { eventDateTime: string } = await req.json();
 
     if (
       !topic ||
-      !eventDate ||
+      !eventDateTime ||
       !location ||
       !thumbnail ||
       !speakers ||
       !Array.isArray(speakers)
     ) {
       return NextResponse.json(
-        { error: "All fields are required and speakers must be an array." },
+        { error: "All fields are required, and speakers must be an array." },
         { status: 400 }
       );
     }
 
-    const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
-    if (!dateRegex.test(eventDate)) {
+    const dateTimeRegex = /^\d{2}-\d{2}-\d{4} \d{2}:\d{2}:\d{2}$/;
+    if (!dateTimeRegex.test(eventDateTime)) {
       return NextResponse.json(
-        { error: "eventDate must be in the format YYYY-MM-DD." },
+        {
+          error:
+            "eventDateTime must be in the format DD-MM-YYYY HH:MM:SS. (24h format)",
+        },
         { status: 400 }
       );
     }
@@ -50,9 +58,22 @@ export const POST = async (req: NextRequest) => {
       }
     }
 
+    const [day, month, year, hour, minute, second] = eventDateTime
+      .match(/\d+/g)!
+      .map(Number);
+
+    const isoDateTime = new Date(
+      year,
+      month - 1,
+      day,
+      hour,
+      minute,
+      second
+    ).toISOString();
+
     const data: EventType = {
       topic,
-      eventDate: new Date(eventDate).toISOString(),
+      eventDate: isoDateTime,
       location,
       thumbnail,
       speakers,

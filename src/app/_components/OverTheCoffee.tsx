@@ -17,7 +17,7 @@ export default function OverTheCoffee() {
   return (
     <div ref={ref}>
       <MotionDivProvider>
-        <div className="mx-auto my-16 max-w-7xl rounded-2xl px-8 py-16">
+        <div className="mx-auto my-16 max-w-7xl rounded-2xl py-16">
           <div className="flex flex-col items-center md:flex-row">
             <div className="flex-1 space-y-6 md:gap-16 md:space-y-10">
               <h2 className="text-3xl font-black leading-tight sm:text-4xl lg:text-6xl">
