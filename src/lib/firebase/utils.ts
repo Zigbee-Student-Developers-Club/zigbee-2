@@ -298,7 +298,7 @@ export const fetchAlumni = async (batch?: string) => {
   let error: string | null = null;
 
   try {
-    let q = query(userCollection, where("role", "==", "alumni"));
+    let q = query(userCollection, where("role", "in", ["student", "alumni"]));
 
     if (batch) {
       q = query(q, where("batch", "==", batch));
