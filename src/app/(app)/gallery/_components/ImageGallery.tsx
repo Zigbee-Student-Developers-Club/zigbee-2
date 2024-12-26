@@ -3,14 +3,15 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 
 const images = [
-  { src: "/reflectionHero.webp", alt: "Image 1", description: "Beautiful reflection on a serene lake." },
-  { src: "/reflectionHero.webp", alt: "Image 2", description: "Sunset over a quiet field." },
-  { src: "/reflectionHero.webp", alt: "Image 3", description: "Mountain peaks under a clear sky." },
-  { src: "/reflectionHero.webp", alt: "Image 4", description: "Flowing river through dense forest." },
-  { src: "/reflectionHero.webp", alt: "Image 5", description: "Stunning night sky with stars." },
-  { src: "/reflectionHero.webp", alt: "Image 6", description: "Calm ocean waves at sunrise." },
-  { src: "/reflectionHero.webp", alt: "Image 7", description: "Snow-covered trees in winter." },
-  { src: "/reflectionHero.webp", alt: "Image 8", description: "Desert dunes illuminated by sunlight." },
+  { src: "https://res.cloudinary.com/dljszrwl0/image/upload/v1735222483/WhatsApp_Image_2024-12-25_at_12.35.46_cfb60055_dzhmb3.webp", alt: "Image 1", description: "On the occuasion of tech seminar with our respected alumni debasis vai " },
+  { src: "https://res.cloudinary.com/dljszrwl0/image/upload/v1735223282/WhatsApp_Image_2024-12-26_at_00.33.40_a98dcde7_bhgrsq.webp", alt: "Image 4", description: "On the occasion of teacher's day 2024" },
+  { src: "https://res.cloudinary.com/dljszrwl0/image/upload/v1735231099/WhatsApp_Image_2024-12-26_at_19.55.10_4377a713_c3pk9d.jpg", alt: "Image 3", description: "With respected alumini Sudhansu vai" },
+  { src: "https://res.cloudinary.com/dljszrwl0/image/upload/v1735223282/WhatsApp_Image_2024-12-26_at_00.33.40_a98dcde7_bhgrsq.webp", alt: "Image 4", description: "On the occasion of teacher's day 2024" },
+  { src: "https://res.cloudinary.com/dljszrwl0/image/upload/v1735224005/DSC_0409_kdn693.webp", alt: "Image 5", description: "On occasion of tathya 2023." },
+  { src: "https://res.cloudinary.com/dljszrwl0/image/upload/v1735224011/DSC_0455_imkauv.webp", alt: "Image 6", description: "On occasion of tathya 2023." },
+  { src: "https://res.cloudinary.com/dljszrwl0/image/upload/v1735224011/DSC_0455_imkauv.webp", alt: "Image 7", description: "On occasion of tathya 2023." },
+  { src: "https://res.cloudinary.com/dljszrwl0/image/upload/v1735224056/DSC_0297_u6an1a.webp", alt: "Image 8", description: "On occasion of tathya 2022." },
+  { src: "https://res.cloudinary.com/dljszrwl0/image/upload/v1735224322/2_tmoiq0.webp", alt: "Image 8", description: "On occasion of tathya 2022." },
 ];
 
 export const ImageGallery = () => {
@@ -61,7 +62,7 @@ export const ImageGallery = () => {
         {images.concat(images).map((image, index) => (
           <div
             key={index}
-            className="shrink-0 cursor-pointer"
+            className="shrink-0 cursor-pointer h-64 w-80"
             onClick={() => handleImageClick(image.src, image.alt, image.description)}
           >
             <Image
@@ -69,7 +70,7 @@ export const ImageGallery = () => {
               alt={image.alt}
               width={300}
               height={300}
-              className="rounded-lg object-cover"
+              className="rounded-lg object-cover w-full h-full"
             />
           </div>
         ))}
@@ -82,7 +83,7 @@ export const ImageGallery = () => {
         {images.concat(images).map((image, index) => (
           <div
             key={index}
-            className="shrink-0 cursor-pointer"
+            className="shrink-0 cursor-pointer h-64 w-80"
             onClick={() => handleImageClick(image.src, image.alt, image.description)}
           >
             <Image
@@ -90,7 +91,7 @@ export const ImageGallery = () => {
               alt={image.alt}
               width={300}
               height={300}
-              className="rounded-lg object-cover"
+              className="rounded-lg object-cover w-full h-full"
             />
           </div>
         ))}
@@ -106,8 +107,8 @@ export const ImageGallery = () => {
             <Image
               src={modalImage.src}
               alt={modalImage.alt}
-              width={800} // Increased width for larger view
-              height={800} // Increased height for larger view
+              width={600} // Increased width for larger view
+              height={600} // Increased height for larger view
               className="rounded-lg"
             />
             <p className="mt-4 text-center text-lg text-gray-700">

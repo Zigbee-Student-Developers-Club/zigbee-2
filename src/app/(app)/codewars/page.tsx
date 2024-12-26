@@ -10,51 +10,51 @@ import { LayoutGrid } from "@/components/ui/layout-grid";
 import MotionDivProvider from "@/components/provider/MotionDivProvider";
 
 const data = [
-  {
-    batch: 2024,
-    competitions: [
-      {
-        name: "Aptitude + DSA 2024",
-        badges: [
-          {
-            name: "Emily Davis",
-            rank: "1st",
-            bgColor: "bg-yellow-500",
-            imageUrl: "/codewars.webp",
-          },
-          {
-            name: "Chris Lee",
-            rank: "2nd",
-            bgColor: "bg-[#C0C0C0]",
-            imageUrl: "/codewars.webp",
-          },
-          {
-            name: "Sam Wilson",
-            rank: "3rd",
-            bgColor: "bg-[#CD7F32]",
-            imageUrl: "/codewars.webp",
-          },
-        ],
-      },
-      {
-        name: "Mini Hackathon 2024",
-        badges: [
-          {
-            name: "Sriram Sahoo",
-            rank: "Winner",
-            bgColor: "bg-yellow-500",
-            imageUrl: "/codewars.webp",
-          },
-          {
-            name: "Bhubanesh Maharana",
-            rank: "Runners up",
-            bgColor: "bg-[#C0C0C0]",
-            imageUrl: "/codewars.webp",
-          },
-        ],
-      },
-    ],
-  },
+  // {
+  //   batch: 2024,
+  //   competitions: [
+  //     {
+  //       name: "Aptitude + DSA 2024",
+  //       badges: [
+  //         {
+  //           name: "Emily Davis",
+  //           rank: "1st",
+  //           bgColor: "bg-yellow-500",
+  //           imageUrl: "/codewars.webp",
+  //         },
+  //         {
+  //           name: "Chris Lee",
+  //           rank: "2nd",
+  //           bgColor: "bg-[#C0C0C0]",
+  //           imageUrl: "/codewars.webp",
+  //         },
+  //         {
+  //           name: "Sam Wilson",
+  //           rank: "3rd",
+  //           bgColor: "bg-[#CD7F32]",
+  //           imageUrl: "/codewars.webp",
+  //         },
+  //       ],
+  //     },
+  //     {
+  //       name: "Mini Hackathon 2024",
+  //       badges: [
+  //         {
+  //           name: "Sriram Sahoo",
+  //           rank: "Winner",
+  //           bgColor: "bg-yellow-500",
+  //           imageUrl: "/codewars.webp",
+  //         },
+  //         {
+  //           name: "Bhubanesh Maharana",
+  //           rank: "Runners up",
+  //           bgColor: "bg-[#C0C0C0]",
+  //           imageUrl: "/codewars.webp",
+  //         },
+  //       ],
+  //     },
+  //   ],
+  // },
   {
     batch: 2023,
     competitions: [
@@ -62,22 +62,22 @@ const data = [
         name: "Aptitude + DSA 2023",
         badges: [
           {
-            name: "Babita Mohalik",
+            name: "Babita",
             rank: "1st",
             bgColor: "bg-yellow-500",
-            imageUrl: "/codewars.webp",
+            imageUrl: "https://res.cloudinary.com/dljszrwl0/image/upload/v1735222476/WhatsApp_Image_2024-12-26_at_16.10.57_68e20c6e_mxk7kt.webp",
           },
           {
-            name: "Satya Brata ",
+            name: "Pankaj",
             rank: "2nd",
             bgColor: "bg-[#C0C0C0]",
-            imageUrl: "/codewars.webp",
+            imageUrl: "https://res.cloudinary.com/dljszrwl0/image/upload/v1735222464/IMG_20230912_202435_ctfkfu.webp",
           },
           {
-            name: "7",
+            name: "Satyabrata",
             rank: "3rd",
             bgColor: "bg-[#CD7F32]",
-            imageUrl: "/codewars.webp",
+            imageUrl: "https://res.cloudinary.com/dljszrwl0/image/upload/v1735222464/20230117_222217_skfeh0.webp",
           },
         ],
       },
@@ -85,16 +85,16 @@ const data = [
         name: "Web war 2023",
         badges: [
           {
-            name: "Sriram Sahoo",
+            name: "Sriram",
             rank: "Winner",
             bgColor: "bg-yellow-500",
-            imageUrl: "/codewars.webp",
+            imageUrl: "https://res.cloudinary.com/dljszrwl0/image/upload/v1735222467/IMG_20241226_024625_yfhzco.webp",
           },
           {
-            name: "Bhubanesh Maharana",
+            name: "Bhubanesh",
             rank: "Runners up",
             bgColor: "bg-[#C0C0C0]",
-            imageUrl: "/codewars.webp",
+            imageUrl: "https://res.cloudinary.com/dljszrwl0/image/upload/v1735222465/WhatsApp_Image_2024-09-22_at_20.10.35_e50cdb70_htijqz.webp",
           },
         ],
       },
@@ -237,12 +237,12 @@ export default function CodeWar() {
 
         {/* Batch Selector */}
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-start gap-4 px-10 md:flex-row">
-          <Text className="font-medium">Choose the batch:</Text>
+          <Text className="font-medium">Choose the year:</Text>
           <Select2
             data={batchOptions}
             value={selectedBatch?.toString()}
             onChange={(value) => setSelectedBatch(Number(value))}
-            placeholder="Select a batch"
+            placeholder=" year"
           />
         </div>
 

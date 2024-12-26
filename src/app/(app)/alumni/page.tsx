@@ -11,7 +11,8 @@ import { useFetchAlumni } from "@/lib/SWRhooks/useSWR";
 import MotionDivProvider from "@/components/provider/MotionDivProvider";
 
 export default function Alumni() {
-  const currYear = new Date().getFullYear() + 2;
+  const currDate = new Date();
+  const currYear = currDate.getMonth() < 8 ? currDate.getFullYear() + 1 : currDate.getFullYear() + 2;
   const [selectedYear, setSelectedYear] = useState<string>(`${currYear}`);
   const { alumniData, isLoading, error } = useFetchAlumni(selectedYear);
 
@@ -56,7 +57,7 @@ export default function Alumni() {
                 </TabsTrigger>
               ))}
             </div>
-            <ScrollBar orientation="horizontal" />
+            <ScrollBar orientation="horizontal" className="scrollbar-track-inherit"/>
           </ScrollArea>
         </TabsList>
 
