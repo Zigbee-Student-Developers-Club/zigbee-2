@@ -5,7 +5,6 @@ import { cn } from "@/lib/utils";
 
 type Card = {
   id: number;
-  content: JSX.Element | React.ReactNode | string;
   className: string;
   thumbnail: string;
 };
@@ -36,12 +35,11 @@ export const LayoutGrid = ({ cards }: { cards: Card[] }) => {
               selected?.id === card.id
                 ? "absolute inset-0 z-50 m-auto flex h-1/2 w-full cursor-pointer flex-col flex-wrap items-center justify-center rounded-lg md:w-1/2"
                 : lastSelected?.id === card.id
-                  ? "z-40 h-full w-full rounded-xl bg-white"
-                  : "h-full w-full rounded-xl bg-white"
+                ? "z-40 h-full w-full rounded-xl bg-white"
+                : "h-full w-full rounded-xl bg-white"
             )}
             layoutId={`card-${card.id}`}
           >
-            {selected?.id === card.id && <SelectedCard selected={selected} />}
             <ImageComponent card={card} />
           </motion.div>
         </div>
@@ -70,43 +68,5 @@ const ImageComponent = ({ card }: { card: Card }) => {
       )}
       alt="thumbnail"
     />
-  );
-};
-
-const SelectedCard = ({ selected }: { selected: Card | null }) => {
-  return (
-    <div className="relative z-[60] flex h-full w-full flex-col justify-end rounded-lg bg-transparent p-12 shadow-2xl">
-      <motion.div
-        initial={{
-          opacity: 0,
-        }}
-        animate={{
-          opacity: 0.6,
-        }}
-        className="absolute inset-0 z-10 h-full w-full bg-black bg-opacity-30"
-      />
-      <motion.div
-        layoutId={`content-${selected?.id}`}
-        initial={{
-          opacity: 0,
-          y: 100,
-        }}
-        animate={{
-          opacity: 1,
-          y: 0,
-        }}
-        exit={{
-          opacity: 0,
-          y: 100,
-        }}
-        transition={{
-          duration: 0.3,
-          ease: "easeInOut",
-        }}
-        className="relative z-[70] inline rounded-lg bg-black bg-opacity-60 p-2 px-8 pb-4 text-center text-3xl text-white"
-      >
-        {selected?.content}
-      </motion.div>
-    </div>
   );
 };

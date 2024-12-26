@@ -6,7 +6,7 @@ import MotionDivProvider from "@/components/provider/MotionDivProvider";
 const Hero = () => {
   return (
     <MotionDivProvider>
-      <div className="flex flex-col items-center space-y-8 md:flex-row md:space-x-1 md:space-y-0">
+      <div className="flex flex-col items-center space-y-8 md:flex-row md:space-x-1 md:py-14  ">
         <div className="flex-1 space-y-5 text-center md:space-y-10">
           <h2 className="text-3xl font-black sm:text-4xl lg:text-6xl">
             Learn . Apply . Grow

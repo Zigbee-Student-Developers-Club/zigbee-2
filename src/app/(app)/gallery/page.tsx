@@ -24,7 +24,7 @@ export default function Gallery() {
         {/* Gallery Section */}
         <div className="container mx-auto">
           <Title size="medium" className="my-16 text-center">
-            Image Gallery of Our Event Tathya 2023 ✨
+            Some Memories of Our Journey ✨
           </Title>
 
           <ImageGallery />

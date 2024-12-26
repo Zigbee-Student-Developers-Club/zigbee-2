@@ -20,6 +20,7 @@ import MotionDivProvider from "@/components/provider/MotionDivProvider";
 import { useSession } from "next-auth/react";
 import { Textarea } from "@/components/ui/textarea";
 import { useRouter } from "next/navigation";
+import { toast } from "@/hooks/use-toast";
 
 const UploadProfilePage = () => {
   const [user, setUser] = useState<Partial<UserData>>({
@@ -79,7 +80,7 @@ const UploadProfilePage = () => {
             image: user?.profileImg,
           },
         });
-        alert("Profile saved successfully!");
+        toast({description: "Your profile uploaded successfully"})
         router.push("/");
       }
     } catch (error) {

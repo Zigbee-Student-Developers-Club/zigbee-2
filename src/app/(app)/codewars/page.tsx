@@ -17,51 +17,6 @@ const data = [
         name: "Aptitude + DSA 2024",
         badges: [
           {
-            name: "John Doe",
-            rank: "1st",
-            bgColor: "bg-yellow-500",
-            imageUrl: "/codewars.webp",
-          },
-          {
-            name: "Jane Smith",
-            rank: "2nd",
-            bgColor: "bg-[#C0C0C0]",
-            imageUrl: "/codewars.webp",
-          },
-          {
-            name: "Alex Johnson",
-            rank: "3rd",
-            bgColor: "bg-[#CD7F32]",
-            imageUrl: "/codewars.webp",
-          },
-        ],
-      },
-      {
-        name: "Mini Hackathon 2024",
-        badges: [
-          {
-            name: "Alice Brown",
-            rank: "Winner",
-            bgColor: "bg-yellow-500",
-            imageUrl: "/codewars.webp",
-          },
-          {
-            name: "Bob White",
-            rank: "Runners up",
-            bgColor: "bg-[#C0C0C0]",
-            imageUrl: "/codewars.webp",
-          },
-        ],
-      },
-    ],
-  },
-  {
-    batch: 2023,
-    competitions: [
-      {
-        name: "Aptitude + DSA 2023",
-        badges: [
-          {
             name: "Emily Davis",
             rank: "1st",
             bgColor: "bg-yellow-500",
@@ -82,16 +37,61 @@ const data = [
         ],
       },
       {
-        name: "Web war 2023",
+        name: "Mini Hackathon 2024",
         badges: [
           {
-            name: "Sophia Brown",
+            name: "Sriram Sahoo",
             rank: "Winner",
             bgColor: "bg-yellow-500",
             imageUrl: "/codewars.webp",
           },
           {
-            name: "Ethan Black",
+            name: "Bhubanesh Maharana",
+            rank: "Runners up",
+            bgColor: "bg-[#C0C0C0]",
+            imageUrl: "/codewars.webp",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    batch: 2023,
+    competitions: [
+      {
+        name: "Aptitude + DSA 2023",
+        badges: [
+          {
+            name: "Babita Mohalik",
+            rank: "1st",
+            bgColor: "bg-yellow-500",
+            imageUrl: "/codewars.webp",
+          },
+          {
+            name: "Satya Brata ",
+            rank: "2nd",
+            bgColor: "bg-[#C0C0C0]",
+            imageUrl: "/codewars.webp",
+          },
+          {
+            name: "7",
+            rank: "3rd",
+            bgColor: "bg-[#CD7F32]",
+            imageUrl: "/codewars.webp",
+          },
+        ],
+      },
+      {
+        name: "Web war 2023",
+        badges: [
+          {
+            name: "Sriram Sahoo",
+            rank: "Winner",
+            bgColor: "bg-yellow-500",
+            imageUrl: "/codewars.webp",
+          },
+          {
+            name: "Bhubanesh Maharana",
             rank: "Runners up",
             bgColor: "bg-[#C0C0C0]",
             imageUrl: "/codewars.webp",
@@ -102,48 +102,81 @@ const data = [
   },
 ];
 
-const gallery2024 = [
+const gallery2023 = [
   {
     id: 1,
-    content: "hello",
     className: "md:col-span-2",
     thumbnail:
-      "https://images.unsplash.com/photo-1588880331179-bc9b93a8cb5e?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "https://res.cloudinary.com/dljszrwl0/image/upload/v1735151090/codewars3.a3487541_osrppu.webp",
   },
   {
     id: 2,
-    content: "hello",
     className: "col-span-1",
     thumbnail:
-      "https://images.unsplash.com/photo-1464457312035-3d7d0e0c058e?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "https://res.cloudinary.com/dljszrwl0/image/upload/v1735151090/codewars2.80feba04_m06z65.webp",
   },
   {
     id: 3,
-    content: "hello",
     className: "col-span-1 md:row-span-2",
     thumbnail:
-      "https://images.unsplash.com/photo-1588880331179-bc9b93a8cb5e?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "https://res.cloudinary.com/dljszrwl0/image/upload/v1735143820/MediaAssets/q5zdujirz6c6glstvuag.webp",
   },
   {
     id: 4,
-    content: "hello",
     className: "md:col-span-2",
     thumbnail:
-      "https://images.unsplash.com/photo-1475070929565-c985b496cb9f?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "https://res.cloudinary.com/dljszrwl0/image/upload/v1735146004/codewars2023-4_fajy3f.webp",
   },
   {
     id: 5,
-    content: "hello",
     className: "col-span-1",
     thumbnail:
-      "https://images.unsplash.com/photo-1588880331179-bc9b93a8cb5e?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "https://res.cloudinary.com/dljszrwl0/image/upload/v1735151090/codewars2.80feba04_m06z65.webp",
   },
   {
     id: 6,
-    content: "hello",
     className: "col-span-1",
     thumbnail:
-      "https://images.unsplash.com/photo-1475070929565-c985b496cb9f?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "https://res.cloudinary.com/dljszrwl0/image/upload/v1735146004/codewars2023-4_fajy3f.webp",
+  },
+];
+
+const gallery2024 = [
+  {
+    id: 1,
+    className: "md:col-span-2",
+    thumbnail:
+      "https://res.cloudinary.com/dljszrwl0/image/upload/v1735151837/WhatsApp_Image_2024-12-25_at_12.32.39_ef6f02a1_kot1n2.jpg",
+  },
+  {
+    id: 2,
+    className: "col-span-1",
+    thumbnail:
+      "https://res.cloudinary.com/dljszrwl0/image/upload/v1735151090/WhatsApp_Image_2024-12-25_at_12.32.37_ec768427_v3eoso.webp",
+  },
+  {
+    id: 3,
+    className: "col-span-1 md:row-span-2",
+    thumbnail:
+      "https://res.cloudinary.com/dljszrwl0/image/upload/v1735151837/WhatsApp_Image_2024-12-25_at_12.32.39_ef6f02a1_kot1n2.jpg",
+  },
+  {
+    id: 4,
+    className: "md:col-span-2",
+    thumbnail:
+      "https://res.cloudinary.com/dljszrwl0/image/upload/v1735151091/WhatsApp_Image_2024-12-25_at_12.54.10_3a35c09d_cnkdtw.webp",
+  },
+  {
+    id: 5,
+    className: "col-span-1",
+    thumbnail:
+      "https://res.cloudinary.com/dljszrwl0/image/upload/v1735151090/WhatsApp_Image_2024-12-25_at_12.32.37_ec768427_v3eoso.webp",
+  },
+  {
+    id: 6,
+    className: "col-span-1",
+    thumbnail:
+      "https://res.cloudinary.com/dljszrwl0/image/upload/v1735151090/WhatsApp_Image_2024-12-25_at_12.54.08_4d9caa93_thdbj0.webp",
   },
 ];
 
@@ -158,7 +191,7 @@ export default function CodeWar() {
   const [selectedBatch, setSelectedBatch] = useState(2024);
 
   const batchOptions = data.map((entry) => ({
-    label: `Batch ${entry?.batch}`,
+    label: `Year ${entry?.batch}`,
     value: entry?.batch?.toString(),
   }));
 
@@ -174,6 +207,17 @@ export default function CodeWar() {
         imageUrl={badge?.imageUrl}
       />
     ));
+  };
+
+  const getGalleryByBatch = () => {
+    switch (selectedBatch) {
+      case 2024:
+        return gallery2024;
+      case 2023:
+        return gallery2023;
+      default:
+        return [];
+    }
   };
 
   return (
@@ -219,9 +263,8 @@ export default function CodeWar() {
           <Title size="medium" className="text-center">
             A Glimpse of Codewars {selectedBatch} ✨
           </Title>
-
           <div className="mx-auto h-[1000px] w-full max-w-7xl md:h-[950px]">
-            <LayoutGrid cards={gallery2024} />
+            <LayoutGrid cards={getGalleryByBatch()} />
           </div>
         </div>
       </div>

@@ -5,6 +5,7 @@ import "./globals.css";
 import Header from "./_components/Header";
 import Footer from "./_components/Footer";
 import NextAuthSessionProvider from "@/components/provider/NextAuthSessionProvider";
+import { Toaster } from "@/components/ui/toaster";
 
 const nunito = Nunito({
   subsets: ["latin"],
@@ -26,7 +27,7 @@ export default function RootLayout({
       <body className={`${nunito.className} min-w-80 antialiased`}>
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
+          defaultTheme="light"
           enableSystem
           disableTransitionOnChange
         >
@@ -37,6 +38,7 @@ export default function RootLayout({
             </div>
           </NextAuthSessionProvider>
           <Footer />
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>

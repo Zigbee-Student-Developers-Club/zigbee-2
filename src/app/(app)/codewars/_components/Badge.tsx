@@ -37,7 +37,9 @@ export const Badge = ({
         <div
           className={`clip-bend relative flex h-8 w-36 items-center justify-center shadow-md ${bgColor}`}
         >
-          <span className="font-semibold text-black">{name}</span>
+          <span className="overflow-hidden text-ellipsis whitespace-nowrap font-semibold text-black px-4">
+            {name}
+          </span>
         </div>
       </div>
 

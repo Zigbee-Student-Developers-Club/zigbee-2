@@ -23,6 +23,7 @@ import { useFetchUserProfile } from "@/lib/SWRhooks/useSWR";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 import { updateUserData } from "@/lib/axios/allApiCall";
 import { useSession } from "next-auth/react";
+import { toast } from "@/hooks/use-toast";
 
 const ProfilePage = () => {
   const { userProfile, isLoading, isValidating, error } = useFetchUserProfile();
@@ -70,7 +71,7 @@ const ProfilePage = () => {
             image: user?.profileImg,
           },
         });
-        alert("Your profile updated successfully");
+        toast({ description: "Your profile updated successfully." });
         setEditMode(false);
       } else {
         alert("Some error occurred ");

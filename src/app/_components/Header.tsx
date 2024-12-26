@@ -1,7 +1,7 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { useTheme } from "next-themes";
+// import { Button } from "@/components/ui/button";
+// import { useTheme } from "next-themes";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
@@ -12,7 +12,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Moon, Sun, Menu, X } from "lucide-react";
+import {  Menu, X } from "lucide-react";
 import Logo from "./Logo";
 import { signOut, useSession } from "next-auth/react";
 
@@ -25,12 +25,13 @@ const navItemsData = [
   { name: "Magazines", route: "/magazines" },
 ];
 const Header = () => {
-  const { setTheme } = useTheme();
+  // for now comment theme toggle unless the color pallate for dark theme is set
+  // const { setTheme } = useTheme();
   const router = useRouter();
   const { data: session, status } = useSession();
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [themeMenuOpen, setThemeMenuOpen] = useState(false);
+  // const [themeMenuOpen, setThemeMenuOpen] = useState(false);
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
 
   const handleNavigation = (navigate: string) => {
@@ -45,7 +46,7 @@ const Header = () => {
         console.error("Unknown navigation option");
     }
     // Close dropdowns when navigating
-    setThemeMenuOpen(false);
+    // setThemeMenuOpen(false);
     setProfileMenuOpen(false);
   };
 
@@ -91,7 +92,7 @@ const Header = () => {
         {/* Theme and Profile */}
         <div className="flex items-center gap-4">
           {/* Theme Toggle */}
-          <DropdownMenu open={themeMenuOpen} onOpenChange={setThemeMenuOpen}>
+          {/* <DropdownMenu open={themeMenuOpen} onOpenChange={setThemeMenuOpen}>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" size="icon">
                 <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
@@ -110,7 +111,7 @@ const Header = () => {
                 System
               </DropdownMenuItem>
             </DropdownMenuContent>
-          </DropdownMenu>
+          </DropdownMenu> */}
 
           {/* Profile Dropdown */}
           {status !== "loading" && (
