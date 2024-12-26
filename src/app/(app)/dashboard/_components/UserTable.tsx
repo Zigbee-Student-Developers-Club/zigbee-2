@@ -48,6 +48,7 @@ import DeleteDialogBox from "@/app/(app)/dashboard/_components/DeleteDialogBox";
 import { deleteUserById } from "@/lib/axios/allApiCall";
 import UserUpdateDialogBox from "./userUpdateDialogBox";
 import { Switch } from "@/components/ui/switch";
+import { toast } from "@/hooks/use-toast";
 
 const UserTable = () => {
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -151,7 +152,7 @@ const UserTable = () => {
 
         if ("message" in response) {
           // If deletion is successful, log success and refresh users list
-          alert(`${selectedUser.name} deleted successfully.`);
+          toast({description :`${selectedUser.name} deleted successfully.`});
           // Refresh the data using mutate function to update the user list
           refreshUsers(); // No need for await, just call mutate
         } else {
@@ -168,9 +169,6 @@ const UserTable = () => {
     }
   }, [selectedUser, refreshUsers]);
 
-  const handleSaveChanges = () => {
-    console.log("triggered");
-  };
 
   useEffect(() => {
     setPage(1);
@@ -405,7 +403,6 @@ const UserTable = () => {
         <UserUpdateDialogBox
           isOpen={userDataUpdateDialogOpen}
           onClose={() => setUserDataUpdateDialogOpen(false)}
-          onSave={handleSaveChanges}
           user={selectedUser}
         />
       )}

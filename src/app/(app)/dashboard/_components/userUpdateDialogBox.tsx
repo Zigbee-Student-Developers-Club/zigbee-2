@@ -23,11 +23,11 @@ import Title from "@/components/ui/title";
 import { Textarea } from "@/components/ui/textarea";
 import { UserData, validPositions, validRoles } from "@/lib/types";
 import { updateUserById } from "@/lib/axios/allApiCall";
+import { toast } from "@/hooks/use-toast";
 
 interface UserUpdateDialogBoxProps {
   isOpen: boolean;
   onClose: () => void;
-  onSave: (updatedData: UserData) => void;
   user: UserData; // UserData data to prepopulate the form
 }
 
@@ -82,7 +82,7 @@ const UserUpdateDialogBox: React.FC<UserUpdateDialogBoxProps> = ({
   const handleSave = async () => {
     const response = await updateUserById(userData?.id || "", userData);
     if (response) {
-      alert("success");
+      toast({ description: "user data updated successfully" });
     }
     onClose();
   };

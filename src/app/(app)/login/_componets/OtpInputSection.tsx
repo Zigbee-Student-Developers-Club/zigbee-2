@@ -41,15 +41,15 @@ const OtpInputSection: React.FC<OtpInputSectionProps> = ({
   // Update parent OTP state and check if it's fully filled
   useEffect(() => {
     setOtp(otp);
-    setISOtpFilled(otp.length === 6); // Assuming OTP length is 6
+    setISOtpFilled(otp.length === 6); 
   }, [otp, setOtp, setISOtpFilled]);
 
   // Clear error message when OTP changes
   useEffect(() => {
     if (message) {
-      setMessage(""); // Clear the error message
+      setMessage(""); 
     }
-  }, [otp, setMessage]);
+  }, [otp, setMessage,message]);
 
   return (
     <div className="relative flex flex-col items-center justify-center gap-2 bg-cyan-50 px-6 py-10 dark:bg-indigo-300">
