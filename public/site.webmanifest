@@ -34,10 +34,24 @@
   ],
   "screenshots": [
     {
-      "src": "https://res.cloudinary.com/dljszrwl0/image/upload/v1735248181/og-image_cxf84l.webp",
-      "sizes": "1200x630",
-      "type": "image/webp",
+      "src": "https://res.cloudinary.com/dljszrwl0/image/upload/v1735250604/mobile4_fikkys.png",
+      "type": "image/png",
       "label": "Home page screenshot of Zigbee OUTR"
+    },
+    {
+      "src": "https://res.cloudinary.com/dljszrwl0/image/upload/v1735250648/mobile1_ktqzay.png",
+      "type": "image/png",
+      "label": "Events page screenshot of Zigbee OUTR"
+    },
+    {
+      "src": "https://res.cloudinary.com/dljszrwl0/image/upload/v1735250604/mobile2_mysq9h.png",
+      "type": "image/png",
+      "label": "Resources page screenshot of Zigbee OUTR"
+    },
+    {
+      "src": "https://res.cloudinary.com/dljszrwl0/image/upload/v1735250604/mobile3_u77yks.png",
+      "type": "image/png",
+      "label": "Magazines page screenshot of Zigbee OUTR"
     }
   ],
   "shortcuts": [
