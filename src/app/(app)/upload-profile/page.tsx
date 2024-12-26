@@ -25,7 +25,8 @@ import { toast } from "@/hooks/use-toast";
 const UploadProfilePage = () => {
   const [user, setUser] = useState<Partial<UserData>>({
     name: "",
-    profileImg: "",
+    profileImg:
+      "https://res.cloudinary.com/dljszrwl0/image/upload/v1735049088/profiles/16f0f360-3f3b-42cb-9ef6-4f777a66687a.webp",
     phoneNumber: "",
     batch: "",
     linkedInUrl: "",
@@ -35,6 +36,7 @@ const UploadProfilePage = () => {
     feedback: "",
   });
 
+  const [errors, setErrors] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const { data: session, update } = useSession();
@@ -63,9 +65,52 @@ const UploadProfilePage = () => {
       ...prevUser,
       [field]: value,
     }));
+    setErrors((prevErrors) => ({ ...prevErrors, [field]: "" })); // Clear errors on input change
+  };
+
+  const validateForm = (): boolean => {
+    const newErrors: Record<string, string> = {};
+
+    // Full Name (mandatory)
+    if (!user.name) newErrors.name = "Full name is required.";
+
+    // Phone Number (mandatory)
+    if (!user.phoneNumber) {
+      newErrors.phoneNumber = "Phone number is required.";
+    }
+
+    // LinkedIn URL (optional but validated if provided)
+    if (
+      user.linkedInUrl &&
+      !/^https?:\/\/(www\.)?linkedin\.com\/.*$/.test(user.linkedInUrl)
+    ) {
+      newErrors.linkedInUrl = "Enter a valid LinkedIn profile URL.";
+    }
+
+    // Batch (optional but validated if provided)
+    if (user.batch) {
+      if (!/^\d{4}$/.test(user.batch)) {
+        newErrors.batch = "Batch must be a 4-digit number.";
+      }
+    }
+
+    // About (optional but validated if provided)
+    if (user.about && user.about.length < 10) {
+      newErrors.about = "About section must be at least 10 characters.";
+    }
+
+    // Feedback (optional but validated if provided)
+    if (user.feedback && user.feedback.length < 10) {
+      newErrors.feedback = "Feedback must be at least 10 characters.";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
   const handleSaveChanges = async () => {
+    if (!validateForm()) return;
+
     setLoading(true);
     try {
       const res = await uploadUserData(user);
@@ -80,8 +125,9 @@ const UploadProfilePage = () => {
             image: user?.profileImg,
           },
         });
-        toast({description: "Your profile uploaded successfully"})
+        toast({ description: "Your profile uploaded successfully" });
         router.push("/");
+        router.refresh();
       }
     } catch (error) {
       alert(
@@ -128,7 +174,7 @@ const UploadProfilePage = () => {
               </div>
             </div>
             <Title size="medium" className="text-black">
-              {user?.name || "Your Name"}
+              {user?.name || ""}
             </Title>
           </div>
         </div>
@@ -143,6 +189,7 @@ const UploadProfilePage = () => {
           </Title>
 
           <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2">
+            {/* Full Name */}
             <div>
               <Text
                 variant="large"
@@ -151,12 +198,15 @@ const UploadProfilePage = () => {
                 Full Name*
               </Text>
               <Input
+                required
                 value={user?.name || ""}
                 onChange={(e) => handleInputChange("name", e.target.value)}
                 placeholder="Full Name"
               />
+              {errors.name && <p className="text-red-500">{errors.name}</p>}
             </div>
 
+            {/* Phone Number */}
             <div>
               <Text
                 variant="large"
@@ -165,19 +215,23 @@ const UploadProfilePage = () => {
                 Phone Number*
               </Text>
               <Input
+                required
                 type="text"
                 value={user?.phoneNumber || ""}
                 onChange={(e) => {
                   const value = e.target.value;
-                  // Allow only numeric input
                   if (/^\d*$/.test(value)) {
                     handleInputChange("phoneNumber", value);
                   }
                 }}
                 placeholder="Phone Number"
               />
+              {errors.phoneNumber && (
+                <p className="text-red-500">{errors.phoneNumber}</p>
+              )}
             </div>
 
+            {/* Batch */}
             <div>
               <Text
                 variant="large"
@@ -188,10 +242,18 @@ const UploadProfilePage = () => {
               <Input
                 type="text"
                 value={user?.batch || ""}
-                onChange={(e) => handleInputChange("batch", e.target.value)}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  if (/^\d*$/.test(value)) {
+                    handleInputChange("batch", value);
+                  }
+                }}
                 placeholder="2025"
               />
+              {errors.batch && <p className="text-red-500">{errors.batch}</p>}
             </div>
+
+            {/* Position */}
             <div>
               <Text
                 variant="large"
@@ -205,8 +267,7 @@ const UploadProfilePage = () => {
                     variant="outline"
                     className="flex w-full items-center justify-between"
                   >
-                    {user?.position || "Select Position"}{" "}
-                    {/* Fallback for position */}
+                    {user?.position || "Select Position"}
                     <ChevronDown className="ml-2 h-4 w-4" />
                   </Button>
                 </DropdownMenuTrigger>
@@ -216,13 +277,17 @@ const UploadProfilePage = () => {
                       key={position}
                       onSelect={() => handleInputChange("position", position)}
                     >
-                      {position}
+                      {position || "No position"}
                     </DropdownMenuItem>
                   ))}
                 </DropdownMenuContent>
               </DropdownMenu>
+              {errors.position && (
+                <p className="text-red-500">{errors.position}</p>
+              )}
             </div>
 
+            {/* LinkedIn */}
             <div>
               <Text
                 variant="large"
@@ -238,8 +303,12 @@ const UploadProfilePage = () => {
                 }
                 placeholder="LinkedIn URL"
               />
+              {errors.linkedInUrl && (
+                <p className="text-red-500">{errors.linkedInUrl}</p>
+              )}
             </div>
 
+            {/* Domain */}
             <div>
               <Text
                 variant="large"
@@ -251,11 +320,11 @@ const UploadProfilePage = () => {
                 type="text"
                 value={user?.domain || ""}
                 onChange={(e) => handleInputChange("domain", e.target.value)}
-                placeholder="Frontend-developer | Android"
+                placeholder="Frontend Developer | Android"
               />
             </div>
 
-            {/* About Section */}
+            {/* About */}
             <div>
               <Text
                 variant="large"
@@ -263,15 +332,16 @@ const UploadProfilePage = () => {
               >
                 About Yourself
               </Text>
-
               <Textarea
                 rows={3}
-                value={user?.about}
+                value={user?.about || ""}
                 onChange={(e) => handleInputChange("about", e.target.value)}
                 placeholder="Write about yourself..."
               />
+              {errors.about && <p className="text-red-500">{errors.about}</p>}
             </div>
 
+            {/* Feedback */}
             <div>
               <Text
                 variant="large"
@@ -281,10 +351,13 @@ const UploadProfilePage = () => {
               </Text>
               <Textarea
                 rows={3}
-                value={user?.feedback}
+                value={user?.feedback || ""}
                 onChange={(e) => handleInputChange("feedback", e.target.value)}
-                placeholder="Write something about our department & Zigbee..."
+                placeholder="Write something about our department..."
               />
+              {errors.feedback && (
+                <p className="text-red-500">{errors.feedback}</p>
+              )}
             </div>
           </div>
 
