@@ -18,9 +18,9 @@ export const POST = async (req: NextRequest) => {
       feedback,
     } = await req.json();
 
-    if (!name || !profileImg || !phoneNumber) {
+    if (!name || !phoneNumber) {
       return NextResponse.json(
-        { error: "Name, Profile Image and Phone Number are required." },
+        { error: "Name and Phone Number required." },
         { status: 400 }
       );
     }
@@ -35,8 +35,8 @@ export const POST = async (req: NextRequest) => {
 
     const userDetails: Partial<UserData> = {
       name,
-      profileImg,
       phoneNumber,
+      profileImg: profileImg || "",
       batch: batch || "",
       linkedInUrl: linkedInUrl || "",
       domain: domain || "",
