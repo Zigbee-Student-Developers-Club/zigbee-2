@@ -87,6 +87,7 @@ export const metadata: Metadata = {
       alt: "Zigbee Student Developers' Club, OUTR (CETB), Bhubaneswar",
     },
   },
+  manifest: "/site.webmanifest",
 };
 
 export default function RootLayout({
