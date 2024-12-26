@@ -114,7 +114,9 @@ const Header = () => {
           </DropdownMenu> */}
 
           {/* Profile Dropdown */}
-          {status !== "loading" && (
+          {status === "loading" ? (
+            <div className="h-10 w-10 animate-pulse rounded-full bg-gray-300"></div>
+          ) : (
             <DropdownMenu
               open={profileMenuOpen}
               onOpenChange={setProfileMenuOpen}

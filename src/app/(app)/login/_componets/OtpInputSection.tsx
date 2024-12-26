@@ -1,5 +1,3 @@
-"use client";
-
 import React, { useState, useEffect } from "react";
 import { Text } from "@/components/ui/text";
 import Title from "@/components/ui/title";
@@ -10,9 +8,11 @@ import {
 } from "@/components/ui/input-otp";
 import { Button } from "@/components/ui/button";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
-import { ChevronLeft} from "lucide-react"
+import { ChevronLeft } from "lucide-react";
+import { REGEXP_ONLY_DIGITS } from "input-otp";
 
 interface OtpInputSectionProps {
+  email: string;
   setOtp: React.Dispatch<React.SetStateAction<string>>;
   isOtpFilled: boolean;
   setISOtpFilled: React.Dispatch<React.SetStateAction<boolean>>;
@@ -20,10 +20,12 @@ interface OtpInputSectionProps {
   handleOtpSubmit: () => void;
   resetOtpState: () => void;
   message: string;
+  setMessage: React.Dispatch<React.SetStateAction<string>>;
   messageColor: string;
 }
 
 const OtpInputSection: React.FC<OtpInputSectionProps> = ({
+  email,
   setOtp,
   isOtpFilled,
   setISOtpFilled,
@@ -31,6 +33,7 @@ const OtpInputSection: React.FC<OtpInputSectionProps> = ({
   handleOtpSubmit,
   resetOtpState,
   message,
+  setMessage,
   messageColor,
 }) => {
   const [otp, localSetOtp] = useState<string>("");
@@ -41,17 +44,29 @@ const OtpInputSection: React.FC<OtpInputSectionProps> = ({
     setISOtpFilled(otp.length === 6); // Assuming OTP length is 6
   }, [otp, setOtp, setISOtpFilled]);
 
+  // Clear error message when OTP changes
+  useEffect(() => {
+    if (message) {
+      setMessage(""); // Clear the error message
+    }
+  }, [otp, setMessage]);
+
   return (
     <div className="relative flex flex-col items-center justify-center gap-2 bg-cyan-50 px-6 py-10 dark:bg-indigo-300">
       <div
         className="absolute left-5 top-5 cursor-pointer"
         onClick={resetOtpState}
       >
-        <ChevronLeft/>
+        <ChevronLeft />
       </div>
       <Title size="medium">Check your email</Title>
+      <Text variant="small" className={`my-2 text-center text-gray-600`}>
+        Please enter the one-time password sent to your Email <br /> {email}
+      </Text>
       <InputOTP
         maxLength={6}
+        pattern={REGEXP_ONLY_DIGITS}
+        autoFocus
         value={otp}
         onChange={(newValue) => localSetOtp(newValue)}
       >
@@ -65,7 +80,10 @@ const OtpInputSection: React.FC<OtpInputSectionProps> = ({
           ))}
         </InputOTPGroup>
       </InputOTP>
-      <Text variant="small" className={`mt-2 text-center ${messageColor} h-1.5`}>
+      <Text
+        variant="small"
+        className={`mt-2 text-center ${messageColor} h-1.5`}
+      >
         {message || " "}
       </Text>
       <Button

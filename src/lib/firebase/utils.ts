@@ -46,7 +46,11 @@ export const checkUserRegistered = async (email: string) => {
   let error: string | null = null;
 
   try {
-    const q = query(userCollection, where("email", "==", email));
+    const q = query(
+      userCollection,
+      where("email", "==", email),
+      where("isProvidedBasicData", "==", true)
+    );
     const querySnapshot = await getDocs(q);
     result = !querySnapshot.empty;
   } catch (err) {
