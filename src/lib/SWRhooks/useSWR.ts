@@ -29,86 +29,132 @@ const useFetchData = <T>(
 // SWR Hook: Fetch Contributors
 export const useFetchContributors = (): {
   contributors: ContributorType[];
+  refreshContributors: () => void;
 } & SwrType => {
-  const { data, isLoading, isValidating, error } = useFetchData<
-    ContributorType[]
-  >("allContributors", api.fetchContributors);
+  const key = "allContributors";
+
+  const { data, isLoading, isValidating, error } = useFetchData<ContributorType[]>(
+    key,
+    api.fetchContributors
+  );
+
+  // Manual refresh function
+  const refreshContributors = () => {
+    mutate(key);
+  };
 
   return {
     contributors: data || [],
     isLoading,
     isValidating,
     error,
+    refreshContributors,
   };
 };
+
 
 // SWR Hook: Fetch Alumni
 export const useFetchAlumni = (
   batch: string
 ): {
   alumniData: AlumniType[];
+  refreshAlumni: () => void;
 } & SwrType => {
+  const key = batch ? `alumni_${batch}` : "allAlumni";
+
   const { data, isLoading, isValidating, error } = useFetchData<AlumniType[]>(
-    batch ? `alumni_${batch}` : "allAlumni",
+    key,
     () => api.fetchAlumni(batch)
   );
+
+  // Manual refresh function
+  const refreshAlumni = () => {
+    mutate(key);
+  };
 
   return {
     alumniData: data || [],
     isLoading,
     isValidating,
     error,
+    refreshAlumni,
   };
 };
-
-// SWR Hook : Fetch Magazines
+// SWR Hook: Fetch Magazines
 export const useFetchMagazines = (): {
   magazineList: MagazineType[];
+  refreshMagazines: () => void;
 } & SwrType => {
+  const key = "magazineList";
+
   const { data, isLoading, isValidating, error } = useFetchData<MagazineType[]>(
-    "magazineList",
+    key,
     api.fetchMagazines
   );
+
+  // Manual refresh function
+  const refreshMagazines = () => {
+    mutate(key);
+  };
 
   return {
     magazineList: data || [],
     isLoading,
     isValidating,
     error,
+    refreshMagazines,
   };
 };
 
-// SWR Hook : Fetch Resources
+// SWR Hook: Fetch Resources
 export const useFetchResources = (): {
   resourceList: ResourceType[];
+  refreshResources: () => void;
 } & SwrType => {
+  const key = "resourcesList";
+
   const { data, isLoading, isValidating, error } = useFetchData<ResourceType[]>(
-    "resourcesList",
+    key,
     api.fetchResources
   );
+
+  // Manual refresh function
+  const refreshResources = () => {
+    mutate(key);
+  };
 
   return {
     resourceList: data || [],
     isLoading,
     isValidating,
     error,
+    refreshResources,
   };
 };
 
-// SWR Hook : Fetch Events
+// SWR Hook: Fetch Events
 export const useFetchEvents = (): {
   eventList: EventType[];
+  refreshEvents: () => void;
 } & SwrType => {
+  const key = "eventsList";
+
   const { data, isLoading, isValidating, error } = useFetchData<EventType[]>(
-    "eventsList",
+    key,
     api.fetchEvents
   );
+
+  // Manual refresh function
+  const refreshEvents = () => {
+    mutate(key);
+  };
 
   return {
     eventList: data || [],
     isLoading,
     isValidating,
     error,
+    refreshEvents,
   };
 };
 
