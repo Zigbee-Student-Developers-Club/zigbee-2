@@ -1,0 +1,100 @@
+{
+  "name": "Zigbee Student Developers' Club, OUTR (CETB), Bhubaneswar",
+  "short_name": "Zigbee OUTR",
+  "description": "Zigbee is a student-run community led by OUTR MCA Students focusing fundamentally on software development.",
+  "lang": "en",
+  "start_url": "/",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "/favicon-16x16.png",
+      "sizes": "16x16",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ],
+  "categories": [
+    "education",
+    "technology",
+    "development",
+    "community",
+    "student",
+    "club",
+    "tech club",
+    "event"
+  ],
+  "screenshots": [
+    {
+      "src": "https://res.cloudinary.com/dljszrwl0/image/upload/v1735248181/og-image_cxf84l.webp",
+      "sizes": "1200x630",
+      "type": "image/webp",
+      "label": "Home page screenshot of Zigbee OUTR"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Alumni",
+      "url": "/alumni",
+      "icons": [
+        {
+          "src": "/favicon-32x32.png",
+          "sizes": "32x32",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Codewars",
+      "url": "/codewars",
+      "icons": [
+        {
+          "src": "/favicon-32x32.png",
+          "sizes": "32x32",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Events",
+      "url": "/events",
+      "icons": [
+        {
+          "src": "/favicon-32x32.png",
+          "sizes": "32x32",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Magazines",
+      "url": "/magazines",
+      "icons": [
+        {
+          "src": "/favicon-32x32.png",
+          "sizes": "32x32",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Resources",
+      "url": "/resources",
+      "icons": [
+        {
+          "src": "/favicon-32x32.png",
+          "sizes": "32x32",
+          "type": "image/png"
+        }
+      ]
+    }
+  ]
+}
