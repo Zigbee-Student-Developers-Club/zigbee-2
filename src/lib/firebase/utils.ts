@@ -12,6 +12,7 @@ import {
   startAt,
   updateDoc,
   where,
+  writeBatch,
 } from "firebase/firestore";
 import firebaseApp from "./config";
 import {
@@ -21,6 +22,7 @@ import {
   MagazineType,
   ResourceType,
   UserData,
+  UserDataForBulk,
 } from "../types";
 import { sendVerificationEmail } from "../resend/utils";
 import { generateToken } from "../jwt";
@@ -695,3 +697,36 @@ export const fetchEvents = async () => {
 
   return { result, error };
 };
+
+export const seedBulkData = async (data: UserDataForBulk[]) => {
+  let error: string | null = null;
+
+  try {
+    // Initialize Firestore batch
+    const batch = writeBatch(db);
+
+    data.forEach(async (user) => {
+      const { name, email, phoneNumber, batch, position, role } = user;
+
+      const userDetails: UserDataForBulk = {
+        name,
+        email,
+        phoneNumber,
+        batch,
+        position: position || "",
+        role: role || "guest"
+      };
+
+      await addDoc(userCollection, userDetails);
+
+    });
+
+    // Commit batch write
+    await batch.commit();
+
+    return { result: true, error: null };
+  } catch (err) {
+    error = handleError(err, "seedBulkData");
+    return { result: false, error };
+  }
+}

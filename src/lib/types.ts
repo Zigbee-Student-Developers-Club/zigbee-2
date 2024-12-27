@@ -110,3 +110,12 @@ export interface UsersResponse {
   };
   message: string;
 }
+
+export interface UserDataForBulk {
+  name: string;
+  email: string;
+  phoneNumber: string;
+  batch: string;
+  position?: string;
+  role?: string;
+}
