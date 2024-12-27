@@ -79,6 +79,7 @@ const UserTable = () => {
     setSelectedUser(user);
     setUserDataUpdateDialogOpen(true);
   }, []);
+  
   const columns: ColumnDef<UserData>[] = [
     {
       accessorKey: "name",
@@ -152,7 +153,7 @@ const UserTable = () => {
 
         if ("message" in response) {
           // If deletion is successful, log success and refresh users list
-          toast({description :`${selectedUser.name} deleted successfully.`});
+          toast({description :`${selectedUser.name} deleted successfully.`})
           // Refresh the data using mutate function to update the user list
           refreshUsers(); // No need for await, just call mutate
         } else {
@@ -169,6 +170,9 @@ const UserTable = () => {
     }
   }, [selectedUser, refreshUsers]);
 
+  const handleSaveChanges = () => {
+    refreshUsers();
+  };
 
   useEffect(() => {
     setPage(1);
@@ -403,6 +407,7 @@ const UserTable = () => {
         <UserUpdateDialogBox
           isOpen={userDataUpdateDialogOpen}
           onClose={() => setUserDataUpdateDialogOpen(false)}
+          onSave={handleSaveChanges}
           user={selectedUser}
         />
       )}

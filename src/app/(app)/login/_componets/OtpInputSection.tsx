@@ -60,7 +60,7 @@ const OtpInputSection: React.FC<OtpInputSectionProps> = ({
         <ChevronLeft />
       </div>
       <Title size="medium">Check your email</Title>
-      <Text variant="small" className={`my-2 text-center text-gray-600`}>
+      <Text variant="small" className={`my-2 text-center text-gray-600 leading-normal`}>
         Please enter the one-time password sent to your Email <br /> {email}
       </Text>
       <InputOTP
