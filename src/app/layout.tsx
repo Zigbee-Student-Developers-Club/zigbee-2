@@ -13,8 +13,81 @@ const nunito = Nunito({
 });
 
 export const metadata: Metadata = {
-  title: "Zigbee",
-  description: "Zigbee, MCA Department Club, OUTR",
+  title: "Zigbee Student Developers' Club, OUTR (CETB), Bhubaneswar",
+  description:
+    "Zigbee is a student run community run by OUTR MCA Students that focuses fundamentally on software development.",
+  keywords:
+    "Zigbee, MCA, OUTR, Student Developers' Club, Zigbee Student Developers' Club, tech club, tech event, odisha tech club, odisha college club, college club, MCA club, mca club, 2025, tech, club, tech conference, outr, odisha university of technology and research, cet, college of engineering and technology, bhubaneswar, odisha, india",
+  authors: {
+    url: "https://zigbeeoutr.in/",
+    name: "MCA Department, OUTR (CETB), Bhubaneswar",
+  },
+  applicationName: "Zigbee Student Developers' Club, OUTR",
+  creator: "MCA Department, OUTR (CETB), Bhubaneswar",
+  icons: {
+    icon: [
+      {
+        url: "./favicon.ico",
+        rel: "icon",
+        type: "image/x-icon",
+      },
+      {
+        url: "/favicon-16x16.png",
+        rel: "icon",
+        sizes: "16x16",
+        type: "image/png",
+      },
+      {
+        url: "/favicon-32x32.png",
+        rel: "icon",
+        sizes: "32x32",
+        type: "image/png",
+      },
+    ],
+    apple: [
+      {
+        url: "/apple-touch-icon.png",
+        rel: "apple-touch-icon",
+        sizes: "180x180",
+        type: "image/png",
+      },
+    ],
+    shortcut: {
+      url: "./favicon.ico",
+      rel: "shortcut icon",
+      type: "image/x-icon",
+    },
+  },
+  openGraph: {
+    type: "website",
+    url: "https://zigbeeoutr.in/",
+    title: "Zigbee Student Developers' Club, OUTR (CETB), Bhubaneswar",
+    description:
+      "Zigbee is a student run community run by OUTR MCA Students that focuses fundamentally on software development.",
+    images: [
+      {
+        url: "https://res.cloudinary.com/dljszrwl0/image/upload/v1735248181/og-image_cxf84l.webp",
+        width: 1200,
+        height: 630,
+        alt: "Zigbee Student Developers' Club, OUTR (CETB), Bhubaneswar",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    site: "@zigbeecetb",
+    title: "Zigbee Student Developers' Club, OUTR (CETB), Bhubaneswar",
+    description:
+      "Zigbee is a student run community run by OUTR MCA Students that focuses fundamentally on software development.",
+    creator: "Zigbee Student Developers' Club",
+    images: {
+      url: "https://res.cloudinary.com/dljszrwl0/image/upload/v1735248181/og-image_cxf84l.webp",
+      width: 1200,
+      height: 630,
+      alt: "Zigbee Student Developers' Club, OUTR (CETB), Bhubaneswar",
+    },
+  },
+  manifest: "/site.webmanifest",
 };
 
 export default function RootLayout({

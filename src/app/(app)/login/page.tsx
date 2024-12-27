@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import OtpInputSection from "@/app/(app)/login/_componets/OtpInputSection";
 import EmailInputSection from "@/app/(app)/login/_componets/EmailInputSection";
 import MotionDivProvider from "@/components/provider/MotionDivProvider";
+// eslint-disable-next-line
 import { signIn, useSession } from "next-auth/react";
 
 const LoginPage = () => {
@@ -19,7 +20,7 @@ const LoginPage = () => {
   const [message, setMessage] = useState("");
   const [messageColor, setMessageColor] = useState("text-gray-500");
   const [isOtpFilled, setISOtpFilled] = useState(false);
-  const { status } = useSession();
+  // const { status } = useSession();
 
   const router = useRouter();
 
@@ -51,9 +52,9 @@ const LoginPage = () => {
     validateAndCheckEmail();
   }, [email]);
 
-  if (status === "authenticated") {
-    return router.push("/");
-  }
+  // if (status === "authenticated") {
+  //   return router.push("/");
+  // }
 
   const handleEmailSubmit = async () => {
     setLoading(true);

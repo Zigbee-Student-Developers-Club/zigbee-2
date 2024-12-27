@@ -154,7 +154,7 @@ const UploadProfilePage = () => {
         {/* Profile Banner */}
         <div className="relative h-80 w-full overflow-hidden rounded-lg bg-gray-200 dark:bg-gray-800">
           <div className="h-full w-full bg-lime-400 object-cover" />
-          <div className="absolute inset-0 flex flex-col items-center justify-center space-y-4 bg-black/30">
+          <div className="absolute inset-0 flex flex-col items-center justify-center space-y-8 bg-black/30">
             <div className="group relative">
               <Avatar className="h-52 w-52">
                 <AvatarImage
@@ -173,7 +173,7 @@ const UploadProfilePage = () => {
                 <ImageUp className="text-black dark:text-white" />
               </div>
             </div>
-            <Title size="medium" className="text-black">
+            <Title size="medium" className="text-black h-8 mt-4">
               {user?.name || ""}
             </Title>
           </div>
@@ -248,7 +248,7 @@ const UploadProfilePage = () => {
                     handleInputChange("batch", value);
                   }
                 }}
-                placeholder="2025"
+                placeholder=""
               />
               {errors.batch && <p className="text-red-500">{errors.batch}</p>}
             </div>
