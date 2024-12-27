@@ -28,6 +28,7 @@ import { toast } from "@/hooks/use-toast";
 interface UserUpdateDialogBoxProps {
   isOpen: boolean;
   onClose: () => void;
+  onSave: () => void;
   user: UserData; // UserData data to prepopulate the form
 }
 
@@ -35,6 +36,7 @@ const UserUpdateDialogBox: React.FC<UserUpdateDialogBoxProps> = ({
   isOpen,
   onClose,
   user,
+  onSave,
 }) => {
   const [userData, setFormData] = useState<UserData>({
     id: "",
@@ -52,6 +54,7 @@ const UserUpdateDialogBox: React.FC<UserUpdateDialogBoxProps> = ({
     isContributor: false,
     domain: "",
   });
+  const [loading , setLoading] = useState<boolean>(false);
 
   // Sync userData with user prop
   useEffect(() => {
@@ -80,11 +83,14 @@ const UserUpdateDialogBox: React.FC<UserUpdateDialogBoxProps> = ({
   };
 
   const handleSave = async () => {
+    setLoading(false);
     const response = await updateUserById(userData?.id || "", userData);
     if (response) {
       toast({ description: "user data updated successfully" });
     }
+    setLoading(true);
     onClose();
+    onSave();
   };
 
   return (
@@ -280,7 +286,7 @@ const UserUpdateDialogBox: React.FC<UserUpdateDialogBoxProps> = ({
           <Button variant="secondary" onClick={onClose}>
             Cancel
           </Button>
-          <Button onClick={handleSave}>Save Changes</Button>
+          <Button onClick={handleSave} disabled={loading}>Save Changes</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
