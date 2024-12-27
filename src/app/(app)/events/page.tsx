@@ -44,6 +44,11 @@ export default function AlumniConnect() {
     );
   }
 
+  // Sort events by date (descending)
+  const sortedEventList = [...eventList].sort(
+    (a, b) => new Date(b.eventDate).getTime() - new Date(a.eventDate).getTime()
+  );
+
   const isEventExpired = (date: string) => {
     return new Date(date) < new Date();
   };
@@ -64,7 +69,7 @@ export default function AlumniConnect() {
 
         {/* Responsive grid */}
         <div className="container mx-auto my-16 mt-10 grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-          {eventList.map((event: EventType) => (
+          {sortedEventList.map((event: EventType) => (
             <Card
               key={event.id}
               className="flex flex-col overflow-hidden bg-gray-100 text-black shadow-md transition-all duration-300 hover:shadow-xl"
@@ -73,7 +78,7 @@ export default function AlumniConnect() {
               <CardHeader className="p-0">
                 <div className="overflow-hidden">
                   <Image
-                    className="max-h-48 w-full rounded-t-lg object-cover transition-transform duration-300 hover:scale-105"
+                    className="h-48 w-full rounded-t-lg object-cover transition-transform duration-300 hover:scale-105"
                     src={event.thumbnail || "/fallback-image.png"}
                     alt={`${event.topic} thumbnail`}
                     width={400}
@@ -85,7 +90,7 @@ export default function AlumniConnect() {
               {/* Card Content */}
               <CardContent className="flex-grow p-6">
                 <div className="mb-6">
-                  <CardTitle className="text-xl font-bold">
+                  <CardTitle className="text-xl font-bold min-h-14">
                     {event.topic}
                   </CardTitle>
                   <div className="mt-3 flex flex-wrap items-center gap-2 text-sm text-blue-900">
@@ -123,7 +128,7 @@ export default function AlumniConnect() {
                       </div>
                     ))
                   ) : (
-                    <p className="text-sm text-gray-400">
+                    <p className="text-sm text-gray-400 text-center">
                       No speakers listed for this event.
                     </p>
                   )}
