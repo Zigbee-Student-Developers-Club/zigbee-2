@@ -118,4 +118,5 @@ export interface UserDataForBulk {
   batch: string;
   position?: string;
   role?: string;
+  isProvidedBasicData?: boolean;
 }

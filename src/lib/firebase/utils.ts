@@ -714,7 +714,8 @@ export const seedBulkData = async (data: UserDataForBulk[]) => {
         phoneNumber,
         batch,
         position: position || "",
-        role: role || "guest"
+        role: role || "guest",
+        isProvidedBasicData: true,
       };
 
       await addDoc(userCollection, userDetails);
