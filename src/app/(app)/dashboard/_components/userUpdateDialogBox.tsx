@@ -83,12 +83,12 @@ const UserUpdateDialogBox: React.FC<UserUpdateDialogBoxProps> = ({
   };
 
   const handleSave = async () => {
-    setLoading(false);
+    setLoading(true);
     const response = await updateUserById(userData?.id || "", userData);
     if (response) {
       toast({ description: "user data updated successfully" });
     }
-    setLoading(true);
+    setLoading(false);
     onClose();
     onSave();
   };
