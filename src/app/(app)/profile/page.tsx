@@ -223,7 +223,7 @@ const ProfilePage = () => {
                 variant="small"
                 className="text-gray-700 dark:text-gray-400"
               >
-                {user.position}
+                {user.position || "N/A" }
               </Text>
             )}
           </div>
@@ -290,7 +290,7 @@ const ProfilePage = () => {
                   rel="noopener noreferrer"
                   className="text-blue-600 underline dark:text-blue-400"
                 >
-                  {user.linkedInUrl}
+                  {user.linkedInUrl || "N/A"}
                 </a>
               </Text>
             )}
@@ -337,7 +337,7 @@ const ProfilePage = () => {
                 variant="small"
                 className="text-gray-700 dark:text-gray-400"
               >
-                {user.about}
+                {user.about || "N/A"}
               </Text>
             )}
           </div>
@@ -361,7 +361,7 @@ const ProfilePage = () => {
                 variant="small"
                 className="text-gray-700 dark:text-gray-400"
               >
-                {user.feedback}
+                {user.feedback || "N/A" }
               </Text>
             )}
           </div>

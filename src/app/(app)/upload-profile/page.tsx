@@ -21,20 +21,24 @@ import { useSession } from "next-auth/react";
 import { Textarea } from "@/components/ui/textarea";
 import { useRouter } from "next/navigation";
 import { toast } from "@/hooks/use-toast";
+import { useFetchUserProfile } from "@/lib/SWRhooks/useSWR";
+
+const INITIAL_USER_STATE: Partial<UserData> = {
+  name: "",
+  profileImg:
+    "https://res.cloudinary.com/dljszrwl0/image/upload/v1735049088/profiles/16f0f360-3f3b-42cb-9ef6-4f777a66687a.webp",
+  phoneNumber: "",
+  batch: "",
+  linkedInUrl: "",
+  domain: "",
+  about: "",
+  position: "",
+  feedback: "",
+};
 
 const UploadProfilePage = () => {
-  const [user, setUser] = useState<Partial<UserData>>({
-    name: "",
-    profileImg:
-      "https://res.cloudinary.com/dljszrwl0/image/upload/v1735049088/profiles/16f0f360-3f3b-42cb-9ef6-4f777a66687a.webp",
-    phoneNumber: "",
-    batch: "",
-    linkedInUrl: "",
-    domain: "",
-    about: "",
-    position: "",
-    feedback: "",
-  });
+  const { userProfile } = useFetchUserProfile();
+  const [user, setUser] = useState<Partial<UserData>>(INITIAL_USER_STATE);
 
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(false);
@@ -48,6 +52,14 @@ const UploadProfilePage = () => {
       profileImg: profileImgUrl,
     }));
   };
+
+  // Update user state when userProfile changes
+  useEffect(() => {
+    if (userProfile) {
+      console.log("Fetched user profile:", userProfile);
+      setUser(userProfile);
+    }
+  }, [userProfile]);
 
   useEffect(() => {
     return () => {
@@ -173,7 +185,7 @@ const UploadProfilePage = () => {
                 <ImageUp className="text-black dark:text-white" />
               </div>
             </div>
-            <Title size="medium" className="text-black h-8 mt-4">
+            <Title size="medium" className="mt-4 h-8 text-black">
               {user?.name || ""}
             </Title>
           </div>
