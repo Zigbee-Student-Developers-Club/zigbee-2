@@ -33,7 +33,7 @@ const AlumniCard: NextPage<AlumDataProp> = ({ alumData }) => {
         {/* Name and Badge */}{" "}
         <Text variant="small" className="font-semibold">
           {alumData.name.toLowerCase()}{" "}
-          {["PC", "CR", "GR"].includes(
+          {["PC", "CR", "GR", "PV"].includes(
             alumData.position?.toUpperCase() || ""
           ) && (
             <Badge
