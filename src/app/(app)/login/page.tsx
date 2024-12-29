@@ -35,13 +35,13 @@ const LoginPage = () => {
       try {
         const response = await checkUserExist(email);
 
-        if (response?.isRegistered) {
-          setMessage("Email is registered.");
+         if (response?.isRegistered) {
+          setMessage("🎉 Welcome back! You're already registered with us.");
           setMessageColor("text-green-500");
         } else {
-          setMessage("Email is not registered.");
-          setMessageColor("text-red-500");
-        }
+          setMessage("✨ Welcome aboard! Let's get you started with an OTP.");
+          setMessageColor("text-green-500");
+        }     
       } catch (error) {
         setMessage((error as Error)?.message || "Error verifying email.");
         setMessageColor("text-red-500");
