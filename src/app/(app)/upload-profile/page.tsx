@@ -249,7 +249,7 @@ const UploadProfilePage = () => {
                 variant="large"
                 className="text-gray-700 dark:text-gray-300"
               >
-                Batch
+                Batch (Passout Year)
               </Text>
               <Input
                 type="text"
