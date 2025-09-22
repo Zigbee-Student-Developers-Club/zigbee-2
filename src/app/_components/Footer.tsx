@@ -4,8 +4,7 @@ import {
   Telegram,
   Linkedin,
   Youtube,
-  Facebook,
-  Twitter,
+  TwitterX,
 } from "react-bootstrap-icons";
 import Logo from "@/app/_components/Logo";
 import { Text } from "@/components/ui/text";
@@ -31,8 +30,6 @@ export default function Footer() {
             <Link href="/gallery" className="hover:text-teal-500">
               Gallery
             </Link>
-            {/* Uncomment the below link if needed */}
-            {/* <Link href="/blogs" className="hover:text-teal-500">Blogs</Link> */}{" "}
           </div>
 
           {/* Navigation Links - Column 2 */}
@@ -85,18 +82,11 @@ export default function Footer() {
               <Youtube size={20} />
             </Link>
             <Link
-              href="https://www.facebook.com/zigbee.cetb"
-              target="_blank"
-              className="transition-colors duration-300 hover:text-blue-800"
-            >
-              <Facebook size={20} />
-            </Link>
-            <Link
               href="https://twitter.com/zigbeecetb"
               target="_blank"
               className="transition-colors duration-300 hover:text-sky-500"
             >
-              <Twitter size={20} />
+              <TwitterX size={20} />
             </Link>
           </div>
         </div>
@@ -106,7 +96,8 @@ export default function Footer() {
 
         {/* Footer Text */}
         <Text variant="small" className="text-center">
-          © 2024 Zigbee Student Developers&apos; Club. All rights reserved
+          &copy; {new Date().getFullYear()} Zigbee Student Developers&apos;
+          Club. All rights reserved
         </Text>
       </div>
     </footer>
