@@ -19,7 +19,7 @@ export default function Footer() {
           <div className="flex flex-col items-start">
             <Logo />
             <Text variant="small" className="mt-2">
-              Dept. of CSA, OUTR, Bhubaneswar.
+              Dept. of MCA, OUTR, Bhubaneswar.
             </Text>
           </div>
 
