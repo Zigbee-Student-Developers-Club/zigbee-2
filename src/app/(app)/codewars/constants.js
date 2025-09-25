@@ -34,7 +34,7 @@ export const WINNERS_DATA = [
         isIndividual: false,
         badges: [
           {
-            name: "Team Safe Heaven",
+            name: "Team SafeHaven",
             rank: "Winner",
             bgColor: "bg-yellow-500",
             imageUrl:
